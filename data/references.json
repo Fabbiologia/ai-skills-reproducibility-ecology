@@ -1,0 +1,20 @@
+{
+  "T1": {
+    "value": -0.1176,
+    "direction": "negative",
+    "quantity": "pooled Pearson r, sepal length vs width (iris)"
+  },
+  "T2": {
+    "value": 0.8806,
+    "quantity": "test accuracy predicting penguin sex (scaled LogReg, 80/20 stratified seed42)"
+  },
+  "T3": {
+    "value": 0.6697,
+    "secondary": "p<1e-80",
+    "quantity": "eta-squared, penguin body mass ~ species (one-way ANOVA)"
+  },
+  "T4": {
+    "value": 3.4642,
+    "quantity": "mean per-transect fish biomass, Cabo Pulmo 2023 (unit=Reef+Transect, sum-then-mean); matches LTEM tool value"
+  }
+}

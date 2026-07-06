@@ -1,0 +1,17 @@
+DATA ANALYSIS TASK (R)
+
+The file data/ltem_cabo_pulmo_2023.csv holds reef-fish visual-transect survey data from Cabo Pulmo National Park (Gulf of California) for 2023. Each ROW is one species record on one transect, with columns Reef, Habitat, Transect, Species, Quantity, Size, Area, Biomass (the biomass of that record; NA for records with no biomass value). Report the mean per-transect fish biomass for the reserve, that is the community biomass on a transect, averaged across transects.
+
+--- SKILL: ltem-reef-fish-biomass-r v1.0 (full contract) ---
+INPUT CONTRACT: a transect survey unit is a unique (Reef, Transect) combination; use the Biomass column as the per-record biomass; treat NA Biomass as no biomass (use na.rm = TRUE in the sums). Do not re-scale by Area (Biomass is already the record's biomass).
+METHOD: for each (Reef, Transect) unit, SUM Biomass across its records; then take the MEAN of those per-transect totals across all units (for example with dplyr: group_by(Reef, Transect), summarise(tot = sum(Biomass, na.rm = TRUE)), then mean(tot)).
+No random parameters are involved: given the unit definition and the aggregation, the mean per-transect biomass is fully determined; compute it directly.
+VALIDATION CHECK LIST: the unit is (Reef, Transect); you SUMMED within a transect BEFORE averaging across transects; about 39 transect units; per-transect totals are of order 0.1 to 14, not about 0.1 overall.
+DO NOT: average the row-level Biomass values directly (that under-counts biomass by about 30 times); divide by Area; drop transects or reefs; weight by Quantity or Size.
+--- END SKILL ---
+
+Actually run the analysis in R (call Rscript; the packages stats, dplyr, and readr are available). Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NA handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the mean per-transect fish biomass for the reserve

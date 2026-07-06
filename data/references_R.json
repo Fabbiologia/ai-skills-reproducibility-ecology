@@ -1,0 +1,19 @@
+{
+  "T1": {
+    "value": -0.1176,
+    "direction": "negative",
+    "quantity": "pooled Pearson r (R cor), iris"
+  },
+  "T2": {
+    "value": 0.8657,
+    "quantity": "test accuracy, R glm binomial, seed 42, stratified 80/20"
+  },
+  "T3": {
+    "value": 0.6697,
+    "quantity": "eta-squared, R aov body_mass ~ species"
+  },
+  "T4": {
+    "value": 3.4642,
+    "quantity": "mean per-transect fish biomass (Reef+Transect), R"
+  }
+}

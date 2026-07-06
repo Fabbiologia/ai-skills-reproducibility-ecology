@@ -1,0 +1,15 @@
+DATA ANALYSIS TASK (R)
+
+The file data/penguins.csv holds the Palmer Penguins data (columns include species and body_mass_g; some body_mass_g values are NA). Test whether body mass differs among the three penguin species, and report a single effect-size value for that difference (and, as `secondary`, the p-value).
+
+--- SKILL: penguins-mass-anova-r v1.0 (contract + fixed controls) ---
+INPUT CONTRACT: response is body_mass_g, group is species (3 groups). Drop rows with NA in body_mass_g or species (do not impute).
+METHOD: one-way ANOVA with aov(body_mass_g ~ species); report the p-value as `secondary`. Effect size = eta-squared = SS_between / SS_total from the same ANOVA table; report eta-squared as `value`.
+No random parameters are involved: given the contract and method, eta-squared and the p-value are fully determined; compute them directly.
+--- END SKILL ---
+
+Actually run the analysis in R (call Rscript; the packages stats, dplyr, and readr are available). Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NA handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the effect size for the difference in body mass among species

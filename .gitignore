@@ -1,0 +1,25 @@
+# Node
+manuscript/node_modules/
+npm-debug.log*
+# NOTE: manuscript/package-lock.json is intentionally committed to pin exact
+# dependency versions for reproducible document builds.
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Build/preview artifacts
+manuscript/_preview/
+manuscript/*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Restricted data: the real LTEM reef-fish monitoring extract is NOT distributed
+# in this repository. It is available on request from the Aburto Lab.
+# See data/ltem_cabo_pulmo_2023.csv.README.md.
+data/ltem_cabo_pulmo_2023.csv

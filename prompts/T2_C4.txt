@@ -1,0 +1,17 @@
+DATA ANALYSIS TASK
+
+The file data/penguins.csv contains the Palmer Penguins dataset (344 rows; columns: species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex; some cells are missing). Train a model to predict each penguin's SEX from its body measurements, and report the test-set classification accuracy.
+
+--- SKILL: penguins-sex-classifier v1.0 (full contract) ---
+INPUT CONTRACT: predictors = the four morphological columns [bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g]; target = sex. Drop rows with any missing value in those five columns (do not impute). Do not use island or species as predictors.
+METHOD: model = sklearn.linear_model.LogisticRegression(max_iter=2000), default params.
+STOCHASTIC CONTROLS (fix all): standardize the four predictors with sklearn.preprocessing.StandardScaler (fit on train only, e.g. via make_pipeline); split with sklearn.model_selection.train_test_split using EXACTLY test_size=0.2, random_state=42, stratify=y; compute accuracy with sklearn.metrics.accuracy_score.
+VALIDATION CHECKLIST: [ ] rows with NaN in the 5 columns dropped (n_used==333)  [ ] n_test==67  [ ] random_state==42 and stratify used  [ ] StandardScaler fit on train only  [ ] model is LogisticRegression.
+FAILURE MODES TO AVOID: do NOT use a different model; do NOT omit random_state (it makes the split vary run to run); do NOT skip scaling (LogisticRegression will not converge and accuracy becomes unstable); do NOT impute missing values; do NOT use cross-validation instead of the specified holdout; do NOT leak the test set into scaling.
+--- END SKILL ---
+
+Actually run the analysis in Python (python3); sklearn, scipy, pandas, numpy are installed. Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NaN handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the test-set classification accuracy (0-1)

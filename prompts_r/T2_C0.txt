@@ -1,0 +1,9 @@
+DATA ANALYSIS TASK (R)
+
+The file data/penguins.csv holds the Palmer Penguins data (344 rows; columns species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex; some cells are NA). Train a model to predict each penguin's sex from its body measurements, and report the test-set classification accuracy.
+
+Actually run the analysis in R (call Rscript; the packages stats, dplyr, and readr are available). Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NA handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the test-set classification accuracy (0-1)

@@ -1,0 +1,14 @@
+DATA ANALYSIS TASK
+
+The file data/penguins.csv contains the Palmer Penguins dataset (columns include species and body_mass_g; some body_mass_g values are missing). Test whether body mass differs among the three penguin species, and report a single effect-size value for that difference (and, as `secondary`, the p-value).
+
+--- SKILL: penguins-mass-anova v1.0 (input + method contract) ---
+INPUT CONTRACT: response = body_mass_g, group = species (3 groups). Drop rows with missing body_mass_g or species (do not impute).
+METHOD: one-way ANOVA via scipy.stats.f_oneway across the three species groups; report p-value as `secondary`. Effect size = eta-squared = SS_between / SS_total computed from the same groups; report eta-squared as `value`.
+--- END SKILL ---
+
+Actually run the analysis in Python (python3); sklearn, scipy, pandas, numpy are installed. Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NaN handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the effect size for the difference in body mass among species

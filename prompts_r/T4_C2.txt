@@ -1,0 +1,14 @@
+DATA ANALYSIS TASK (R)
+
+The file data/ltem_cabo_pulmo_2023.csv holds reef-fish visual-transect survey data from Cabo Pulmo National Park (Gulf of California) for 2023. Each ROW is one species record on one transect, with columns Reef, Habitat, Transect, Species, Quantity, Size, Area, Biomass (the biomass of that record; NA for records with no biomass value). Report the mean per-transect fish biomass for the reserve, that is the community biomass on a transect, averaged across transects.
+
+--- SKILL: ltem-reef-fish-biomass-r v1.0 (input + method contract) ---
+INPUT CONTRACT: a transect survey unit is a unique (Reef, Transect) combination; use the Biomass column as the per-record biomass; treat NA Biomass as no biomass (use na.rm = TRUE in the sums). Do not re-scale by Area (Biomass is already the record's biomass).
+METHOD: for each (Reef, Transect) unit, SUM Biomass across its records; then take the MEAN of those per-transect totals across all units (for example with dplyr: group_by(Reef, Transect), summarise(tot = sum(Biomass, na.rm = TRUE)), then mean(tot)).
+--- END SKILL ---
+
+Actually run the analysis in R (call Rscript; the packages stats, dplyr, and readr are available). Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NA handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the mean per-transect fish biomass for the reserve

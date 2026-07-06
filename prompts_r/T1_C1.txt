@@ -1,0 +1,16 @@
+DATA ANALYSIS TASK (R)
+
+R has the iris dataset built in (data(iris); columns Sepal.Length and Sepal.Width). Report the correlation between sepal length and sepal width, and whether the relationship is positive or negative.
+
+--- SKILL: iris-sepal-correlation-r (basic) ---
+Follow this procedure:
+1. Load the iris data.
+2. Compute the correlation between sepal length and sepal width.
+3. Report the coefficient and whether it is positive or negative.
+--- END SKILL ---
+
+Actually run the analysis in R (call Rscript; the packages stats, dplyr, and readr are available). Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NA handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the correlation coefficient between the two variables

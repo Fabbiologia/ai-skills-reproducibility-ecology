@@ -1,0 +1,453 @@
+{
+  "cells": {
+    "T1_C0": {
+      "n": 10,
+      "mean": -0.11756978413300206,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 1.0,
+      "cat_dist": {
+        "negative": 10
+      },
+      "abs_err_ref": 3.0215866997931884e-05,
+      "validity_rate": 1.0
+    },
+    "T1_C1": {
+      "n": 10,
+      "mean": -0.11756978413300208,
+      "sd": 6.7986997775525915e-18,
+      "cv": 5.782693085377693e-17,
+      "range": 1.3877787807814457e-17,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 1.0,
+      "cat_dist": {
+        "negative": 10
+      },
+      "abs_err_ref": 3.0215866997918006e-05,
+      "validity_rate": 1.0
+    },
+    "T1_C2": {
+      "n": 10,
+      "mean": -0.11756978413300206,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 1.0,
+      "cat_dist": {
+        "negative": 10
+      },
+      "abs_err_ref": 3.0215866997931884e-05,
+      "validity_rate": 1.0
+    },
+    "T1_C3": {
+      "n": 10,
+      "mean": -0.11756978413300206,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 1.0,
+      "cat_dist": {
+        "negative": 10
+      },
+      "abs_err_ref": 3.0215866997931884e-05,
+      "validity_rate": 1.0
+    },
+    "T1_C4": {
+      "n": 10,
+      "mean": -0.11756978413300206,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 1.0,
+      "cat_dist": {
+        "negative": 10
+      },
+      "abs_err_ref": 3.0215866997931884e-05,
+      "validity_rate": 1.0
+    },
+    "T2_C0": {
+      "n": 10,
+      "mean": 0.8867316631130064,
+      "sd": 0.006134063208105085,
+      "cv": 0.006917609309867793,
+      "range": 0.012302985074626904,
+      "n_distinct": 2,
+      "exact_match_rate": 0.5,
+      "cat_agreement": 0.1,
+      "cat_dist": {
+        "Logistic regression (binary classification of sex Male vs Female) from body measurements": 1,
+        "Logistic Regression classifier (binary: Male vs Female) on 4 body measurements": 1,
+        "Logistic Regression (binary classification of sex Male/Female) with StandardScaler": 1,
+        "Logistic Regression (StandardScaler + LogisticRegression pipeline) predicting sex (Male=1/Female=0) from body measurements": 1,
+        "Logistic Regression classifier predicting penguin sex from 4 body measurements": 1,
+        "Logistic regression with StandardScaler pipeline predicting sex from body measurements": 1,
+        "Logistic regression (StandardScaler + LogisticRegression) predicting sex (Male=1/Female=0) from body measurements": 1,
+        "Logistic regression (sklearn LogisticRegression, max_iter=1000) predicting sex (Male=1) from 4 body measurements": 1,
+        "Logistic Regression (binary classification: Male vs Female) on 4 body-measurement features": 1,
+        "Logistic Regression (binary classification of sex from body measurements)": 1
+      },
+      "abs_err_ref": 0.0061316631130063914,
+      "validity_rate": 0.5
+    },
+    "T2_C1": {
+      "n": 10,
+      "mean": 0.8925376119402986,
+      "sd": 0.008954825906579813,
+      "cv": 0.010032995569915317,
+      "range": 0.02985074626865669,
+      "n_distinct": 3,
+      "exact_match_rate": 0.6,
+      "cat_agreement": 0.4,
+      "cat_dist": {
+        "Logistic Regression classifier (StandardScaler + LogisticRegression pipeline) predicting sex (Male vs Female) from body measurements": 1,
+        "Logistic regression (StandardScaler + LogisticRegression, max_iter=1000) classifying sex from body measurements": 1,
+        "Logistic Regression classifier (StandardScaler + LogisticRegression pipeline) predicting sex from body measurements": 1,
+        "RandomForestClassifier (sklearn) predicting sex from body measurements": 4,
+        "RandomForestClassifier (sklearn) for binary sex classification": 1,
+        "RandomForestClassifier (sklearn) predicting sex from body measurements; test-set accuracy": 1,
+        "Logistic regression classifier predicting sex from body measurements": 1
+      },
+      "abs_err_ref": 0.01193761194029852,
+      "validity_rate": 0.3
+    },
+    "T2_C2": {
+      "n": 10,
+      "mean": 0.8853766879886283,
+      "sd": 0.00863928724983881,
+      "cv": 0.009757753244514805,
+      "range": 0.027185501066098183,
+      "n_distinct": 3,
+      "exact_match_rate": 0.5,
+      "cat_agreement": 0.1,
+      "cat_dist": {
+        "LogisticRegression (sklearn.linear_model, max_iter=2000, default params) predicting sex from body measurements": 1,
+        "LogisticRegression (sklearn.linear_model, max_iter=2000, default params); binary classification of sex from morphology": 1,
+        "LogisticRegression (sklearn.linear_model, max_iter=2000, default params); supervised binary classification of sex": 1,
+        "sklearn.linear_model.LogisticRegression (max_iter=2000, default params); binary classification of sex from 4 morphological predictors": 1,
+        "LogisticRegression (sklearn, max_iter=2000, default params) predicting sex from 4 morphological measurements": 1,
+        "sklearn.linear_model.LogisticRegression(max_iter=2000), default params; predict sex from morphology": 1,
+        "LogisticRegression(max_iter=2000) predicting sex from 4 morphological measurements; accuracy on held-out test set": 1,
+        "LogisticRegression (sklearn, max_iter=2000, default params); binary classification of sex from 4 morphological predictors": 1,
+        "LogisticRegression (sklearn.linear_model, max_iter=2000, default params) for binary sex classification": 1,
+        "LogisticRegression (sklearn) binary classification of sex from 4 morphological predictors": 1
+      },
+      "abs_err_ref": 0.004776687988628292,
+      "validity_rate": 0.4
+    },
+    "T2_C3": {
+      "n": 10,
+      "mean": 0.8805970149253731,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.2,
+      "cat_dist": {
+        "LogisticRegression (max_iter=2000, default params) in a make_pipeline with StandardScaler; sklearn accuracy_score on held-out test set": 1,
+        "LogisticRegression(max_iter=2000) in a StandardScaler pipeline (make_pipeline); accuracy_score on held-out test set": 1,
+        "LogisticRegression (max_iter=2000, default params) in a make_pipeline with StandardScaler; accuracy_score on held-out test set": 1,
+        "LogisticRegression (max_iter=2000, default params) in a StandardScaler pipeline; accuracy_score on held-out test set": 2,
+        "LogisticRegression (max_iter=2000, default params) with StandardScaler in sklearn Pipeline; accuracy_score on held-out test set": 1,
+        "LogisticRegression (max_iter=2000, default params) with StandardScaler via make_pipeline; accuracy_score on test set": 1,
+        "LogisticRegression (sklearn, max_iter=2000, default params) in a StandardScaler pipeline; accuracy_score on held-out test set": 1,
+        "LogisticRegression (max_iter=2000, default params) with StandardScaler in a make_pipeline; sex predicted from 4 morphological predictors": 1,
+        "LogisticRegression (max_iter=2000, default params) with StandardScaler in a pipeline": 1
+      },
+      "abs_err_ref": 2.9850746269266537e-06,
+      "validity_rate": 1.0
+    },
+    "T2_C4": {
+      "n": 10,
+      "mean": 0.8805970149253731,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.2,
+      "cat_dist": {
+        "LogisticRegression (max_iter=2000, default params) with StandardScaler in a make_pipeline; sklearn accuracy_score on holdout test set": 2,
+        "LogisticRegression(max_iter=2000) in make_pipeline with StandardScaler; accuracy_score on holdout test set": 1,
+        "LogisticRegression (max_iter=2000, default params) in make_pipeline with StandardScaler; holdout accuracy_score": 1,
+        "LogisticRegression (max_iter=2000, default params) in a StandardScaler pipeline; holdout test-set accuracy_score": 1,
+        "LogisticRegression(max_iter=2000) with StandardScaler in sklearn make_pipeline; accuracy_score on holdout test set": 1,
+        "LogisticRegression(max_iter=2000) in a make_pipeline with StandardScaler; predicts sex from 4 morphological predictors; accuracy_score on holdout test set": 1,
+        "LogisticRegression(max_iter=2000) with StandardScaler pipeline, holdout accuracy_score": 1,
+        "LogisticRegression (max_iter=2000, default params) on StandardScaler-scaled predictors via make_pipeline; single 80/20 holdout; accuracy_score": 1,
+        "LogisticRegression(max_iter=2000) in a StandardScaler pipeline; accuracy_score on holdout test set": 1
+      },
+      "abs_err_ref": 2.9850746269266537e-06,
+      "validity_rate": 1.0
+    },
+    "T3_C0": {
+      "n": 10,
+      "mean": 0.6696719536879615,
+      "sd": 1.4432899320127036e-16,
+      "cv": 2.1552193190476885e-16,
+      "range": 5.551115123125783e-16,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.6,
+      "cat_dist": {
+        "One-way ANOVA (scipy.stats.f_oneway) with eta-squared effect size (SS_between/SS_total)": 1,
+        "One-way ANOVA (scipy.stats.f_oneway) with eta-squared effect size": 6,
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size = eta-squared": 1,
+        "One-way ANOVA (scipy.stats.f_oneway) across three species; effect size = eta-squared (SS_between/SS_total)": 1,
+        "One-way ANOVA (scipy.stats.f_oneway); effect size = eta-squared (SS_between/SS_total)": 1
+      },
+      "abs_err_ref": 2.8046312038454424e-05,
+      "validity_rate": 1.0
+    },
+    "T3_C1": {
+      "n": 10,
+      "mean": 0.6696719583191654,
+      "sd": 1.3893611561233144e-08,
+      "cv": 2.0746891651406812e-08,
+      "range": 4.631203853744381e-08,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.5,
+      "cat_dist": {
+        "One-way ANOVA (scipy.stats.f_oneway) across three species; effect size = eta-squared (SS_between/SS_total)": 2,
+        "One-way ANOVA (scipy.stats.f_oneway) with eta-squared effect size": 5,
+        "One-way ANOVA (scipy.stats.f_oneway) across three species; effect size = eta-squared": 2,
+        "One-way ANOVA (scipy.stats.f_oneway) with eta-squared effect size (SS_between/SS_total)": 1
+      },
+      "abs_err_ref": 2.8041680834589577e-05,
+      "validity_rate": 1.0
+    },
+    "T3_C2": {
+      "n": 10,
+      "mean": 0.6696719536879615,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.2,
+      "cat_dist": {
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species groups; effect size = eta-squared (SS_between/SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway); effect size eta-squared = SS_between/SS_total": 2,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species groups; effect size = eta-squared (SS_between/SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) with eta-squared effect size (SS_between/SS_total)": 2,
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size = eta-squared (SS_between/SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size = eta-squared = SS_between/SS_total": 1,
+        "One-way ANOVA (scipy.stats.f_oneway) across three penguin species; effect size = eta-squared (SS_between/SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species; eta-squared = SS_between/SS_total": 1
+      },
+      "abs_err_ref": 2.8046312038454424e-05,
+      "validity_rate": 1.0
+    },
+    "T3_C3": {
+      "n": 10,
+      "mean": 0.6696719536879615,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.1,
+      "cat_dist": {
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size = eta-squared = SS_between/SS_total": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) with eta-squared effect size (SS_between/SS_total)": 1,
+        "One-way ANOVA (scipy.stats.f_oneway) with eta-squared effect size (SS_between/SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species groups; effect size = eta-squared = SS_between / SS_total": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species groups; effect size = eta-squared (SS_between/SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species; eta-squared = SS_between/SS_total": 1,
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species groups; effect size = eta-squared (SS_between/SS_total)": 1,
+        "One-way ANOVA (scipy.stats.f_oneway); effect size = eta-squared (SS_between/SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size eta-squared = SS_between/SS_total": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species groups; effect size = eta-squared = SS_between/SS_total": 1
+      },
+      "abs_err_ref": 2.8046312038454424e-05,
+      "validity_rate": 1.0
+    },
+    "T3_C4": {
+      "n": 10,
+      "mean": 0.6696719536879615,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.2,
+      "cat_dist": {
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size eta-squared = SS_between/SS_total": 2,
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size = eta-squared (SS_between/SS_total)": 2,
+        "One-way ANOVA (scipy.stats.f_oneway) across three species; effect size = eta-squared (SS_between / SS_total)": 1,
+        "one-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size = eta-squared (SS_between/SS_total)": 2,
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species groups; effect size = eta-squared (SS_between/SS_total)": 1,
+        "One-way ANOVA (scipy.stats.f_oneway) across 3 species; effect size = eta-squared = SS_between/SS_total": 2
+      },
+      "abs_err_ref": 2.8046312038454424e-05,
+      "validity_rate": 1.0
+    },
+    "T4_C0": {
+      "n": 10,
+      "mean": 3.2952063795420696,
+      "sd": 1.2651402325758454e-07,
+      "cv": 3.839335346126819e-08,
+      "range": 4.2171341085861513e-07,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.1,
+      "cat_dist": {
+        "Sum of Biomass per transect, then mean across transects (pandas groupby.sum + mean)": 1,
+        "Sum of Biomass per transect (grouped by Reef, Habitat, Transect), then mean across transects": 1,
+        "Group records by unique transect (Reef+Habitat+Transect), sum Biomass within each transect to get community biomass, then average across transects (pandas groupby, sum, mean)": 1,
+        "Group records by unique transect (Reef+Habitat+Transect), sum Biomass per transect (community biomass), then take the mean across transects.": 1,
+        "Per-transect community biomass = sum of record Biomass grouped by transect, then arithmetic mean across transects (pandas groupby.sum + mean)": 1,
+        "Sum biomass per transect, then mean across transects (community per-transect biomass)": 1,
+        "Sum of Biomass per unique transect, then mean across transects": 1,
+        "Per-transect biomass aggregation: sum Biomass within each unique transect, then mean across transects": 1,
+        "Sum Biomass per transect then mean across transects": 1,
+        "Per-transect community biomass: sum Biomass over all records within each transect, then average across transects (arithmetic mean)": 1
+      },
+      "abs_err_ref": 0.16899362045793032,
+      "validity_rate": 0.0
+    },
+    "T4_C1": {
+      "n": 10,
+      "mean": 3.2952063795420696,
+      "sd": 1.2651402325758454e-07,
+      "cv": 3.839335346126819e-08,
+      "range": 4.2171341085861513e-07,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.2,
+      "cat_dist": {
+        "Sum of Biomass per transect (transect = unique Reef+Habitat+Transect), then arithmetic mean across transects": 1,
+        "Per-transect biomass summed (grouped by Reef+Habitat+Transect), then averaged across transects": 1,
+        "Sum record-level Biomass per transect, then mean across transects (pandas groupby)": 1,
+        "Sum of Biomass per transect (grouped by Reef+Habitat+Transect), then mean across transects": 1,
+        "Sum of Biomass per unique transect (grouped by Reef, Habitat, Transect), then averaged across transects": 1,
+        "Sum Biomass within each transect, then average across transects (arithmetic mean)": 1,
+        "Sum Biomass per transect, then mean across transects": 2,
+        "Sum of record biomass per transect, then mean across transects": 1,
+        "Group records by transect (Reef+Habitat+Transect), sum Biomass per transect, then average across transects (mean of per-transect community biomass).": 1
+      },
+      "abs_err_ref": 0.16899362045793032,
+      "validity_rate": 0.0
+    },
+    "T4_C2": {
+      "n": 10,
+      "mean": 3.4641913664166615,
+      "sd": 0.0,
+      "cv": 0.0,
+      "range": 0.0,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.2,
+      "cat_dist": {
+        "Mean of per-(Reef,Transect) summed Biomass totals": 1,
+        "groupby (Reef, Transect) sum of Biomass, then mean of per-transect totals": 2,
+        "Mean of per-(Reef,Transect) summed Biomass across survey units (pandas groupby sum then mean)": 1,
+        "Mean of per-(Reef,Transect) summed Biomass totals (ltem-reef-fish-biomass v1.0 contract)": 1,
+        "Sum Biomass per (Reef, Transect) survey unit, then mean of per-transect totals": 1,
+        "Mean of per-transect summed biomass (per ltem-reef-fish-biomass v1.0 contract): group by (Reef, Transect), SUM Biomass across records, then MEAN of per-transect totals": 1,
+        "Group by (Reef, Transect) survey unit, sum Biomass column per unit, then take mean of per-transect totals across all units": 1,
+        "groupby-sum-then-mean": 1,
+        "Group by (Reef, Transect) survey unit, sum Biomass column per unit, then take mean of per-transect totals": 1
+      },
+      "abs_err_ref": 8.633583338468753e-06,
+      "validity_rate": 1.0
+    },
+    "T4_C3": {
+      "n": 10,
+      "mean": 3.4641913664149953,
+      "sd": 4.998401692546395e-12,
+      "cv": 1.4428768979119983e-12,
+      "range": 1.666133897515465e-11,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.1,
+      "cat_dist": {
+        "Group by (Reef, Transect); sum Biomass per unit (NaN skipped); mean of per-unit totals": 1,
+        "Per-transect biomass aggregation: sum Biomass per (Reef, Transect) survey unit, then mean of totals across units": 1,
+        "Group by (Reef, Transect) survey unit, sum Biomass per unit, then mean of per-unit totals": 1,
+        "Per-transect biomass summation then mean across survey units; survey unit = unique (Reef, Transect); pandas groupby sum then mean": 1,
+        "Group by (Reef, Transect) survey unit, sum Biomass per unit, then mean of per-transect totals": 1,
+        "Per-transect biomass aggregation: group by (Reef, Transect), sum Biomass column (NaN skipped), then mean of per-unit totals": 1,
+        "Group-by (Reef, Transect) survey unit; sum Biomass per unit, then mean of per-transect totals": 1,
+        "Group-by (Reef, Transect) survey unit: sum per-record Biomass within unit, then mean of per-transect totals across units (pandas groupby.sum().mean())": 1,
+        "Per-transect biomass aggregation: sum Biomass per (Reef, Transect) survey unit, then mean across units": 1,
+        "Group by (Reef, Transect), sum Biomass per unit, then mean of per-unit totals": 1
+      },
+      "abs_err_ref": 8.633585004691469e-06,
+      "validity_rate": 1.0
+    },
+    "T4_C4": {
+      "n": 10,
+      "mean": 3.4641913664166615,
+      "sd": 2.6645352591003756e-16,
+      "cv": 7.691651462824799e-17,
+      "range": 8.881784197001252e-16,
+      "n_distinct": 1,
+      "exact_match_rate": 1.0,
+      "cat_agreement": 0.2,
+      "cat_dist": {
+        "Sum Biomass within each (Reef, Transect) survey unit, then mean of per-transect totals": 1,
+        "Per-transect biomass aggregation: sum Biomass within each (Reef, Transect) survey unit, then mean of per-transect totals across units": 1,
+        "Group by (Reef, Transect) survey unit, SUM Biomass within each unit, then MEAN of per-transect totals across units": 1,
+        "Sum Biomass within each (Reef, Transect) survey unit, then take mean of per-transect totals across units": 1,
+        "Sum Biomass within each (Reef, Transect) survey unit, then take the mean of per-transect totals across all units": 2,
+        "Grouped aggregation: sum Biomass within each (Reef, Transect) survey unit, then mean of per-transect totals": 1,
+        "Group by (Reef, Transect) survey unit, SUM Biomass within each unit (NaN skipped), then MEAN of per-transect totals across units": 1,
+        "Sum Biomass per (Reef, Transect) survey unit, then mean of per-transect totals across units": 1,
+        "Sum Biomass within each (Reef, Transect) survey unit, then mean of per-transect totals across all units (pandas groupby)": 1
+      },
+      "abs_err_ref": 8.633583338468753e-06,
+      "validity_rate": 1.0
+    }
+  },
+  "levene": {
+    "T1": {
+      "levene_W": null,
+      "levene_p": null,
+      "note": "near-zero variance"
+    },
+    "T2": {
+      "levene_W": 0.2490482819736399,
+      "levene_p": 0.7813134028169395
+    },
+    "T3": {
+      "levene_W": 0.9999999664382682,
+      "levene_p": 0.3305649391786969
+    },
+    "T4": {
+      "levene_W": 0.6666403264046746,
+      "levene_p": 0.5780405231255944
+    }
+  },
+  "references": {
+    "T1": {
+      "value": -0.1176,
+      "direction": "negative",
+      "quantity": "pooled Pearson r, sepal length vs width (iris)"
+    },
+    "T2": {
+      "value": 0.8806,
+      "quantity": "test accuracy predicting penguin sex (scaled LogReg, 80/20 stratified seed42)"
+    },
+    "T3": {
+      "value": 0.6697,
+      "secondary": "p<1e-80",
+      "quantity": "eta-squared, penguin body mass ~ species (one-way ANOVA)"
+    },
+    "T4": {
+      "value": 3.4642,
+      "quantity": "mean per-transect fish biomass, Cabo Pulmo 2023 (unit=Reef+Transect, sum-then-mean); matches LTEM tool value"
+    }
+  }
+}

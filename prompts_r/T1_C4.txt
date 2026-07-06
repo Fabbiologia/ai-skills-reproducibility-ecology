@@ -1,0 +1,17 @@
+DATA ANALYSIS TASK (R)
+
+R has the iris dataset built in (data(iris); columns Sepal.Length and Sepal.Width). Report the correlation between sepal length and sepal width, and whether the relationship is positive or negative.
+
+--- SKILL: iris-sepal-correlation-r v1.0 (full contract) ---
+INPUT CONTRACT: use all 150 rows of the built-in iris; use columns Sepal.Length and Sepal.Width; do not filter or split by Species.
+METHOD: compute the POOLED Pearson correlation across all 150 rows with cor(iris$Sepal.Length, iris$Sepal.Width) (method = 'pearson', the default).
+No random parameters are involved: the pooled Pearson correlation is fully determined by the contract and method above; compute it directly.
+VALIDATION CHECK LIST: n == 150; method is pooled Pearson (not by Species, not Spearman or Kendall); the value is between -1 and 1.
+DO NOT: compute the correlation within each Species and average it (Simpson's paradox flips the sign); use method = 'spearman' or 'kendall'; drop any rows.
+--- END SKILL ---
+
+Actually run the analysis in R (call Rscript; the packages stats, dplyr, and readr are available). Report the REAL computed numbers, not estimates.
+
+Return ONLY a single JSON object as the very last line (no prose after it), with exactly these keys:
+{"value": <float, the primary quantity below>, "secondary": <float or null>, "direction": <"positive"/"negative" or null>, "method": "<method/model/test used>", "params": "<key parameters: seed, split, scaling, scope, filters, NA handling>", "n": <number of observations used>}
+PRIMARY QUANTITY (`value`) = the correlation coefficient between the two variables

@@ -1,0 +1,57 @@
+export const meta = {
+  name: 'skills-reproducibility-v2',
+  description: 'Run 4 tasks x 5-rung skill ablation x 10 reps = 200 independent agent runs on iris/penguins/LTEM data; return structured results',
+  phases: [{ title: 'Runs', detail: '200 independent analysis agents' }],
+}
+
+// EDIT THIS to the absolute path of your checkout's prompts/ directory before running.
+// (Agents need an absolute path to read each condition file reliably.)
+const REPO = '/ABSOLUTE/PATH/TO/for_submission'   // <-- set to your repository root
+const DIR = REPO + '/prompts'
+const TASKS = ['T1', 'T2', 'T3', 'T4']
+const CONDS = ['C0', 'C1', 'C2', 'C3', 'C4']
+const REPS = 10
+
+const SCHEMA = {
+  type: 'object',
+  properties: {
+    value:     { type: ['number', 'null'], description: 'the primary computed quantity' },
+    secondary: { type: ['number', 'null'] },
+    direction: { type: ['string', 'null'] },
+    method:    { type: 'string' },
+    params:    { type: 'string' },
+    n:         { type: ['number', 'null'] },
+  },
+  required: ['value', 'method', 'params'],
+  additionalProperties: true,
+}
+
+function jobPrompt(t, c) {
+  return `Read the file at ${DIR}/${t}_${c}.txt and follow its instructions EXACTLY. ` +
+    `You MUST actually execute Python with python3 (sklearn, scipy, pandas, numpy installed) ` +
+    `to compute the real numbers — never guess or estimate. Then report the result via the ` +
+    `structured output with the exact fields requested in the file (value, secondary, direction, ` +
+    `method, params, n). 'value' must be the primary quantity named at the bottom of the file.`
+}
+
+async function runOne(t, c, r) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const res = await agent(jobPrompt(t, c), {
+      label: `${t}-${c}-r${r}${attempt ? '.' + attempt : ''}`,
+      phase: 'Runs', schema: SCHEMA,
+    })
+    if (res && res.value !== undefined && res.value !== null) {
+      return { task: t, condition: c, rep: r, ...res }
+    }
+  }
+  return { task: t, condition: c, rep: r, value: null, method: 'FAILED', params: '', secondary: null, direction: null, n: null }
+}
+
+const items = []
+for (const t of TASKS) for (const c of CONDS) for (let r = 1; r <= REPS; r++) items.push({ t, c, r })
+log(`launching ${items.length} runs (${TASKS.length} tasks x ${CONDS.length} conds x ${REPS} reps)`)
+
+const out = await parallel(items.map(it => () => runOne(it.t, it.c, it.r)))
+const ok = out.filter(o => o && o.value !== null).length
+log(`completed: ${ok}/${items.length} successful`)
+return out

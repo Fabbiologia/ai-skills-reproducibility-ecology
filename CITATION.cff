@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite the manuscript and this repository."
+title: "Do AI skills improve the output reproducibility of ecological analyses? A controlled experiment"
+abstract: >-
+  Materials, data, code and documents for a controlled 4x5x10 factorial experiment
+  testing whether AI skills improve the output reproducibility of ecological analyses,
+  where the five skill levels add one kind of instruction at a time. Includes a short
+  background literature review.
+type: software
+authors:
+  - family-names: "Favoretto"
+    given-names: "Fabio"
+    affiliation: "School of Biological and Marine Science, University of Plymouth, UK"
+  - family-names: "Rivera"
+    given-names: "Alberto"
+    affiliation: "Scripps Institution of Oceanography, University of California San Diego, USA"
+  - family-names: "León Solorzano"
+    given-names: "Eduardo"
+    affiliation: "Centro para la Biodiversidad Marina y la Conservación, A.C., La Paz, Mexico"
+keywords:
+  - reproducibility
+  - large language models
+  - agent skills
+  - open science
+  - marine ecology
+  - FAIR
+license: MIT
+version: "1.0.0"
+date-released: "2026-07-02"
