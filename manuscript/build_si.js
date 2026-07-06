@@ -177,7 +177,7 @@ c.push(BULLET("run_experiment.workflow.js and run_experiment_r.workflow.js orche
 c.push(BULLET("results_v2.json and results_v2_R.json hold every run's structured output (200 records each)."));
 c.push(BULLET("analyze_v2.py scores the Python arm; analyze_cross_language.py scores R and the Python-versus-R comparison and draws the comparison figure."));
 c.push(BULLET("generate_prompts.py and generate_prompts_r.py regenerate the prompt files; data/ holds the three input CSV files."));
-c.push(P("These materials are in the Git repository https://github.com/Fabbiologia/ai-skills-reproducibility-ecology (made public and archived with a DOI on acceptance). The restricted LTEM reef-fish file for Task T4 is not distributed there and is available on request from the Aburto Lab.", { spacing: { before: 100 } }));
+c.push(P("These materials are in the public Git repository https://github.com/Fabbiologia/ai-skills-reproducibility-ecology (archived with a DOI on acceptance). The restricted LTEM reef-fish file for Task T4 is not distributed there and is available on request from the Aburto Lab.", { spacing: { before: 100 } }));
 c.push(P("Together these make the experiment fully reproducible end-to-end. Re-running each orchestration regenerates its run set, and the analysis scripts regenerate every number and figure reported here.", { spacing: { before: 100 } }));
 
 const doc = buildDoc(c, { title: "Supporting Information for AI skills and output reproducibility in ecology", footerLeft: "Supporting Information" });
