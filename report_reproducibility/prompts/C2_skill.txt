@@ -1,0 +1,24 @@
+REPORT WRITING TASK
+
+Write a short, self-contained data report on the Palmer Penguins dataset in the file data/penguins.csv (columns: species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex; some cells are missing). The report must answer these four questions and end with a conclusion:
+  Q1. What is the correlation between flipper length and body mass?
+  Q2. Does body mass differ among the three species? Give a test and an effect size.
+  Q3. How accurately can a penguin's sex be predicted from the four body measurements? Give a test-set accuracy.
+  Q4. What is the mean body mass of each species?
+Actually run the analysis in Python (sklearn, scipy, pandas, numpy are installed) and use the real computed numbers, not estimates.
+
+--- SKILL: penguin-report-analysis v1.0 ---
+Write the report with these sections, in order: 1. Title; 2. Data and methods; 3. Results with one subsection per question (Q1, Q2, Q3, Q4); 4. Conclusion (one paragraph).
+
+MISSING DATA: for each analysis, drop rows with a missing value in the columns that analysis uses (listwise deletion). Do not impute.
+
+METHOD FOR EACH QUESTION (use exactly this):
+  Q1: pooled Pearson correlation across all rows with scipy.stats.pearsonr(flipper_length_mm, body_mass_g). Report r to 3 decimals. Do not use Spearman or a per-species correlation.
+  Q2: one-way ANOVA with scipy.stats.f_oneway across the three species; effect size = eta-squared = SS_between / SS_total. Report the p-value and eta-squared. Do not use Kruskal-Wallis or pairwise t-tests as the main test, and do not report a different effect size.
+  Q3: predictors are the four body-measurement columns; target is sex. Standardise the predictors with StandardScaler; split with train_test_split(test_size=0.2, random_state=42, stratify=y); model is LogisticRegression(max_iter=2000); report accuracy_score to 4 decimals. Do not use a different model, do not omit random_state, do not skip scaling.
+  Q4: mean of body_mass_g for each species (after dropping missing body_mass_g). Report each species mean to 1 decimal.
+
+The Conclusion must state, in plain words: that body mass differs strongly and significantly among species with Gentoo the heaviest; that flipper length and body mass are positively correlated; and the sex-prediction accuracy.
+--- END SKILL ---
+
+When finished, return the structured result the workflow asks for: the number and the method for each question, the species means, the section headings you used, the conclusion paragraph, and the full report as markdown text.

@@ -1,0 +1,10 @@
+REPORT WRITING TASK
+
+Write a short, self-contained data report on the Palmer Penguins dataset in the file data/penguins.csv (columns: species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex; some cells are missing). The report must answer these four questions and end with a conclusion:
+  Q1. What is the correlation between flipper length and body mass?
+  Q2. Does body mass differ among the three species? Give a test and an effect size.
+  Q3. How accurately can a penguin's sex be predicted from the four body measurements? Give a test-set accuracy.
+  Q4. What is the mean body mass of each species?
+Actually run the analysis in Python (sklearn, scipy, pandas, numpy are installed) and use the real computed numbers, not estimates.
+
+When finished, return the structured result the workflow asks for: the number and the method for each question, the species means, the section headings you used, the conclusion paragraph, and the full report as markdown text.

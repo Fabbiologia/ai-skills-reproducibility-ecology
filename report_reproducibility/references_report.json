@@ -1,0 +1,11 @@
+{
+  "Q1_flipper_mass_pearson": 0.8712,
+  "Q2_anova_p": 2.89e-82,
+  "Q2_eta2": 0.6697,
+  "Q3_sex_accuracy": 0.8806,
+  "Q4_species_mean_mass": {
+    "Adelie": 3700.7,
+    "Chinstrap": 3733.1,
+    "Gentoo": 5076.0
+  }
+}

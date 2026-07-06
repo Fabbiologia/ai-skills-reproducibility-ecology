@@ -65,6 +65,11 @@ for_submission/
 ├── prompts/                      ← the 20 Python condition prompts (T{1..4}_C{0..4}.txt)
 ├── prompts_r/                    ← the 20 R condition prompts (T{1..4}_C{0..4}.txt)
 ├── results/                      ← generated: summary tables (json/csv) + figures (png)
+├── report_reproducibility/       ← second experiment: whole-report reproducibility + skill coherence
+│   ├── FINDINGS.md               ← results write-up
+│   ├── generate_report_prompts.py, run_report_experiment.workflow.js, analyze_report.py
+│   ├── prompts/ (C0/C1/C2), results_report.json, references_report.json
+│   └── results/fig_report_reproducibility.png
 └── manuscript/                   ← Word documents + build scripts
     ├── Manuscript_AI_Skills_Reproducibility_MEE.docx
     ├── Supporting_Information_AI_Skills_Reproducibility_MEE.docx

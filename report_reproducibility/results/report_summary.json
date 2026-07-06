@@ -1,0 +1,137 @@
+{
+  "C0": {
+    "n": 8,
+    "adherence": 0.791625,
+    "item_rates": {
+      "q1_pooled_pearson": 1,
+      "q2_anova_eta2": 1,
+      "q3_logreg_seed42_scaled": 0,
+      "q4_species_means": 1,
+      "structure_ok": 0.875,
+      "missing_listwise": 1
+    },
+    "concl_rates": {
+      "concl_gentoo_heaviest": 1,
+      "concl_mass_differs": 1,
+      "concl_sex_pred": 1,
+      "concl_flipper_positive": 1
+    },
+    "report_match": 1.0,
+    "q1": {
+      "n": 8,
+      "sd": 0.0,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q2": {
+      "n": 8,
+      "sd": 0.0,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q3": {
+      "n": 8,
+      "sd": 0.0,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q4_sd": 0.00771677465728977,
+    "valid": {
+      "q1": 1.0,
+      "q2": 1.0,
+      "q3": 0.0,
+      "q4": 1.0
+    },
+    "mean_valid": 0.75
+  },
+  "C1": {
+    "n": 8,
+    "adherence": 0.8332916666666667,
+    "item_rates": {
+      "q1_pooled_pearson": 1,
+      "q2_anova_eta2": 1,
+      "q3_logreg_seed42_scaled": 0,
+      "q4_species_means": 1,
+      "structure_ok": 1,
+      "missing_listwise": 1
+    },
+    "concl_rates": {
+      "concl_gentoo_heaviest": 1,
+      "concl_mass_differs": 1,
+      "concl_sex_pred": 1,
+      "concl_flipper_positive": 1
+    },
+    "report_match": 1.0,
+    "q1": {
+      "n": 8,
+      "sd": 5.844815247074148e-07,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q2": {
+      "n": 8,
+      "sd": 9.275445855673274e-06,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q3": {
+      "n": 8,
+      "sd": 1.4173667737839215e-05,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q4_sd": 0.009884249505676115,
+    "valid": {
+      "q1": 1.0,
+      "q2": 1.0,
+      "q3": 0.0,
+      "q4": 1.0
+    },
+    "mean_valid": 0.75
+  },
+  "C2": {
+    "n": 8,
+    "adherence": 1,
+    "item_rates": {
+      "q1_pooled_pearson": 1,
+      "q2_anova_eta2": 1,
+      "q3_logreg_seed42_scaled": 1,
+      "q4_species_means": 1,
+      "structure_ok": 1,
+      "missing_listwise": 1
+    },
+    "concl_rates": {
+      "concl_gentoo_heaviest": 1,
+      "concl_mass_differs": 1,
+      "concl_sex_pred": 1,
+      "concl_flipper_positive": 1
+    },
+    "report_match": 1.0,
+    "q1": {
+      "n": 8,
+      "sd": 0.0,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q2": {
+      "n": 8,
+      "sd": 0.0,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q3": {
+      "n": 8,
+      "sd": 0.0,
+      "exact": 1.0,
+      "distinct": 1
+    },
+    "q4_sd": 0.0,
+    "valid": {
+      "q1": 1.0,
+      "q2": 1.0,
+      "q3": 1.0,
+      "q4": 1.0
+    },
+    "mean_valid": 1.0
+  }
+}
