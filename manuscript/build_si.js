@@ -34,7 +34,7 @@ const c = [];
 c.push(TITLE("Supporting Information"));
 c.push(P("**Skills as the new packages: an evidence-based standard for good AI analysis skills and a curated repository for ecology**", { spacing: { after: 40 } }));
 c.push(P("Favoretto, Rivera, and León Solorzano. Target journal: Methods in Ecology and Evolution.", { size: 20 }));
-c.push(P("Contents: S1 How we reviewed the literature · S2 Search terms · S3 What we recorded for each study · S4 Studies we read (with the selection summary) · S5 Experiment prompts (full text) · S6 Full results and statistics · S7 Additional figures · S8 Software environment, code, and data availability · S9 Study 2 report materials and results.", { size: 20 }));
+c.push(P("Contents: S1 How we reviewed the literature · S2 Search terms · S3 What we recorded for each study · S4 Studies we read (with the selection summary) · S5 Experiment prompts (full text) · S6 Full results and statistics · S7 Additional figures · S8 Software environment, code, and data availability · S9 Experiment 2 report materials and results.", { size: 20 }));
 c.push(HR());
 
 // ---- S1 ----
@@ -164,7 +164,7 @@ c.push(H1("S7  Additional figures"));
 c.push(img(path.join(RES, "fig1_value_strips.png"), 600, 400, "Value strips"));
 c.push(CAP("Figure S2. All 200 Python outputs by task and level (10 runs per cell, with small horizontal jitter so points do not overlap). The dashed line shows the reference. T1 and T3 fall on the reference at every level, T2 scatters until C3, and T4 sits consistently away from the reference (3.2952) at C0 and C1 and moves to the reference (3.4642) from C2."));
 c.push(img(path.join(RES, "fig4_python_vs_r.png"), 600, 400, "Python versus R"));
-c.push(CAP("Figure S3. Python (blue) and R (red) outputs by skill level, 10 runs per cell per language. Dashed lines show the reference for each language. T1, T3, and T4 sit on one shared line in both languages, while T2 sits on two different lines. This is the same figure discussed in the main text (main Figure 3), shown here at full size."));
+c.push(CAP("Figure S3. Python (blue) and R (red) outputs by skill level, 10 runs per cell per language. Dashed lines show the reference for each language. T1, T3, and T4 sit on one shared line in both languages, while T2 sits on two different lines. This is the same figure discussed in the main text (main Figure 2), shown here at full size."));
 
 // ---- S8 ----
 c.push(H1("S8  Software environment, code and data availability"));
@@ -180,9 +180,9 @@ c.push(BULLET("generate_prompts.py and generate_prompts_r.py regenerate the prom
 c.push(P("These materials are in the public Git repository https://github.com/Fabbiologia/ai-skills-reproducibility-ecology (archived with a DOI on acceptance). The restricted LTEM reef-fish file for Task T4 is not distributed there and is available on request from the Aburto Lab.", { spacing: { before: 100 } }));
 c.push(P("Together these make the experiment fully reproducible end-to-end. Re-running each orchestration regenerates its run set, and the analysis scripts regenerate every number and figure reported here.", { spacing: { before: 100 } }));
 
-// ---- S9 (Study 2) ----
-c.push(H1("S9  Study 2 materials: report prompts and results"));
-c.push(P("Study 2 asked agents to write a short data report on the Palmer Penguins dataset and then graded each report with a second judge agent. Two report versions were used, a standard report with four common analyses and a hard report with six analyses that each have a real method fork. Each version had three conditions (no skill, a structure-only skill, and a full methods skill) with 8 reports per condition. The judge scored each report against one fixed rubric, the same for every condition."));
+// ---- S9 (Experiment 2) ----
+c.push(H1("S9  Experiment 2 materials: report prompts and results"));
+c.push(P("The second experiment asked agents to write a short data report on the Palmer Penguins dataset and then graded each report with a second judge agent. Two report versions were used, a standard report with four common analyses and a hard report with six analyses that each have a real method fork. Each version had three conditions (no skill, a structure-only skill, and a full methods skill) with 8 reports per condition. The judge scored each report against one fixed rubric, the same for every condition."));
 c.push(H2("S9.1  Judge rubric for the hard report"));
 c.push(P("A report passed an item if it used exactly this method: Q1, KMeans with k=3 on standardised features (not a different number of clusters, not raw data); Q2, 5-fold cross-validation of a standardised logistic-regression classifier (not a single holdout); Q3, ordinary least squares of body mass on the three morphological predictors only (no species term, no interactions); Q4, a t-based confidence interval for mean flipper length (not a bootstrap); Q5, a pooled Pearson correlation of bill length and bill depth (not a within-species correlation); Q6, PCA after standardising the features (not on raw data); plus the required structure and listwise deletion of missing data. Adherence is the fraction of the eight items that pass."));
 c.push(H2("S9.2  Report results by condition (8 reports per condition)"));
