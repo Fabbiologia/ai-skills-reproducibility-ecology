@@ -7,7 +7,7 @@ const {
   PageNumber, Header, Footer, PageBreak, TabStopType, TabStopPosition,
 } = docx;
 
-const FONT = "Helvetica";
+const FONT = "Times New Roman";
 const BODY = "1F2937", HEAD = "111827", TEAL = "0F766E", GRAY = "6B7280", LINE = "E5E7EB", FILL = "F3F4F6";
 
 // rich text: **bold**, *italic*, ~sub~ handled minimally; splits a string into TextRuns
@@ -15,7 +15,7 @@ function rt(s, base = {}) {
   const runs = [];
   const re = /(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_)/g;
   let last = 0, m;
-  const push = (text, extra) => { if (text) runs.push(new TextRun({ text, font: FONT, size: base.size || 22, color: base.color || BODY, bold: base.bold, italics: base.italics, ...extra })); };
+  const push = (text, extra) => { if (text) runs.push(new TextRun({ text, font: FONT, size: base.size || 24, color: base.color || BODY, bold: base.bold, italics: base.italics, ...extra })); };
   while ((m = re.exec(s))) {
     push(s.slice(last, m.index));
     const tok = m[0];
@@ -29,14 +29,14 @@ function rt(s, base = {}) {
 }
 
 const P = (s, opts = {}) => new Paragraph({ spacing: { line: 336, after: 120, ...(opts.spacing || {}) }, alignment: opts.align, children: typeof s === "string" ? rt(s, opts) : s, ...(opts.p || {}) });
-const TITLE = (s) => new Paragraph({ style: "Title", children: rt(s, { size: 44, bold: true, color: HEAD }) });
-const H1 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_1, children: rt(s, { size: 34, bold: true, color: HEAD }) });
-const H2 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_2, children: rt(s, { size: 26, bold: true, color: HEAD }) });
-const H3 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_3, children: rt(s, { size: 23, bold: true, color: HEAD }) });
-const CAP = (s) => new Paragraph({ spacing: { after: 160, line: 300 }, children: rt(s, { size: 18, color: GRAY, italics: true }) });
+const TITLE = (s) => new Paragraph({ style: "Title", children: rt(s, { size: 24, bold: true, color: HEAD }) });
+const H1 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_1, children: rt(s, { size: 24, bold: true, color: HEAD }) });
+const H2 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_2, children: rt(s, { size: 24, bold: true, color: HEAD }) });
+const H3 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_3, children: rt(s, { size: 24, bold: true, color: HEAD }) });
+const CAP = (s) => new Paragraph({ spacing: { after: 160, line: 300 }, children: rt(s, { size: 22, color: GRAY, italics: true }) });
 const BULLET = (s) => new Paragraph({ numbering: { reference: "bullets", level: 0 }, spacing: { after: 60, line: 320 }, children: rt(s) });
 const NUM = (s, ref = "nums") => new Paragraph({ numbering: { reference: ref, level: 0 }, spacing: { after: 60, line: 320 }, children: rt(s) });
-const REFP = (s) => new Paragraph({ spacing: { after: 100, line: 300 }, indent: { left: 360, hanging: 360 }, children: rt(s, { size: 20 }) });
+const REFP = (s) => new Paragraph({ spacing: { after: 100, line: 300 }, indent: { left: 360, hanging: 360 }, children: rt(s, { size: 24 }) });
 const HR = (color = TEAL, size = 6) => new Paragraph({ border: { bottom: { style: BorderStyle.SINGLE, size, color, space: 1 } }, spacing: { before: 160, after: 160 } });
 const GAP = (after = 120) => new Paragraph({ spacing: { after }, children: [] });
 const PB = () => new Paragraph({ children: [new PageBreak()] });
@@ -60,12 +60,12 @@ function buildDoc(children, { title = "Document", footerLeft = "", lineNumbers =
   return new Document({
     creator: "Aburto Lab", title,
     styles: {
-      default: { document: { run: { font: FONT, size: 22, color: BODY }, paragraph: { spacing: { line: 336, after: 120 } } } },
+      default: { document: { run: { font: FONT, size: 24, color: BODY }, paragraph: { spacing: { line: 336, after: 120 } } } },
       paragraphStyles: [
-        { id: "Title", name: "Title", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 44, bold: true, color: HEAD }, paragraph: { spacing: { before: 240, after: 200 }, outlineLevel: 0 } },
-        { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 34, bold: true, color: HEAD }, paragraph: { spacing: { before: 320, after: 120 }, outlineLevel: 0 } },
-        { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 26, bold: true, color: HEAD }, paragraph: { spacing: { before: 260, after: 80 }, outlineLevel: 1 } },
-        { id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 23, bold: true, color: HEAD }, paragraph: { spacing: { before: 200, after: 40 }, outlineLevel: 2 } },
+        { id: "Title", name: "Title", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 24, bold: true, color: HEAD }, paragraph: { spacing: { before: 240, after: 200 }, outlineLevel: 0 } },
+        { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 24, bold: true, color: HEAD }, paragraph: { spacing: { before: 320, after: 120 }, outlineLevel: 0 } },
+        { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 24, bold: true, color: HEAD }, paragraph: { spacing: { before: 260, after: 80 }, outlineLevel: 1 } },
+        { id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 24, bold: true, color: HEAD }, paragraph: { spacing: { before: 200, after: 40 }, outlineLevel: 2 } },
       ],
     },
     numbering: {
