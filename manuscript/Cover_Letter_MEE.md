@@ -12,7 +12,7 @@ The Editors
 *Methods in Ecology and Evolution*
 British Ecological Society
 
-**Re: Submission of an original Research Article, "Do AI skills improve the output reproducibility of ecological analyses? A controlled experiment."**
+**Re: Submission of an original Research Article, "Do AI skills improve the output reproducibility of ecological analyses? Controlled experiments."**
 
 Dear Editors,
 

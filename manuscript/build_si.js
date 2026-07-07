@@ -32,9 +32,9 @@ function promptBlock(id, title, folder = "prompts") {
 
 const c = [];
 c.push(TITLE("Supporting Information"));
-c.push(P("**Do AI skills improve the output reproducibility of ecological analyses? A controlled experiment**", { spacing: { after: 40 } }));
+c.push(P("**Do AI skills improve the output reproducibility of ecological analyses? Controlled experiments**", { spacing: { after: 40 } }));
 c.push(P("Favoretto, Rivera, and León Solorzano. Target journal: Methods in Ecology and Evolution.", { size: 20 }));
-c.push(P("Contents: S1 How we reviewed the literature · S2 Search terms · S3 What we recorded for each study · S4 Studies we read (with the selection summary) · S5 Experiment prompts (full text) · S6 Full results and statistics · S7 Additional figures · S8 Software environment, code, and data availability.", { size: 20 }));
+c.push(P("Contents: S1 How we reviewed the literature · S2 Search terms · S3 What we recorded for each study · S4 Studies we read (with the selection summary) · S5 Experiment prompts (full text) · S6 Full results and statistics · S7 Additional figures · S8 Software environment, code, and data availability · S9 Study 2 report materials and results.", { size: 20 }));
 c.push(HR());
 
 // ---- S1 ----
@@ -179,6 +179,38 @@ c.push(BULLET("analyze_v2.py scores the Python arm; analyze_cross_language.py sc
 c.push(BULLET("generate_prompts.py and generate_prompts_r.py regenerate the prompt files; data/ holds the three input CSV files."));
 c.push(P("These materials are in the public Git repository https://github.com/Fabbiologia/ai-skills-reproducibility-ecology (archived with a DOI on acceptance). The restricted LTEM reef-fish file for Task T4 is not distributed there and is available on request from the Aburto Lab.", { spacing: { before: 100 } }));
 c.push(P("Together these make the experiment fully reproducible end-to-end. Re-running each orchestration regenerates its run set, and the analysis scripts regenerate every number and figure reported here.", { spacing: { before: 100 } }));
+
+// ---- S9 (Study 2) ----
+c.push(H1("S9  Study 2 materials: report prompts and results"));
+c.push(P("Study 2 asked agents to write a short data report on the Palmer Penguins dataset and then graded each report with a second judge agent. Two report versions were used, a standard report with four common analyses and a hard report with six analyses that each have a real method fork. Each version had three conditions (no skill, a structure-only skill, and a full methods skill) with 8 reports per condition. The judge scored each report against one fixed rubric, the same for every condition."));
+c.push(H2("S9.1  Judge rubric for the hard report"));
+c.push(P("A report passed an item if it used exactly this method: Q1, KMeans with k=3 on standardised features (not a different number of clusters, not raw data); Q2, 5-fold cross-validation of a standardised logistic-regression classifier (not a single holdout); Q3, ordinary least squares of body mass on the three morphological predictors only (no species term, no interactions); Q4, a t-based confidence interval for mean flipper length (not a bootstrap); Q5, a pooled Pearson correlation of bill length and bill depth (not a within-species correlation); Q6, PCA after standardising the features (not on raw data); plus the required structure and listwise deletion of missing data. Adherence is the fraction of the eight items that pass."));
+c.push(H2("S9.2  Report results by condition (8 reports per condition)"));
+const rsum = JSON.parse(rd(path.join(DIR, "report_reproducibility", "results", "report_summary.json")));
+const hsum = JSON.parse(rd(path.join(DIR, "report_reproducibility", "results", "hard_summary.json")));
+const pct = (x) => (x == null ? "--" : Math.round(x * 100) + "%");
+c.push(P("Table S9. Standard report.", { size: 19, spacing: { after: 40 } }));
+c.push(ctable(["Metric", "No skill", "Structure", "Full skill"], [
+  ["Skill coherence (adherence)", pct(rsum.C0.adherence), pct(rsum.C1.adherence), pct(rsum.C2.adherence)],
+  ["Report reproducibility (all numbers agree)", pct(rsum.C0.report_match), pct(rsum.C1.report_match), pct(rsum.C2.report_match)],
+  ["Validity (matches reference)", pct(rsum.C0.mean_valid), pct(rsum.C1.mean_valid), pct(rsum.C2.mean_valid)],
+], [3760, 1900, 1800, 1900], 16));
+c.push(GAP(100));
+c.push(P("Table S10. Hard report, per-analysis run-to-run agreement (exact-match rate across the 8 reports).", { size: 19, spacing: { after: 40 } }));
+const QLAB = { q1_k: "Q1 clusters (k)", q1_sil: "Q1 silhouette", q2_acc: "Q2 accuracy", q3_adjr2: "Q3 adj R2", q4_ci_low: "Q4 CI lower", q4_ci_high: "Q4 CI upper", q5_corr: "Q5 correlation", q6_pc1_pct: "Q6 PCA PC1 %" };
+const qrows = Object.keys(QLAB).map((q) => [QLAB[q],
+  pct(hsum.C0.perq[q].exact), pct(hsum.C1.perq[q].exact), pct(hsum.C2.perq[q].exact)]);
+c.push(ctable(["Analysis", "No skill", "Structure", "Full skill"], qrows, [3160, 2000, 2100, 2100], 16));
+c.push(P("Low agreement means independent reports gave different numbers for that analysis. Q2 (accuracy) and Q3 (body-mass model) diverge without the full skill; the other four do not, because the agents' default already matched the specified method. The full run-level report outputs and judge grades are in results_report.json and results_hard.json in the report_reproducibility folder of the repository (S8).", { size: 20, spacing: { before: 100 } }));
+c.push(H2("S9.3  Hard report condition prompts (verbatim)"));
+const HN = { C0_none: "C0 no skill", C1_structure: "C1 structure", C2_skill: "C2 full skill" };
+for (const [f, label] of Object.entries(HN)) {
+  c.push(H3(label));
+  mono(rd(path.join(DIR, "report_reproducibility", "prompts_hard", `${f}.txt`))).forEach(p => c.push(p));
+  c.push(GAP(80));
+}
+c.push(P("The three standard-report prompts follow the same pattern with four analyses and are in report_reproducibility/prompts of the repository.", { size: 20 }));
+c.push(PB());
 
 const doc = buildDoc(c, { title: "Supporting Information for AI skills and output reproducibility in ecology", footerLeft: "Supporting Information" });
 write(doc, path.join(__dirname, "Supporting_Information_AI_Skills_Reproducibility_MEE.docx"));

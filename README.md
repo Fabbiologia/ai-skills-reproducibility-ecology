@@ -1,7 +1,7 @@
 # Do AI skills improve the output reproducibility of ecological analyses?
 
 Reproducibility repository for the manuscript **"Do AI skills improve the output
-reproducibility of ecological analyses? A controlled experiment"** (target journal:
+reproducibility of ecological analyses? Controlled experiments"** (target journal:
 *Methods in Ecology and Evolution*).
 
 This repository contains everything needed to reproduce the experiment, its figures

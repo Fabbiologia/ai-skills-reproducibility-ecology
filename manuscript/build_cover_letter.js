@@ -18,7 +18,7 @@ c.push(small("The Editors", { spacing: { after: 0 } }));
 c.push(small("*Methods in Ecology and Evolution*", { spacing: { after: 0 } }));
 c.push(small("British Ecological Society", { spacing: { after: 160 } }));
 
-c.push(P("**Re: Submission of an original Research Article, “Do AI skills improve the output reproducibility of ecological analyses? A controlled experiment.”**", { spacing: { after: 160 } }));
+c.push(P("**Re: Submission of an original Research Article, “Do AI skills improve the output reproducibility of ecological analyses? Controlled experiments.”**", { spacing: { after: 160 } }));
 
 c.push(P("Dear Editors,"));
 

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or data, please cite the manuscript and this repository."
-title: "Do AI skills improve the output reproducibility of ecological analyses? A controlled experiment"
+title: "Do AI skills improve the output reproducibility of ecological analyses? Controlled experiments"
 abstract: >-
   Materials, data, code and documents for a controlled 4x5x10 factorial experiment
   testing whether AI skills improve the output reproducibility of ecological analyses,
