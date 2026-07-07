@@ -1,8 +1,13 @@
-# Do AI skills improve the output reproducibility of ecological analyses?
+# Skills as the new packages: a standard for good AI analysis skills
 
-Reproducibility repository for the manuscript **"Do AI skills improve the output
-reproducibility of ecological analyses? Controlled experiments"** (target journal:
-*Methods in Ecology and Evolution*).
+Reproducibility repository for the manuscript **"Skills as the new packages: an
+evidence-based standard for good AI analysis skills and a curated repository for
+ecology"** (target journal: *Methods in Ecology and Evolution*).
+
+The paper argues that AI skills are becoming a reusable unit of analysis, like R
+packages on CRAN, and uses two controlled experiments to work out what a skill must
+contain and be tested for to deserve a place in a curated repository for Model
+Context Protocol (MCP) servers and skills.
 
 This repository contains everything needed to reproduce the experiment, its figures
 and statistics, and to rebuild the manuscript and Supporting Information documents

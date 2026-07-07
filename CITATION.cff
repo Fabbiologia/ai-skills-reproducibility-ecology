@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 message: "If you use this software or data, please cite the manuscript and this repository."
-title: "Do AI skills improve the output reproducibility of ecological analyses? Controlled experiments"
+title: "Skills as the new packages: an evidence-based standard for good AI analysis skills and a curated repository for ecology"
 abstract: >-
-  Materials, data, code and documents for a controlled 4x5x10 factorial experiment
-  testing whether AI skills improve the output reproducibility of ecological analyses,
-  where the five skill levels add one kind of instruction at a time. Includes a short
-  background literature review.
+  Materials, data, code, and documents for a paper that argues AI skills are becoming
+  a reusable unit of analysis like R packages, and uses two controlled experiments to
+  define an evidence-based standard for a good skill and the design of a curated
+  repository for Model Context Protocol servers and skills.
 type: software
 authors:
   - family-names: "Favoretto"

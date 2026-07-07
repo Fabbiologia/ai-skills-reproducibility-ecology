@@ -32,7 +32,7 @@ function promptBlock(id, title, folder = "prompts") {
 
 const c = [];
 c.push(TITLE("Supporting Information"));
-c.push(P("**Do AI skills improve the output reproducibility of ecological analyses? Controlled experiments**", { spacing: { after: 40 } }));
+c.push(P("**Skills as the new packages: an evidence-based standard for good AI analysis skills and a curated repository for ecology**", { spacing: { after: 40 } }));
 c.push(P("Favoretto, Rivera, and León Solorzano. Target journal: Methods in Ecology and Evolution.", { size: 20 }));
 c.push(P("Contents: S1 How we reviewed the literature · S2 Search terms · S3 What we recorded for each study · S4 Studies we read (with the selection summary) · S5 Experiment prompts (full text) · S6 Full results and statistics · S7 Additional figures · S8 Software environment, code, and data availability · S9 Study 2 report materials and results.", { size: 20 }));
 c.push(HR());
