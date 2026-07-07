@@ -19,6 +19,9 @@ manuscript/*.pdf
 .DS_Store
 Thumbs.db
 
+# Private working notes (author only, never published)
+private/
+
 # Restricted data: the real LTEM reef-fish monitoring extract is NOT distributed
 # in this repository. It is available on request from the Aburto Lab.
 # See data/ltem_cabo_pulmo_2023.csv.README.md.
