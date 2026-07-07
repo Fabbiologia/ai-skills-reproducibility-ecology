@@ -34,6 +34,7 @@ const H1 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_1, children: rt(
 const H2 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_2, children: rt(s, { size: 24, bold: true, color: HEAD }) });
 const H3 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_3, children: rt(s, { size: 24, bold: true, color: HEAD }) });
 const CAP = (s) => new Paragraph({ spacing: { after: 160, line: 300 }, children: rt(s, { size: 22, color: GRAY, italics: true }) });
+const TCAP = (s) => new Paragraph({ spacing: { before: 200, after: 60, line: 300 }, children: rt(s, { size: 22, color: GRAY, italics: true }) });
 const BULLET = (s) => new Paragraph({ numbering: { reference: "bullets", level: 0 }, spacing: { after: 60, line: 320 }, children: rt(s) });
 const NUM = (s, ref = "nums") => new Paragraph({ numbering: { reference: ref, level: 0 }, spacing: { after: 60, line: 320 }, children: rt(s) });
 const REFP = (s) => new Paragraph({ spacing: { after: 100, line: 300 }, indent: { left: 360, hanging: 360 }, children: rt(s, { size: 24 }) });
@@ -88,4 +89,4 @@ function buildDoc(children, { title = "Document", footerLeft = "", lineNumbers =
 
 async function write(doc, path) { const buf = await Packer.toBuffer(doc); fs.writeFileSync(path, buf); console.log("wrote", path, fs.statSync(path).size, "bytes"); }
 
-module.exports = { rt, P, TITLE, H1, H2, H3, CAP, BULLET, NUM, REFP, HR, GAP, PB, img, table, buildDoc, write, COLORS: { BODY, HEAD, TEAL, GRAY, LINE, FILL } };
+module.exports = { rt, P, TITLE, H1, H2, H3, CAP, TCAP, BULLET, NUM, REFP, HR, GAP, PB, img, table, buildDoc, write, COLORS: { BODY, HEAD, TEAL, GRAY, LINE, FILL } };

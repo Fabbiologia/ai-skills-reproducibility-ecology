@@ -1,5 +1,5 @@
 const T = require("./theme.js");
-const { P, TITLE, H1, H2, H3, CAP, BULLET, NUM, REFP, HR, GAP, PB, img, table, buildDoc, write, rt } = T;
+const { P, TITLE, H1, H2, H3, CAP, TCAP, BULLET, NUM, REFP, HR, GAP, PB, img, table, buildDoc, write, rt } = T;
 const path = require("path");
 const RES = path.resolve(__dirname, "..", "results");
 const RREP = path.resolve(__dirname, "..", "report_reproducibility", "results");
@@ -52,7 +52,8 @@ c.push(P("Both experiments share the same approach. Each run is a fresh autonomo
 c.push(P("In the first experiment we crossed four analysis tasks with five levels of skill detail, in two languages (Python and R), with ten replicate runs per cell, giving 400 runs. The two languages let us test a stronger form of reproducibility, whether independent implementations in different languages reach the same answer, which is results reproducibility in the sense of Goodman et al. (2016)."));
 c.push(P("In the second experiment the agents wrote a short data report on the Palmer Penguins dataset that answered several questions and ended with a conclusion. We used a standard report with four common analyses and a hard report with six analyses that each have a real method fork, such as how many clusters to use, cross-validation or a single split for an accuracy, which predictors to put in a body-mass model, a t interval or a bootstrap for a confidence interval, a pooled or a within-species correlation, and whether to standardise before a principal component analysis. Each report version had three skill conditions, no skill, a structure-only skill that fixes the sections but not the statistics, and a full skill that fixes the exact method, parameters, and missing-data rule for every question, with eight reports per condition. A second judge agent then graded each report against one fixed rubric, the same for every condition, and scored how many of the specified methods the report actually used."));
 c.push(H2("3.3  Tasks and datasets"));
-c.push(P("For the first experiment we chose four tasks to cover different analysis types and different ways an analysis can diverge, and because each has a reference answer that depends on the method chosen (Table 1). Data were given as fixed local files, so the only thing that varied was the method, not the data. The iris and Palmer Penguins datasets are standard open teaching datasets. Task T4 uses real reef fish visual-census data from the Long-Term Ecological Monitoring programme in Cabo Pulmo National Park, Gulf of California (2023 surveys, 2,798 species records across 10 reefs). The second experiment uses the Palmer Penguins dataset for its report."));
+c.push(P("For the first experiment we chose four tasks to cover different analysis types and different ways an analysis can diverge, and because each has a reference answer that depends on the method chosen (Table I). Data were given as fixed local files, so the only thing that varied was the method, not the data. The iris and Palmer Penguins datasets are standard open teaching datasets. Task T4 uses real reef fish visual-census data from the Long-Term Ecological Monitoring programme in Cabo Pulmo National Park, Gulf of California (2023 surveys, 2,798 species records across 10 reefs). The second experiment uses the Palmer Penguins dataset for its report."));
+c.push(TCAP("Table I. The four analysis tasks of the first experiment. Each reference is the value from the fully specified recipe, computed independently. The T4 reference equals the value that the operational LTEM database tool reports for the same region and year."));
 c.push(table(
   ["Task", "Dataset (domain)", "Question", "Main source of divergence", "Reference"],
   [
@@ -63,10 +64,10 @@ c.push(table(
   ],
   [700, 1750, 2150, 3160, 1360]
 ));
-c.push(CAP("Table 1. The four analysis tasks of the first experiment. Each reference is the value from the fully specified recipe, computed independently. The T4 reference equals the value that the operational LTEM database tool reports for the same region and year."));
 c.push(P("The same four tasks were run in Python and in R. In R the agents used the built-in iris data, read the same penguins and LTEM files, and used R functions (cor, glm with family binomial, aov, and dplyr for the aggregation). Three of the four references are the same value in both languages, because a correlation, an ANOVA effect size, and a sum then mean are the same number whatever the language. The classifier is the exception. Its fully specified R value is 0.8657 (a binomial glm with the same seed and split rule), which is close to but not the same as the Python value of 0.8806, because scikit-learn and R use different models and different random number generators. We recorded a Python reference and an R reference for that task and scored each language against its own reference."));
 c.push(H2("3.4  Skill levels"));
-c.push(P("The variable we changed was the content of an instruction block placed before the task. In the first experiment each level adds structure to the one before it, so the step between two levels shows what one skill feature contributes (Table 2). In the second experiment the three report conditions are a shorter version of the same idea, from no skill through a structure-only skill to a full skill that fixes every method. The full text of all prompts is in the Supporting Information (S5)."));
+c.push(P("The variable we changed was the content of an instruction block placed before the task. In the first experiment each level adds structure to the one before it, so the step between two levels shows what one skill feature contributes (Table II). In the second experiment the three report conditions are a shorter version of the same idea, from no skill through a structure-only skill to a full skill that fixes every method. The full text of all prompts is in the Supporting Information (S5)."));
+c.push(TCAP("Table II. The five skill levels of the first experiment, each adding to the one before it."));
 c.push(table(
   ["Level", "What it adds", "What it isolates"],
   [
@@ -78,7 +79,6 @@ c.push(table(
   ],
   [1500, 5060, 2800]
 ));
-c.push(CAP("Table 2. The five skill levels of the first experiment, each adding to the one before it."));
 c.push(H2("3.5  Outcome measures"));
 c.push(P("For each cell we scored two things across the runs. For run to run reproducibility we used the standard deviation (SD) and the coefficient of variation of the output, the number of distinct answers within a set tolerance, and the exact-match rate, meaning the share of runs equal to the most common answer. For validity we used the share of runs whose output matched an independent reference within tolerance. In the second experiment we added coherence, meaning the share of the specified methods that the report actually used, judged from the report text against a fixed rubric. Tolerances were 10⁻³ for correlation, accuracy, and η², and 10⁻² (biomass units) for T4."));
 c.push(H2("3.6  Statistical analysis"));
@@ -90,54 +90,14 @@ c.push(PB());
 // ---------------- 4 RESULTS (merged) ----------------
 c.push(H1("4  Results"));
 c.push(P("All 400 runs of the first experiment finished, and all 24 reports of the second experiment, with their gradings, finished."));
-c.push(P("Reproducibility was high by default. Three of the four tasks (T1, T3, T4) gave the same answer in every condition, including with no skill, because the agents settled on one common approach, and the naive biomass error that is about thirty times too low was never made. The skill mattered in two places. Where a task involved randomness, in the penguin sex classifier (T2), fixing the method was not enough on its own, because with the model fixed but the seed, split, and scaling still free the runs gave several different accuracies, and the variation fell to zero only when the skill also fixed the random settings. That raised run to run agreement from 16 of 30 at the low-skill levels to 20 of 20 at the high-skill levels (Fisher's exact P = 2.2×10⁻⁴) and moved every run onto the reference value (Table 3, Figure 1). Where a convention was unclear, in the reef fish biomass task (T4), the runs were fully reproducible at every level yet wrong under no or basic skill, because all of them defined the survey unit in the same reasonable but non-standard way; only the input and method contract, which set the survey unit, made the answer correct, raising validity from 0 of 20 before the contract to 30 of 30 with it (P = 2.1×10⁻¹⁴) while reproducibility stayed at 100% throughout."));
+c.push(P("Reproducibility was high by default. Three of the four tasks (T1, T3, T4) gave the same answer in every condition, including with no skill, because the agents settled on one common approach, and the naive biomass error that is about thirty times too low was never made. The skill mattered in two places. Where a task involved randomness, in the penguin sex classifier (T2), fixing the method was not enough on its own, because with the model fixed but the seed, split, and scaling still free the runs gave several different accuracies, and the variation fell to zero only when the skill also fixed the random settings. That raised run to run agreement from 16 of 30 at the low-skill levels to 20 of 20 at the high-skill levels (Fisher's exact P = 2.2×10⁻⁴) and moved every run onto the reference value (Figure 1). Where a convention was unclear, in the reef fish biomass task (T4), the runs were fully reproducible at every level yet wrong under no or basic skill, because all of them defined the survey unit in the same reasonable but non-standard way; only the input and method contract, which set the survey unit, made the answer correct, raising validity from 0 of 20 before the contract to 30 of 30 with it (P = 2.1×10⁻¹⁴) while reproducibility stayed at 100% throughout."));
 c.push(P("A long but vague skill did not help. For the classifier it slightly increased the run to run variation and lowered the share of correct runs, because the loose instruction to train a classifier invited a free choice of model and the agents drifted to a random forest with varied splits. Length was not the active part; constraint was. The two richest levels, by contrast, reached full reproducibility and full validity on every task, and the added check list and do-not rules caused no measurable harm where they were not the deciding factor."));
-c.push(table(
-  ["Task", "Level", "SD", "Distinct", "Exact-match", "Validity", "Diff. from ref."],
-  [
-    ["T1 iris corr", "C0 to C4", "0.000", "1", "100%", "100%", "0.000"],
-    ["T2 penguin clf", "C0 none", "0.0061", "2", "50%", "50%", "0.006"],
-    ["", "C1 basic", "0.0090", "3", "60%", "30%", "0.012"],
-    ["", "C2 contract", "0.0086", "3", "50%", "40%", "0.005"],
-    ["", "C3 controls", "0.000", "1", "100%", "100%", "0.000"],
-    ["", "C4 full", "0.000", "1", "100%", "100%", "0.000"],
-    ["T3 penguin ANOVA", "C0 to C4", "0.000", "1", "100%", "100%", "0.000"],
-    ["T4 LTEM biomass", "C0 none", "0.000", "1", "100%", "0%", "0.169"],
-    ["", "C1 basic", "0.000", "1", "100%", "0%", "0.169"],
-    ["", "C2 contract", "0.000", "1", "100%", "100%", "0.000"],
-    ["", "C3 controls", "0.000", "1", "100%", "100%", "0.000"],
-    ["", "C4 full", "0.000", "1", "100%", "100%", "0.000"],
-  ],
-  [1900, 1500, 1000, 1260, 1400, 1200, 1100]
-));
-c.push(CAP("Table 3. First experiment, Python. Output reproducibility and validity by task and level (10 runs per cell). SD and the difference from the reference are in the units of each task."));
 c.push(img(path.join(RES, "fig3_heatmaps.png"), 600, 210, "Reproducibility and validity heatmaps"));
 c.push(CAP("Figure 1. Run to run agreement (left) and validity against the reference (right), as a percentage of the 10 runs per cell. Agreement falls below 100% only for the stochastic task T2, and returns to 100% at C3. Validity shows two different fixes. T2 is corrected at C3, while T4 is consistent but wrong (0%) until the contract at C2 (100%)."));
-c.push(P("Running the same tasks in R gave the same pattern, and comparing the two languages directly is the stronger test (Table 4, Figure 2). For the three deterministic tasks Python and R gave the same value at every level, even where that value was wrong, so this kind of result is reproducible across languages and does not depend on the tool. On the biomass task both languages agreed on the same wrong value before the contract and both moved to the reference once the contract set the survey unit. The classifier was the only task where the two languages did not match, because scikit-learn and R use different models and different random number generators, so each language was reproducible within itself once the seed was fixed, but the two could not be made bit-for-bit equal, which means a cross-language comparison of a random method needs a tolerance rather than an identical number."));
-c.push(table(
-  ["Task", "Python (full skill)", "R (full skill)", "Same across languages?"],
-  [
-    ["T1 iris correlation", "−0.1176", "−0.1176", "Yes"],
-    ["T2 penguin classifier", "0.8806", "0.8657", "No (differ by ~0.015)"],
-    ["T3 penguin ANOVA (η²)", "0.6697", "0.6697", "Yes"],
-    ["T4 LTEM biomass", "3.4642", "3.4642", "Yes"],
-  ],
-  [2600, 2200, 2100, 2460]
-));
-c.push(CAP("Table 4. Cross-language comparison at the full skill level. The three deterministic tasks agree exactly. The classifier does not, because the two languages use different models and random number generators."));
+c.push(P("Running the same tasks in R gave the same pattern, and comparing the two languages directly is the stronger test (Figure 2). For the three deterministic tasks Python and R gave the same value at every level, even where that value was wrong, so this kind of result is reproducible across languages and does not depend on the tool. On the biomass task both languages agreed on the same wrong value before the contract and both moved to the reference once the contract set the survey unit. The classifier was the only task where the two languages did not match, because scikit-learn and R use different models and different random number generators, so each language was reproducible within itself once the seed was fixed, but the two could not be made bit-for-bit equal, which means a cross-language comparison of a random method needs a tolerance rather than an identical number."));
 c.push(img(path.join(RES, "fig4_python_vs_r.png"), 600, 400, "Python versus R output by skill level"));
 c.push(CAP("Figure 2. Output by skill level in Python (blue) and R (red), 10 runs per cell per language. Dashed lines show the reference for each language. T1, T3, and T4 sit on one shared line in both languages, including the wrong value for T4 at C0 and C1. T2 sits on two different lines, because the Python and R classifiers do not give the same accuracy."));
-c.push(P("The report experiment carried the same lessons up to a whole deliverable (Table 5, Figure 3). For the standard report the reports were already reproducible without a skill, because eight independent agents produced the same numbers and the same conclusions, so the skill mainly improved coherence, from 79% with no skill to 100% with the full skill, and validity, from 75% to 100%. Under no or basic skill every report used the machine-learning library's default split for the classifier rather than the specified one, so the reports were reproducible but wrong, and a skill that fixed only the report structure did not fix the statistics. For the hard report, where each analysis had a real fork, reproducibility broke as well, because independent reports agreed on all of their numbers only half of the time, coherence fell to 58% and validity to 56%, and only the full skill returned all three to 100%. The failures were of the same two kinds seen in the single-output experiment, with some analyses diverging from run to run, such as the species-accuracy question where different reports used different models, and others reproducible but wrong, such as the clustering that every report cut into two groups rather than the three species. As before, the skill changed the outcome only where the agents' default differed from the specified method."));
-c.push(table(
-  ["Metric", "No skill", "Structure skill", "Full skill"],
-  [
-    ["Skill coherence (uses the specified statistics)", "58%", "69%", "100%"],
-    ["Report reproducibility (all numbers agree)", "50%", "50%", "100%"],
-    ["Validity (numbers match the reference)", "56%", "61%", "100%"],
-  ],
-  [3560, 1900, 2000, 1900]
-));
-c.push(CAP("Table 5. Second experiment, hard report with six forky analyses, 8 reports per condition. Only the full methods skill made the report coherent, reproducible, and valid at the same time."));
+c.push(P("The report experiment carried the same lessons up to a whole deliverable (Figure 3). For the standard report the reports were already reproducible without a skill, because eight independent agents produced the same numbers and the same conclusions, so the skill mainly improved coherence, from 79% with no skill to 100% with the full skill, and validity, from 75% to 100%. Under no or basic skill every report used the machine-learning library's default split for the classifier rather than the specified one, so the reports were reproducible but wrong, and a skill that fixed only the report structure did not fix the statistics. For the hard report, where each analysis had a real fork, reproducibility broke as well, because independent reports agreed on all of their numbers only half of the time, coherence fell to 58% and validity to 56%, and only the full skill returned all three to 100%. The failures were of the same two kinds seen in the single-output experiment, with some analyses diverging from run to run, such as the species-accuracy question where different reports used different models, and others reproducible but wrong, such as the clustering that every report cut into two groups rather than the three species. As before, the skill changed the outcome only where the agents' default differed from the specified method."));
 c.push(img(path.join(RREP, "fig_hard_report.png"), 640, 256, "Hard report results"));
 c.push(CAP("Figure 3. Hard report results. Left: skill coherence, whole-report agreement, and validity by condition. Right: agreement across runs for each of the six analyses. The species-accuracy and body-mass questions diverge without the skill, while the other four do not, because their default already matched the specified method."));
 c.push(PB());
