@@ -1,0 +1,16 @@
+REPORT WRITING TASK
+
+Write a short morphometric analysis report on the Palmer Penguins dataset in the file data/penguins.csv (columns: species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex; some cells are missing). Answer these six questions and end with a conclusion:
+  Q1. Group the penguins into clusters from their four body measurements. How many clusters are there, and what is the clustering quality (silhouette score)?
+  Q2. How accurately can species be predicted from the four body measurements? Report an accuracy.
+  Q3. Build a regression model for body mass and report its adjusted R-squared.
+  Q4. Give a 95% confidence interval for the mean flipper length.
+  Q5. What is the correlation between bill length and bill depth?
+  Q6. Run a principal component analysis of the four measurements and report the percent of variance on the first component.
+Actually run the analysis in Python (sklearn, scipy, pandas, numpy are installed) and use the real computed numbers, not estimates.
+
+--- SKILL: penguin-morphometrics-structure ---
+Write the report with these sections, in order: 1. Title; 2. Data and methods (state how you handled missing values and which method you used for each question); 3. Results, one short subsection per question (Q1 to Q6), each stating the number(s); 4. Conclusion (one paragraph). Use appropriate methods for each question.
+--- END SKILL ---
+
+When finished, return the structured result the workflow asks for: for each question the number(s) and the method you used (q1_k, q1_sil, q1_method; q2_acc, q2_method; q3_adjr2, q3_predictors; q4_ci_low, q4_ci_high, q4_method; q5_corr, q5_scope; q6_pc1_pct, q6_scaled), the list of section headings, your conclusion paragraph, and report_md (the full report as markdown).

@@ -1,0 +1,10 @@
+{
+  "Q1_silhouette_k3": 0.446,
+  "Q1_k": 3,
+  "Q2_species_cv5_acc": 0.991,
+  "Q3_bodymass_adjR2": 0.7618,
+  "Q5_billLD_pooled_pearson": -0.229,
+  "Q6_pca_pc1_pct_scaled": 68.6,
+  "Q4_flipper_ci_low": 199.46,
+  "Q4_flipper_ci_high": 202.48
+}

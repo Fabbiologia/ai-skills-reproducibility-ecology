@@ -61,13 +61,52 @@ C0 and C1 reports.
    train/test split, an unfixed choice that otherwise fell back to the tool default.
    This matches the main experiment: skills improve output by removing free choices.
 
+## Harder version: a report full of forky analyses
+
+The report above was a standard task, so replicability was already high and only
+coherence and validity separated the conditions. To make it hard, we built a second
+report with six analyses that each have a genuine method fork: Q1 clustering (how many
+clusters, and whether to standardise), Q2 species accuracy (cross-validation vs a
+single holdout, and which model), Q3 a "best model" for body mass (which predictors,
+whether species is included), Q4 a confidence interval (t vs bootstrap), Q5 the bill
+length-depth correlation (pooled vs within-species, a Simpson's paradox), and Q6 a PCA
+first-component percentage (whether the features are standardised first). Same three
+conditions, 8 reports each; `references_hard.json`, `run_hard_report.workflow.js`,
+`analyze_hard_report.py`, figure `results/fig_hard_report.png`.
+
+| Metric | C0 none | C1 structure | C2 full skill |
+|---|---|---|---|
+| Skill coherence | 58% | 69% | **100%** |
+| Report reproducibility (all numbers agree) | 50% | 50% | **100%** |
+| Validity (numbers match the reference) | 56% | 61% | **100%** |
+
+Now the forks bite, and two different failure modes appear:
+
+- **Genuine run-to-run divergence.** For Q2, the no-skill reports used different models
+  (random forest, linear discriminant analysis, logistic regression) with different
+  validation schemes, so the reported accuracy changed from run to run. Whole-report
+  match fell to 50%. So once a report has real method forks, replicability is no longer
+  guaranteed, and the full skill is what restores it (back to 100%).
+- **Reproducibly wrong.** For Q1 every no-skill run chose k=2 (the silhouette-optimal
+  cut, the Gentoo-versus-others size split) rather than the k=3 the skill specifies for
+  the three species, and for Q3 most runs added species to the regression, raising the
+  adjusted R-squared from 0.76 to 0.87. These were consistent across runs but did not
+  match the specified method, so they scored high on agreement and zero on validity.
+
+Q4, Q5, and Q6 did not diverge, because the agents' default happened to match the
+specified method (a t interval, a pooled Pearson correlation, a standardised PCA). As
+in the main experiment, the skill only changed the outcome where the default differed.
+The structure-only skill (C1) again barely helped: fixing the layout did not fix the
+statistics. Only the full methods skill made the hard report reproducible, coherent,
+and valid at the same time. The value of the skill grew with the difficulty of the
+report: on the standard report it mainly fixed coherence and validity, and on the hard
+report it also restored run-to-run reproducibility.
+
 ## Limitations
-One dataset, one report template with four analyses, one language (Python), a single
-model provider, eight reports per condition, and a single-judge grader. The report is
-a fairly standard task, so the default agreement is high; a longer or less standard
-report with more free choices would likely show larger differences between conditions.
-A larger study should add more report templates, a multi-judge grader with agreement
-checks, and reports with more open method choices.
+Two report templates (a standard one and a hard one), one dataset, one language
+(Python), a single model provider, eight reports per condition, and a single-judge
+grader. A larger study should add more datasets and templates, a multi-judge grader
+with agreement checks, and a second model provider.
 
 ## Files
 - `generate_report_prompts.py` writes the three condition prompts (`prompts/`).
@@ -76,3 +115,10 @@ checks, and reports with more open method choices.
 - `analyze_report.py` scores coherence, reproducibility, and validity and draws
   `results/fig_report_reproducibility.png`.
 - `references_report.json` holds the canonical values for Q1 to Q4.
+
+Hard version:
+- `generate_hard_prompts.py` writes the three hard-condition prompts (`prompts_hard/`).
+- `run_hard_report.workflow.js` generates and judges the 24 hard reports.
+- `results_hard.json` holds every hard report's output and judge grades.
+- `analyze_hard_report.py` scores it and draws `results/fig_hard_report.png`.
+- `references_hard.json` holds the canonical values for the six hard analyses.

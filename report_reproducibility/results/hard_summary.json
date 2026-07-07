@@ -1,0 +1,230 @@
+{
+  "C0": {
+    "n": 8,
+    "adherence": 0.578125,
+    "item_rates": {
+      "q1_kmeans_k3": 0,
+      "q2_cv5_logreg": 0,
+      "q3_ols_3morph": 0.25,
+      "q4_t_interval": 1,
+      "q5_pooled_pearson": 1,
+      "q6_pca_scaled": 1,
+      "structure_ok": 1,
+      "missing_listwise": 1
+    },
+    "perq": {
+      "q1_k": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 0.0
+      },
+      "q1_sil": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 0.0
+      },
+      "q2_acc": {
+        "exact": 0.75,
+        "distinct": 2,
+        "sd": 0.004577509557608778,
+        "valid": 0.25
+      },
+      "q3_adjr2": {
+        "exact": 0.75,
+        "distinct": 2,
+        "sd": 0.04906033912438848,
+        "valid": 0.25
+      },
+      "q4_ci_low": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.00019999999999242846,
+        "valid": 1.0
+      },
+      "q4_ci_high": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.00010000000000331966,
+        "valid": 1.0
+      },
+      "q5_corr": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q6_pc1_pct": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0013047988350687858,
+        "valid": 1.0
+      }
+    },
+    "whole_match": 0.5,
+    "mean_valid": 0.5625,
+    "q1_k": {
+      "2": 8
+    },
+    "q6_scaled": {
+      "true": 8
+    },
+    "q5_scope": {
+      "Pearson correl": 7,
+      "Pooled Pearson": 1
+    }
+  },
+  "C1": {
+    "n": 8,
+    "adherence": 0.6875,
+    "item_rates": {
+      "q1_kmeans_k3": 0,
+      "q2_cv5_logreg": 0.375,
+      "q3_ols_3morph": 0.125,
+      "q4_t_interval": 1,
+      "q5_pooled_pearson": 1,
+      "q6_pca_scaled": 1,
+      "structure_ok": 1,
+      "missing_listwise": 0.875
+    },
+    "perq": {
+      "q1_k": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 0.0
+      },
+      "q1_sil": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.00024206145913799063,
+        "valid": 0.0
+      },
+      "q2_acc": {
+        "exact": 0.5,
+        "distinct": 2,
+        "sd": 0.004667909060810825,
+        "valid": 0.75
+      },
+      "q3_adjr2": {
+        "exact": 0.875,
+        "distinct": 2,
+        "sd": 0.037513230999208814,
+        "valid": 0.125
+      },
+      "q4_ci_low": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.00019999999999242846,
+        "valid": 1.0
+      },
+      "q4_ci_high": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.00038405728739415414,
+        "valid": 1.0
+      },
+      "q5_corr": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 4.841229182760082e-05,
+        "valid": 1.0
+      },
+      "q6_pc1_pct": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.01408819874043696,
+        "valid": 1.0
+      }
+    },
+    "whole_match": 0.5,
+    "mean_valid": 0.609375,
+    "q1_k": {
+      "2": 8
+    },
+    "q6_scaled": {
+      "true": 8
+    },
+    "q5_scope": {
+      "Pearson correl": 6,
+      "Overall (poole": 1,
+      "Overall Pearso": 1
+    }
+  },
+  "C2": {
+    "n": 8,
+    "adherence": 1,
+    "item_rates": {
+      "q1_kmeans_k3": 1,
+      "q2_cv5_logreg": 1,
+      "q3_ols_3morph": 1,
+      "q4_t_interval": 1,
+      "q5_pooled_pearson": 1,
+      "q6_pca_scaled": 1,
+      "structure_ok": 1,
+      "missing_listwise": 0.875
+    },
+    "perq": {
+      "q1_k": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q1_sil": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q2_acc": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q3_adjr2": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q4_ci_low": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q4_ci_high": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q5_corr": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 0.0,
+        "valid": 1.0
+      },
+      "q6_pc1_pct": {
+        "exact": 1.0,
+        "distinct": 1,
+        "sd": 3.307189138470546e-05,
+        "valid": 1.0
+      }
+    },
+    "whole_match": 1.0,
+    "mean_valid": 1.0,
+    "q1_k": {
+      "3": 8
+    },
+    "q6_scaled": {
+      "true": 8
+    },
+    "q5_scope": {
+      "Pooled Pearson": 8
+    }
+  }
+}
