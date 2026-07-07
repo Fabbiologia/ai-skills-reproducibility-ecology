@@ -1,5 +1,6 @@
 const T = require("./theme.js");
-const { P, TITLE, H1, H2, H3, CAP, BULLET, NUM, REFP, HR, GAP, PB, img, buildDoc, write, rt, COLORS } = T;
+const { P, TITLE, H1, H2, H3, CAP, BULLET, NUM, REFP, HR, GAP, PB, img, buildDoc, write, rt, setSpacing, COLORS } = T;
+setSpacing(240); // supporting information is single-spaced
 const docx = require("docx");
 const { Paragraph, TextRun, Table, TableRow, TableCell, BorderStyle, WidthType, ShadingType } = docx;
 const fs = require("fs"), path = require("path");
@@ -33,7 +34,7 @@ function promptBlock(id, title, folder = "prompts") {
 const c = [];
 c.push(TITLE("Supporting Information"));
 c.push(P("**Skills as the new packages: an evidence-based standard for good AI analysis skills and a curated repository for ecology**", { spacing: { after: 40 } }));
-c.push(P("Favoretto, Rivera, and León Solorzano. Target journal: Methods in Ecology and Evolution.", { size: 20 }));
+c.push(P("Supporting Information for a manuscript prepared for double-anonymous review. Target journal: Methods in Ecology and Evolution.", { size: 20 }));
 c.push(P("Contents: S1 How we reviewed the literature · S2 Search terms · S3 What we recorded for each study · S4 Studies we read (with the selection summary) · S5 Experiment prompts (full text) · S6 Full results and statistics · S7 Additional figures · S8 Software environment, code, and data availability · S9 Experiment 2 report materials and results.", { size: 20 }));
 c.push(HR());
 
@@ -177,7 +178,7 @@ c.push(BULLET("run_experiment.workflow.js and run_experiment_r.workflow.js orche
 c.push(BULLET("results_v2.json and results_v2_R.json hold every run's structured output (200 records each)."));
 c.push(BULLET("analyze_v2.py scores the Python arm; analyze_cross_language.py scores R and the Python-versus-R comparison and draws the comparison figure."));
 c.push(BULLET("generate_prompts.py and generate_prompts_r.py regenerate the prompt files; data/ holds the three input CSV files."));
-c.push(P("These materials are in the public Git repository https://github.com/Fabbiologia/ai-skills-reproducibility-ecology (archived with a DOI on acceptance). The restricted LTEM reef-fish file for Task T4 is not distributed there and is available on request from the Aburto Lab.", { spacing: { before: 100 } }));
+c.push(P("These materials are provided for peer review in an anonymised repository, the link to which is shared with the editors; the repository will be de-anonymised and archived with a DOI on acceptance. The restricted reef fish file for Task T4 is not included and is available on request.", { spacing: { before: 100 } }));
 c.push(P("Together these make the experiment fully reproducible end-to-end. Re-running each orchestration regenerates its run set, and the analysis scripts regenerate every number and figure reported here.", { spacing: { before: 100 } }));
 
 // ---- S9 (Experiment 2) ----

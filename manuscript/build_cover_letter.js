@@ -1,5 +1,6 @@
 const T = require("./theme.js");
-const { P, HR, GAP, buildDoc, write, rt } = T;
+const { P, HR, GAP, buildDoc, write, rt, setSpacing } = T;
+setSpacing(240); // cover letter is single-spaced
 const path = require("path");
 const docx = require("docx");
 const { Paragraph, TextRun } = docx;

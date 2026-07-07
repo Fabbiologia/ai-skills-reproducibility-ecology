@@ -9,6 +9,10 @@ const {
 
 const FONT = "Times New Roman";
 const BODY = "1F2937", HEAD = "111827", TEAL = "0F766E", GRAY = "6B7280", LINE = "E5E7EB", FILL = "F3F4F6";
+// Line spacing in twentieths (240 = single, 480 = double). MEE wants double-spaced
+// manuscripts; the cover letter calls setSpacing(240) for single.
+let LINESP = 480;
+const setSpacing = (v) => { LINESP = v; };
 
 // rich text: **bold**, *italic*, ~sub~ handled minimally; splits a string into TextRuns
 function rt(s, base = {}) {
@@ -28,16 +32,16 @@ function rt(s, base = {}) {
   return runs;
 }
 
-const P = (s, opts = {}) => new Paragraph({ spacing: { line: 336, after: 120, ...(opts.spacing || {}) }, alignment: opts.align, children: typeof s === "string" ? rt(s, opts) : s, ...(opts.p || {}) });
+const P = (s, opts = {}) => new Paragraph({ spacing: { line: LINESP, after: 120, ...(opts.spacing || {}) }, alignment: opts.align, children: typeof s === "string" ? rt(s, opts) : s, ...(opts.p || {}) });
 const TITLE = (s) => new Paragraph({ style: "Title", children: rt(s, { size: 24, bold: true, color: HEAD }) });
 const H1 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_1, children: rt(s, { size: 24, bold: true, color: HEAD }) });
 const H2 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_2, children: rt(s, { size: 24, bold: true, color: HEAD }) });
 const H3 = (s) => new Paragraph({ heading: HeadingLevel.HEADING_3, children: rt(s, { size: 24, bold: true, color: HEAD }) });
 const CAP = (s) => new Paragraph({ spacing: { after: 160, line: 300 }, children: rt(s, { size: 22, color: GRAY, italics: true }) });
 const TCAP = (s) => new Paragraph({ spacing: { before: 200, after: 60, line: 300 }, children: rt(s, { size: 22, color: GRAY, italics: true }) });
-const BULLET = (s) => new Paragraph({ numbering: { reference: "bullets", level: 0 }, spacing: { after: 60, line: 320 }, children: rt(s) });
-const NUM = (s, ref = "nums") => new Paragraph({ numbering: { reference: ref, level: 0 }, spacing: { after: 60, line: 320 }, children: rt(s) });
-const REFP = (s) => new Paragraph({ spacing: { after: 100, line: 300 }, indent: { left: 360, hanging: 360 }, children: rt(s, { size: 24 }) });
+const BULLET = (s) => new Paragraph({ numbering: { reference: "bullets", level: 0 }, spacing: { after: 60, line: LINESP }, children: rt(s) });
+const NUM = (s, ref = "nums") => new Paragraph({ numbering: { reference: ref, level: 0 }, spacing: { after: 60, line: LINESP }, children: rt(s) });
+const REFP = (s) => new Paragraph({ spacing: { after: 100, line: LINESP }, indent: { left: 360, hanging: 360 }, children: rt(s, { size: 24 }) });
 const HR = (color = TEAL, size = 6) => new Paragraph({ border: { bottom: { style: BorderStyle.SINGLE, size, color, space: 1 } }, spacing: { before: 160, after: 160 } });
 const GAP = (after = 120) => new Paragraph({ spacing: { after }, children: [] });
 const PB = () => new Paragraph({ children: [new PageBreak()] });
@@ -61,7 +65,7 @@ function buildDoc(children, { title = "Document", footerLeft = "", lineNumbers =
   return new Document({
     creator: "Aburto Lab", title,
     styles: {
-      default: { document: { run: { font: FONT, size: 24, color: BODY }, paragraph: { spacing: { line: 336, after: 120 } } } },
+      default: { document: { run: { font: FONT, size: 24, color: BODY }, paragraph: { spacing: { line: LINESP, after: 120 } } } },
       paragraphStyles: [
         { id: "Title", name: "Title", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 24, bold: true, color: HEAD }, paragraph: { spacing: { before: 240, after: 200 }, outlineLevel: 0 } },
         { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true, run: { font: FONT, size: 24, bold: true, color: HEAD }, paragraph: { spacing: { before: 320, after: 120 }, outlineLevel: 0 } },
@@ -89,4 +93,4 @@ function buildDoc(children, { title = "Document", footerLeft = "", lineNumbers =
 
 async function write(doc, path) { const buf = await Packer.toBuffer(doc); fs.writeFileSync(path, buf); console.log("wrote", path, fs.statSync(path).size, "bytes"); }
 
-module.exports = { rt, P, TITLE, H1, H2, H3, CAP, TCAP, BULLET, NUM, REFP, HR, GAP, PB, img, table, buildDoc, write, COLORS: { BODY, HEAD, TEAL, GRAY, LINE, FILL } };
+module.exports = { rt, P, TITLE, H1, H2, H3, CAP, TCAP, BULLET, NUM, REFP, HR, GAP, PB, img, table, buildDoc, write, setSpacing, COLORS: { BODY, HEAD, TEAL, GRAY, LINE, FILL } };
