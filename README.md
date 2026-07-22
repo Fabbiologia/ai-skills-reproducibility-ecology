@@ -30,13 +30,18 @@ proportion per condition and conditions are compared across the twelve tasks wit
 paired Wilcoxon signed-rank tests. Repeated runs of one task are treated as repeated
 measures of that task and never as independent observations.
 
-**What was found.** The question alone reached the reference in 57 per cent of runs
-across all twelve tasks and in 2 per cent on the five tasks where the choice was
-genuinely open. A written specification raised these to 90 and 78 per cent, a working
-script to 72 and 38 per cent. The specification beat the script across tasks
-(P = 0.031) while the script was not distinguishable from no instruction (P = 0.109).
-On several tasks every run that returned a number returned the *same wrong number*,
-so neither repeating the analysis nor trying another model would have exposed it.
+**What was found.** The question alone reached the reference in 59 per cent of runs
+across all twelve tasks and in 3 per cent on the five tasks where the choice was
+genuinely open. A written specification raised these to 96 and 90 per cent, a working
+script to 75 and 44 per cent. The specification beat the script across tasks
+(P = 0.031) while the script was not distinguishable from no instruction (P = 0.094).
+
+Agreement between runs tracked correctness poorly. The script made runs agree with
+one another on 11 of 12 tasks, exactly as often as the specification did, while
+reaching the correct value far less often, and on one task **all ten runs given a
+working script returned the same wrong number**. Repeating the analysis, rewriting it
+in a second language, or trying another company's model would each have confirmed
+that error.
 
 ## Layout
 
@@ -47,7 +52,7 @@ for_submission/
 │   ├── references.json    the twelve questions, specifications, references and tolerances
 │   ├── run.py             the harness: 12 tasks x 3 conditions x 2 models x 5 repeats
 │   ├── run_records.csv     the 360 run records
-│   ├── analyze.py         task-level statistics and the paired tests
+│   ├── analyze.py         task-level statistics, paired tests, agreement, sensitivity
 │   ├── make_figures.py    Figures 1 and 2
 │   └── data/portal_surveys.csv
 ├── transfer_runs/         how far a specification carries when the data are presented differently
@@ -60,6 +65,7 @@ for_submission/
 │   └── results/                                summary tables
 ├── registry_standard/     proposed machine-readable manifest for a shared collection
 ├── manuscript/            the .docx files and the scripts that build them
+│                          (the Supporting Information is generated from the records)
 ├── data/                  iris, penguins, and the access note for the restricted reef data
 ├── audit_archive.py       structural and provenance audit
 ├── PROVENANCE.md          known gaps, stated rather than papered over

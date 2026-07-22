@@ -24,8 +24,8 @@ analyze:            ## task-level statistics from the archived run records
 figures:            ## draw Figures 1 and 2
 	$(PYTHON) main_study/make_figures.py
 
-docs:               ## rebuild the manuscript, title page and cover letter (.docx)
-	cd manuscript && node build_paper2.js && node build_title_page2.js && node build_cover_letter2.js
+docs:               ## rebuild the manuscript, SI, title page and cover letter (.docx)
+	cd manuscript && node build_paper2.js && node build_si2.js && node build_title_page2.js && node build_cover_letter2.js
 
 standard:           ## validate the proposed machine-readable specification manifests
 	$(PYTHON) registry_standard/validate_skills.py

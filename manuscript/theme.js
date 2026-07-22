@@ -14,10 +14,12 @@ const BODY = "1F2937", HEAD = "111827", TEAL = "0F766E", GRAY = "6B7280", LINE =
 let LINESP = 480;
 const setSpacing = (v) => { LINESP = v; };
 
-// rich text: **bold**, *italic*, ~sub~ handled minimally; splits a string into TextRuns
+// rich text: **bold**, *italic*, ~sub~ handled minimally; splits a string into TextRuns.
+// Underscores are NOT italic markers: identifiers such as run_records.csv and
+// A1_reef_biomass appear in the text and must survive intact.
 function rt(s, base = {}) {
   const runs = [];
-  const re = /(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_)/g;
+  const re = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
   let last = 0, m;
   const push = (text, extra) => { if (text) runs.push(new TextRun({ text, font: FONT, size: base.size || 24, color: base.color || BODY, bold: base.bold, italics: base.italics, ...extra })); };
   while ((m = re.exec(s))) {
