@@ -1,10 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this software or data, please cite the manuscript and this repository."
-title: "Reusable instructions make AI ecological analyses reproducible when they remove analytical choices"
+title: "Repeated AI analyses of ecological data agree on wrong answers until the method is written down"
 abstract: >-
-  Materials, data, code, and documents for controlled ablations of AI analysis skills
-  across ecological tasks, plus a proposed machine-readable evidence standard for
-  versioned and testable skill repositories.
+  Tasks, reference values, prompts, run records, analysis code and documents for a
+  study of how often an artificial-intelligence tool reaches the correct value on an
+  ecological analysis task, and of whether writing the method down as a reusable
+  specification does more for it than sharing a working script. Includes a proposed
+  machine-readable manifest for a shared collection of such specifications.
 type: software
 authors:
   - family-names: "Favoretto"
@@ -18,11 +20,11 @@ authors:
     affiliation: "Centro para la Biodiversidad Marina y la Conservación, A.C., La Paz, Mexico"
 keywords:
   - reproducibility
+  - analytical choices
   - large language models
-  - agent skills
+  - specification
   - open science
-  - marine ecology
-  - FAIR
+  - ecology
 license: MIT
-version: "1.0.0"
-date-released: "2026-07-02"
+version: "2.0.0"
+date-released: "2026-07-22"

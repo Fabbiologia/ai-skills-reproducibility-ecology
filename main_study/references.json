@@ -11,7 +11,7 @@
   "A2_portal_abundance": {
     "fork": "aggregation",
     "dataset": "portal",
-    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/main_study/data/portal_surveys.csv",
     "question": "How many rodents were captured per plot per year, on average?",
     "spec": "Restrict to records where taxa is 'Rodent'. A sampling unit is a unique (plot_id, year) combination that appears in the data. Count the records in each unit, then report the mean of those counts across units.",
     "reference": 55.32633279483037,
@@ -20,7 +20,7 @@
   "A3_portal_richness": {
     "fork": "aggregation",
     "dataset": "portal",
-    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/main_study/data/portal_surveys.csv",
     "question": "What is the mean rodent species richness of a plot in a year?",
     "spec": "Restrict to records where taxa is 'Rodent' and species_id is present. A sampling unit is a unique (plot_id, year) combination that appears in the data. Richness is the number of distinct species_id values in a unit. Report the mean richness across units.",
     "reference": 6.688206785137318,
@@ -47,7 +47,7 @@
   "S3_portal_hf_weight_corr": {
     "fork": "scope",
     "dataset": "portal",
-    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/main_study/data/portal_surveys.csv",
     "question": "How strongly are hindfoot length and body weight related in this rodent community?",
     "spec": "Restrict to records where taxa is 'Rodent'. Compute a single Pearson correlation over all such rows pooled together, without splitting or conditioning on species. Use only rows where both measurements are present.",
     "reference": 0.6838127650872681,
@@ -65,7 +65,7 @@
   "M2_portal_dm_weight": {
     "fork": "missing",
     "dataset": "portal",
-    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/main_study/data/portal_surveys.csv",
     "question": "What is the mean weight of Dipodomys merriami (species_id 'DM')?",
     "spec": "Restrict to records with species_id 'DM'. Exclude records whose weight is missing; do not treat a missing weight as zero. Report the mean of the remaining weights.",
     "reference": 43.157863964139544,
@@ -74,7 +74,7 @@
   "M3_portal_implicit_zeros": {
     "fork": "missing",
     "dataset": "portal",
-    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/main_study/data/portal_surveys.csv",
     "question": "Across the whole survey, what is the mean number of rodents caught in a plot in a year?",
     "spec": "Restrict to records where taxa is 'Rodent'. The sampling units are every combination of a plot_id and a year that occur anywhere in the file, so a plot-year with no rodent records is a real zero and must be counted as zero rather than omitted. Report the mean count over all such units.",
     "reference": 54.88301282051282,
@@ -101,7 +101,7 @@
   "R3_portal_species_clf": {
     "fork": "randomness",
     "dataset": "portal",
-    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/main_study/data/portal_surveys.csv",
     "question": "How accurately can the two Dipodomys species (DM and DO) be told apart from weight and hindfoot length?",
     "spec": "Restrict to records with species_id 'DM' or 'DO' and drop records missing weight or hindfoot_length. Predictors are weight and hindfoot_length; the target is species_id. Standardise the predictors with StandardScaler fitted on the training data only (use a pipeline). Split with train_test_split(test_size=0.2, random_state=42, stratify=y). Fit LogisticRegression(max_iter=2000). Report accuracy on the held-out test set.",
     "reference": 0.8125249301954527,

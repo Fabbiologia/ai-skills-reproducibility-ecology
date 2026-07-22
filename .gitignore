@@ -29,4 +29,4 @@ data/ltem_cabo_pulmo_2023.csv
 
 # Word lock/temp files
 ~$*
-transfer_pilot/data/
+transfer_runs/data/

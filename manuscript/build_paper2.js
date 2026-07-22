@@ -1,7 +1,7 @@
 const T = require("./theme.js");
 const { P, TITLE, H1, H2, CAP, TCAP, NUM, REFP, PB, img, table, buildDoc, write } = T;
 const path = require("path");
-const S2 = path.resolve(__dirname, "..", "study2");
+const S2 = path.resolve(__dirname, "..", "main_study");
 
 const c = [];
 

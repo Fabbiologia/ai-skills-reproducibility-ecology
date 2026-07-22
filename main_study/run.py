@@ -17,7 +17,7 @@ Every model sees the same data preview an analyst would see, so the test is
 about specification rather than about guessing column names.
 
 Usage (needs OPENAI_API_KEY and GEMINI_API_KEY):
-  run_study2.py <reps> <out csv>
+  run.py <reps> <out csv>
 """
 import os, sys, re, json, subprocess, tempfile, time, csv
 from pathlib import Path
@@ -30,7 +30,7 @@ TEMPERATURE = 1.0
 TIMEOUT = 180
 
 REPS = int(sys.argv[1]) if len(sys.argv) > 1 else 5
-OUT = HERE / (sys.argv[2] if len(sys.argv) > 2 else "study2_records.csv")
+OUT = HERE / (sys.argv[2] if len(sys.argv) > 2 else "run_records.csv")
 
 PROVIDERS = [
     {"provider": "openai", "model": "gpt-4.1"},

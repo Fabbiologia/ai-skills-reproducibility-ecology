@@ -1,202 +1,137 @@
-# Reusable instructions make AI ecological analyses reproducible
+# Repeated AI analyses of ecological data agree on wrong answers until the method is written down
 
-Reproducibility repository for the manuscript **"Reusable instructions make AI
-ecological analyses reproducible when they remove analytical choices"** (target journal:
-*Methods in Ecology and Evolution*).
+Materials for the manuscript of that title, prepared for *Methods in Ecology and
+Evolution*. Everything needed to check the numbers, redraw the figures and rebuild
+the documents is here, and none of it requires calling a model.
 
-The paper tests when structured AI instructions improve the reproducibility and
-validity of ecological analyses, then turns the observed mechanisms into a proposed,
-machine-checkable evidence standard for curated skill repositories.
+## What the study asks
 
-This repository contains everything needed to reproduce the experiment, its figures
-and statistics, and to rebuild the manuscript and Supporting Information documents
-from source.
+An ecologist can describe an analysis to an artificial-intelligence tool in ordinary
+words and receive a number. The study asks how often that number is correct, whether
+writing the method down as a reusable specification improves matters, and whether it
+does so more than supplying a working script.
 
----
+Twelve tasks on four ecological datasets each pose a question the way an ecologist
+would ask it, leaving one analytical choice open. Four kinds of open choice are
+covered, with three tasks each, and no kind is confined to a single dataset:
 
-## What the study does
+| kind of open choice | what is left undecided |
+|---|---|
+| sampling unit | what is averaged over before a mean is taken |
+| scope | whether an estimate is pooled across groups or computed within them |
+| missing records | how absent values, and rows absent altogether, are treated |
+| fitting a model | the split of the data, the random seed, the scaling |
 
-AI *skills* are reusable, structured instructions for LLM and agent tools. No earlier
-study had directly tested whether they improve the **output reproducibility** of
-ecological analyses. This repository holds a controlled experiment that tests it: a
-fully crossed **4 (task) by 5 (skill level) by 2 (language: Python and R) by 10
-(replicate) = 400-run** design in which independent LLM agents each run an analysis
-and return a structured result. The five skill levels add one kind of instruction at
-a time (none, basic, contract, controls, full), so the experiment shows which part of
-a skill does the work, and the two languages test whether different code reaches the
-same answer. A short literature review sets the context and is not a formal
-systematic review.
+Every task ran under three conditions, namely the question alone, the question with a
+written specification, and the question with a working script for a different task of
+the same kind. Each condition ran ten times across models from two companies, giving
+360 runs. **The unit of replication is the task**, so each task contributes one
+proportion per condition and conditions are compared across the twelve tasks with
+paired Wilcoxon signed-rank tests. Repeated runs of one task are treated as repeated
+measures of that task and never as independent observations.
 
-**Headline result:** in this task set, skills helped only where they removed a
-consequential analytical choice. Fixed stochastic controls removed Python classifier
-variation; an explicit survey-unit contract corrected a reproducible but invalid
-biomass result. Generic added prose did not help. These task-level findings motivate,
-but do not by themselves validate, a universal repository standard.
+**What was found.** The question alone reached the reference in 57 per cent of runs
+across all twelve tasks and in 2 per cent on the five tasks where the choice was
+genuinely open. A written specification raised these to 90 and 78 per cent, a working
+script to 72 and 38 per cent. The specification beat the script across tasks
+(P = 0.031) while the script was not distinguishable from no instruction (P = 0.109).
+On several tasks every run that returned a number returned the *same wrong number*,
+so neither repeating the analysis nor trying another model would have exposed it.
 
----
-
-## Repository structure
+## Layout
 
 ```
 for_submission/
-├── README.md                     ← this file
-├── LICENSE                       ← MIT (code) + data/docs terms below
-├── CITATION.cff                  ← citation metadata
-├── requirements.txt              ← Python dependencies (tested versions)
-├── environment.yml               ← conda alternative
-├── Makefile                      ← reproduce / build targets
-├── Dockerfile                    ← containerised reproduction of analysis + docs
-├── REPORT_v2.md                  ← plain-text findings report
-├── PROVENANCE.md                 ← known archival gaps and interpretation boundaries
-├── audit_archive.py              ← structural and provenance audit
-│
-├── generate_prompts.py           ← writes the 20 Python condition prompts (the independent variable)
-├── generate_prompts_r.py         ← writes the 20 R condition prompts
-├── run_experiment.workflow.js    ← orchestration that launched the 200 Python agent runs
-├── run_experiment_r.workflow.js  ← orchestration that launched the 200 R agent runs
-├── analyze_v2.py                 ← scores the Python arm; regenerates its tables + figures
-├── analyze_cross_language.py     ← scores R and the Python-vs-R comparison; draws the comparison figure
-├── generate_prisma_flow.py       ← draws the literature-selection diagram (Figure S1)
-├── results_v2.json               ← the 200 Python run-level records (raw experimental data)
-├── results_v2_R.json             ← the 200 R run-level records (raw experimental data)
-│
-├── data/                         ← input datasets + canonical references
-│   ├── iris.csv
-│   ├── penguins.csv
-│   ├── ltem_cabo_pulmo_2023.csv.README.md  ← real reef-fish data NOT included; available on request
-│   ├── references.json           ← Python reference values
-│   └── references_R.json         ← R reference values (T2 differs: 0.8657)
-├── prompts/                      ← the 20 Python condition prompts (T{1..4}_C{0..4}.txt)
-├── prompts_r/                    ← the 20 R condition prompts (T{1..4}_C{0..4}.txt)
-├── results/                      ← generated: summary tables (json/csv) + figures (png)
-├── report_reproducibility/       ← second experiment: whole-report reproducibility + skill coherence
-│   ├── FINDINGS.md               ← results write-up
-│   ├── generate_report_prompts.py, run_report_experiment.workflow.js, analyze_report.py
-│   ├── prompts/ (C0/C1/C2), results_report.json, references_report.json
-│   └── results/fig_report_reproducibility.png
-├── repository_standard/          ← proposed machine-readable admission standard
-│   ├── skill-evidence.schema.json
-│   ├── validate_skills.py
-│   └── examples/penguins-sex-classifier/
-└── manuscript/                   ← Word documents + build scripts
-    ├── Manuscript_AI_Skills_Reproducibility_MEE.docx
-    ├── Supporting_Information_AI_Skills_Reproducibility_MEE.docx
-    ├── Cover_Letter_MEE.docx / .md
-    ├── theme.js, build_manuscript.js, build_si.js
-    └── package.json
+├── main_study/            the twelve tasks: all inference rests on this
+│   ├── tasks.py           task definitions; every reference computed twice, independently
+│   ├── references.json    the twelve questions, specifications, references and tolerances
+│   ├── run.py             the harness: 12 tasks x 3 conditions x 2 models x 5 repeats
+│   ├── run_records.csv     the 360 run records
+│   ├── analyze.py         task-level statistics and the paired tests
+│   ├── make_figures.py    Figures 1 and 2
+│   └── data/portal_surveys.csv
+├── transfer_runs/         how far a specification carries when the data are presented differently
+├── supporting_runs/       earlier runs reported as description only, with no test applied
+│   ├── results_v2.json, results_v2_R.json      the Python and R arms
+│   ├── analyze_cross_language.py               Python against R
+│   ├── crossprovider_harness.py, analyze_providers.py   five models, three companies
+│   ├── report_reproducibility/                 whole-report runs
+│   ├── prompts/, prompts_r/                    the prompts as they were sent
+│   └── results/                                summary tables
+├── registry_standard/     proposed machine-readable manifest for a shared collection
+├── manuscript/            the .docx files and the scripts that build them
+├── data/                  iris, penguins, and the access note for the restricted reef data
+├── audit_archive.py       structural and provenance audit
+├── PROVENANCE.md          known gaps, stated rather than papered over
+└── Makefile               make help
 ```
 
----
+## Reproducing it
 
-## Two reproducibility layers
-
-**1. Deterministic (fully reproducible here).** Everything downstream of the raw run
-data — all tables, statistics, figures, and the Word documents — regenerates exactly
-from `results_v2.json` with `analyze_v2.py` and the manuscript build scripts. This is
-what the `Makefile` / `Dockerfile` reproduce.
-
-**2. The agent runs (require an LLM-agent harness).** `results_v2.json` was produced by
-`run_experiment.workflow.js` orchestrating 200 independent LLM coding agents (built on
-a single underlying model) via the Claude Code agent/workflow harness. The prompts
-(`generate_prompts.py`, `prompts/`) and orchestration are provided in full for
-transparency, but **re-running the agents requires that harness and will not
-bit-reproduce**, because execution is stochastic and backend-dependent. The archival
-records do not identify the exact model version, provider release, harness version,
-or decoding settings; this is a known historical limitation, not information that
-should be inferred retrospectively. See `PROVENANCE.md`.
-
-The report experiment retains structured values and judge grades but not the full
-report text the judge saw. Its findings are exploratory and cannot be independently
-regraded from the current archive. The workflows now retain full text and provenance
-for future run sets.
-
----
-
-## Quickstart — reproduce the analysis and documents
-
-Requires Python 3.11+ and Node.js 18+.
+Python 3.11 or later and Node.js 18 or later.
 
 ```bash
-# 1. install dependencies
-pip install -r requirements.txt
-cd manuscript && npm install && cd ..
-
-# 2. regenerate all tables, statistics and figures from the raw run data
-python analyze_v2.py
-
-# 3. rebuild the manuscript and Supporting Information .docx
-cd manuscript && node build_manuscript.js && node build_si.js && cd ..
+make setup && make reproduce
 ```
 
-Or use the Makefile:
+`make reproduce` recomputes every reference value with two independent
+implementations, regenerates the statistics from the archived run records, redraws
+both figures and rebuilds the three Word documents. It calls no model and is
+deterministic. `make check` runs the archive audit. `make help` lists the targets.
+
+To re-run the experiment itself, set `OPENAI_API_KEY` and `GEMINI_API_KEY` and run
+`python main_study/run.py 5`. This calls paid interfaces, costs money, and will not
+reproduce the archived records exactly, because the models sample at a temperature of
+one. That is the phenomenon under study rather than a defect of the harness.
+
+### In a container
 
 ```bash
-make setup       # pip install + npm install
-make reproduce   # analyze_v2.py + rebuild both .docx (deterministic)
-make check       # validate skill manifests + audit archive completeness
-make all         # also regenerate the prompt files
+docker build -t spec-repro . && docker run --rm -v "$PWD:/work" spec-repro
 ```
 
-### Containerised (Docker)
+## Two layers of reproducibility, kept apart
 
-```bash
-docker build -t mee-repro .
-docker run --rm -v "$PWD:/work" mee-repro   # runs `make reproduce`
-```
+Everything downstream of the run records is deterministic and regenerates here. The
+run records themselves came from calling models, and calling them again will give
+different records. The main study names the models it used, `gpt-4.1` and
+`gemini-pro-latest`, and the temperature, which was left at its default of one.
 
-The container reproduces the deterministic layer (statistics, figures, documents).
+The supporting runs are older and their records do not carry the model identifier or
+the decoding settings for every run, and the whole-report records do not retain the
+full text that was graded. This is one reason those runs are reported as description
+with no test applied, and it is stated in the manuscript as well as in
+`PROVENANCE.md`. It is a gap in the record, not something to be reconstructed from
+memory.
 
----
+## Data
 
-## Re-running the agent experiment (optional, needs the harness)
-
-1. Edit `run_experiment.workflow.js` and set `REPO` to the absolute path of your
-   checkout (agents need an absolute path to read each prompt file).
-2. Regenerate the prompt files: `python generate_prompts.py` (they use repo-relative
-   data paths, so run agents with the working directory at the repository root).
-3. Complete the required `RUN_PROVENANCE` block. The workflow refuses to launch while
-   model, provider, harness, decoding, or run-date fields are unset.
-4. Execute `run_experiment.workflow.js` in the Claude Code workflow harness. It runs
-   4 tasks × 5 conditions × 10 replicates with a 3× retry per cell and enforced
-   structured output, returning the run array (overwrite `results_v2.json`).
-5. `python analyze_v2.py` to re-score.
-
----
-
-## Data provenance and licensing
-
-- **iris.csv** — Fisher's iris data, via scikit-learn (`sklearn.datasets.load_iris`).
-- **penguins.csv** — Palmer Penguins (Horst, Hill & Gorman 2020; data from Gorman et
+- **iris.csv** — Fisher's iris measurements, via scikit-learn.
+- **penguins.csv** — Palmer Penguins (Horst, Hill and Gorman 2020; data from Gorman et
   al. 2014), via seaborn. CC0.
-- **ltem_cabo_pulmo_2023.csv** — **excluded from the public repository** (available on
-  request from the Aburto Lab; see `data/ltem_cabo_pulmo_2023.csv.README.md`). A 2023
-  extract (2,798 reef-fish records, 10 reefs,
-  41 transect units) from the Long-Term Ecological Monitoring (LTEM) programme,
-  Cabo Pulmo National Park, Gulf of California. It is required to rerun Task T4;
-  please contact the Aburto Lab regarding reuse of the monitoring data.
+- **portal_surveys.csv** — twenty six years of rodent capture records from the Portal
+  Project long-term survey.
+- **ltem_cabo_pulmo_2023.csv** — **not distributed here**. A 2023 extract of reef-fish
+  transect records from the Long-Term Ecological Monitoring programme in Cabo Pulmo
+  National Park, Gulf of California. Available on request from the Aburto Lab; see
+  `data/ltem_cabo_pulmo_2023.csv.README.md`. The deterministic reproduction does not
+  need it. Re-running the two reef-fish tasks does.
 
-**Code** (`*.py`, `*.js`) is released under the MIT License (`LICENSE`).
-**Text and figures** (manuscript, SI, `results/*.png`) are intended for release under
-CC-BY 4.0 on publication.
+Code is released under the MIT License. Text and figures are intended for release
+under CC-BY 4.0 on publication.
 
----
+## Citing
 
-## Citation
+See `CITATION.cff`. Please cite the manuscript once published, and this repository
+with its Zenodo DOI until then.
 
-See `CITATION.cff`. Please cite the manuscript once published; until then cite this
-repository and the archived OSF/Zenodo DOI (to be added on submission).
+## What the study does not show
 
-## Software environment (tested)
-
-Python 3; numpy 2.4.6; scipy 1.16.3; scikit-learn 1.9.0; matplotlib; pandas; seaborn.
-Node.js with `docx` 9.7.x for document generation.
-
-## Interpretation boundary
-
-The experiment was not preregistered, used one model/provider configuration that was
-not fully recorded, and has one task supporting each of its two main mechanistic
-effects. The Fisher tests are exploratory contrasts over runs from those tasks, not
-evidence that the effect sizes generalise to all ecological analyses. The strongest
-contribution is conditional: identify consequential degrees of freedom, encode them
-as a contract, and test reproducibility, reference validity, and method coherence
-separately.
+Twelve tasks on four datasets is a small sample of ecological analysis, and each kind
+of open choice rests on three tasks. Two companies' models were used in the main
+study. The reference values are correct given the quantity each task states, but the
+choice of quantity is ours; an ecologist could define a survey unit differently and be
+right to do so. What the results show is that the value returned without a
+specification did not match the quantity the question intended, not that one
+convention is universally correct. The tasks are single steps rather than multi-step
+analyses in which one choice feeds the next.

@@ -15,7 +15,7 @@ script, and every script is executed identically. Any failure is a transfer
 failure, not a data difference.
 
 Usage (needs OPENAI_API_KEY and GEMINI_API_KEY in the environment):
-  run_transfer_pilot.py <reps> <out csv>
+  run_transfer.py <reps> <out csv>
 """
 import os, sys, re, json, subprocess, tempfile, time
 from pathlib import Path

@@ -15,7 +15,7 @@ from scipy import stats
 
 HERE = Path(__file__).parent
 REFS = json.loads((HERE / "references.json").read_text())
-rows = list(csv.DictReader(open(HERE / "study2_records.csv")))
+rows = list(csv.DictReader(open(HERE / "run_records.csv")))
 ARMS = ["none", "skill", "code"]
 
 # ---- task-level summary: one proportion per (task, arm), pooling providers ----
@@ -113,5 +113,5 @@ for prov in sorted({r["provider"] for r in rows}):
     print(line)
 
 json.dump({f"{t}|{a}": task_rate[(t, a)] for t in tasks for a in ARMS},
-          open(HERE / "study2_task_rates.json", "w"), indent=2)
-print("\nWrote study2/study2_task_rates.json")
+          open(HERE / "task_rates.json", "w"), indent=2)
+print("\nWrote main_study/task_rates.json")

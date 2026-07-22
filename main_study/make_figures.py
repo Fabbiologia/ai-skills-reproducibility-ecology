@@ -23,7 +23,7 @@ from matplotlib.lines import Line2D
 
 HERE = Path(__file__).parent
 REFS = json.loads((HERE / "references.json").read_text())
-rows = list(csv.DictReader(open(HERE / "study2_records.csv")))
+rows = list(csv.DictReader(open(HERE / "run_records.csv")))
 
 ARMS = ["none", "code", "skill"]
 ALAB = {"none": "Question\nalone", "code": "With a\nscript", "skill": "With a\nspecification"}

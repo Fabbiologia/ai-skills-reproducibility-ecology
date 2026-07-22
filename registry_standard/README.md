@@ -13,7 +13,7 @@ The manifest also requires versioning, provenance, environment constraints, fixe
 Validate every example with:
 
 ```bash
-python repository_standard/validate_skills.py
+python registry_standard/validate_skills.py
 ```
 
 The `penguins-sex-classifier` entry is a worked example built from Task T2. A production repository should additionally run the declared fixtures across multiple model providers, retain full agent rollouts, record failure and retry counts, and publish signed result summaries for every skill version.

@@ -325,7 +325,7 @@ def build(verbose=True):
     (HERE / "references.json").write_text(json.dumps(out, indent=2))
     if verbose:
         print(f"\nAll {len(out)} references verified by two independent implementations.")
-        print("Wrote study2/references.json")
+        print("Wrote main_study/references.json")
     return out
 
 

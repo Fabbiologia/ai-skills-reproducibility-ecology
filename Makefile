@@ -1,49 +1,49 @@
-# Reproducibility targets for the MEE skills-reproducibility study.
-# The deterministic layer (analyze, docs) regenerates everything from results_v2.json.
+# Reproducibility targets.
+#
+# The deterministic layer regenerates every number, figure and document in the
+# paper from the archived run records, without calling any model. The `runs`
+# target calls paid model interfaces, so it is never part of `reproduce`.
 
 PYTHON ?= python3
 
-.PHONY: setup prompts analyze prisma xlang report figures docs standard audit check reproduce all clean
+.PHONY: help setup refs analyze figures docs standard audit check reproduce runs all clean
+
+help:               ## list the available targets
+	@grep -hE '^[a-z]+:.*##' $(MAKEFILE_LIST) | sed 's/:.*##/\t/' | expand -t22
 
 setup:              ## install Python and Node dependencies
 	$(PYTHON) -m pip install -r requirements.txt
 	cd manuscript && npm install
 
-prompts:            ## regenerate the Study 1 (Python + R) and Study 2 (report) prompt files
-	$(PYTHON) generate_prompts.py
-	$(PYTHON) generate_prompts_r.py
-	cd report_reproducibility && $(PYTHON) generate_report_prompts.py && $(PYTHON) generate_hard_prompts.py
+refs:               ## recompute every reference value with two independent implementations
+	$(PYTHON) main_study/tasks.py
 
-analyze:            ## regenerate Python result tables, statistics and figures from results_v2.json
-	$(PYTHON) analyze_v2.py
+analyze:            ## task-level statistics from the archived run records
+	$(PYTHON) main_study/analyze.py
 
-xlang:              ## regenerate R + cross-language results and the Python-vs-R figure
-	$(PYTHON) analyze_cross_language.py
+figures:            ## draw Figures 1 and 2
+	$(PYTHON) main_study/make_figures.py
 
-prisma:             ## regenerate the literature selection diagram (Figure S1)
-	$(PYTHON) generate_prisma_flow.py
+docs:               ## rebuild the manuscript, title page and cover letter (.docx)
+	cd manuscript && node build_paper2.js && node build_title_page2.js && node build_cover_letter2.js
 
-report:             ## regenerate Study 2 (report-level) results and figures
-	cd report_reproducibility && $(PYTHON) analyze_report.py && $(PYTHON) analyze_hard_report.py
+standard:           ## validate the proposed machine-readable specification manifests
+	$(PYTHON) registry_standard/validate_skills.py
 
-figures: analyze xlang prisma report   ## all figures + statistics (Studies 1 and 2)
-
-docs:               ## rebuild the manuscript, SI, cover letter and title page (.docx)
-	cd manuscript && node build_manuscript.js && node build_si.js && node build_cover_letter.js && node build_title_page.js
-
-standard:           ## validate proposed skill-repository manifests
-	$(PYTHON) repository_standard/validate_skills.py
-
-audit:              ## audit archive completeness and print known provenance warnings
+audit:              ## check archive completeness and print known provenance gaps
 	$(PYTHON) audit_archive.py
 
-check: standard audit  ## run non-generating repository checks
+check: standard audit  ## repository checks that generate nothing
 
-reproduce: figures docs   ## deterministic reproduction: stats + figures + documents
+reproduce: refs analyze figures docs  ## everything in the paper, without calling a model
 
-all: prompts figures docs check ## also regenerate prompts and run repository checks
+runs:               ## re-run the experiment; calls paid model interfaces and overwrites the records
+	@echo "This calls paid model interfaces and overwrites main_study/run_records.csv."
+	@echo "Set OPENAI_API_KEY and GEMINI_API_KEY, then run: $(PYTHON) main_study/run.py 5"
 
-clean:              ## remove generated outputs (keeps raw results_v2*.json and data)
-	rm -f results/summary_v2.json results/summary_v2.csv results/cross_language_summary.json results/*.png
+all: reproduce check ## reproduce everything and run the repository checks
+
+clean:              ## remove generated outputs, keeping the raw run records and the data
+	rm -f main_study/task_rates.json main_study/*.png
 	rm -f manuscript/*.pdf
 	rm -rf manuscript/_preview
