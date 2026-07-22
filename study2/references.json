@@ -1,0 +1,110 @@
+{
+  "A1_reef_biomass": {
+    "fork": "aggregation",
+    "dataset": "reef",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/data/ltem_cabo_pulmo_2023.csv",
+    "question": "Report the mean per-transect fish biomass for the reserve, that is, the community biomass on a transect averaged across transects.",
+    "spec": "A survey unit is a unique (Reef, Transect) combination. Use the Biomass column as the per-record biomass and treat records with no biomass value as contributing nothing. Do not re-normalise by Area. Sum biomass within each survey unit, then take the mean of those per-unit totals.",
+    "reference": 3.4641913664166615,
+    "tolerance": 0.01
+  },
+  "A2_portal_abundance": {
+    "fork": "aggregation",
+    "dataset": "portal",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "question": "How many rodents were captured per plot per year, on average?",
+    "spec": "Restrict to records where taxa is 'Rodent'. A sampling unit is a unique (plot_id, year) combination that appears in the data. Count the records in each unit, then report the mean of those counts across units.",
+    "reference": 55.32633279483037,
+    "tolerance": 0.01
+  },
+  "A3_portal_richness": {
+    "fork": "aggregation",
+    "dataset": "portal",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "question": "What is the mean rodent species richness of a plot in a year?",
+    "spec": "Restrict to records where taxa is 'Rodent' and species_id is present. A sampling unit is a unique (plot_id, year) combination that appears in the data. Richness is the number of distinct species_id values in a unit. Report the mean richness across units.",
+    "reference": 6.688206785137318,
+    "tolerance": 0.01
+  },
+  "S1_iris_corr": {
+    "fork": "scope",
+    "dataset": "iris",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/data/iris.csv",
+    "question": "What is the correlation between sepal length and sepal width?",
+    "spec": "Compute a single Pearson correlation over all rows pooled together, without splitting or conditioning on species.",
+    "reference": -0.11756978413300206,
+    "tolerance": 0.001
+  },
+  "S2_penguin_bill_corr": {
+    "fork": "scope",
+    "dataset": "penguins",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/data/penguins.csv",
+    "question": "What is the correlation between bill length and bill depth?",
+    "spec": "Compute a single Pearson correlation over all rows pooled together, without splitting or conditioning on species. Use only rows where both measurements are present.",
+    "reference": -0.23505287035553274,
+    "tolerance": 0.001
+  },
+  "S3_portal_hf_weight_corr": {
+    "fork": "scope",
+    "dataset": "portal",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "question": "How strongly are hindfoot length and body weight related in this rodent community?",
+    "spec": "Restrict to records where taxa is 'Rodent'. Compute a single Pearson correlation over all such rows pooled together, without splitting or conditioning on species. Use only rows where both measurements are present.",
+    "reference": 0.6838127650872681,
+    "tolerance": 0.001
+  },
+  "M1_penguin_gentoo_mass": {
+    "fork": "missing",
+    "dataset": "penguins",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/data/penguins.csv",
+    "question": "What is the mean body mass of female Gentoo penguins?",
+    "spec": "Restrict to species 'Gentoo'. Drop records where either sex or body_mass_g is missing, then report the mean body_mass_g of the records with sex 'Female'.",
+    "reference": 4679.741379310345,
+    "tolerance": 0.01
+  },
+  "M2_portal_dm_weight": {
+    "fork": "missing",
+    "dataset": "portal",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "question": "What is the mean weight of Dipodomys merriami (species_id 'DM')?",
+    "spec": "Restrict to records with species_id 'DM'. Exclude records whose weight is missing; do not treat a missing weight as zero. Report the mean of the remaining weights.",
+    "reference": 43.157863964139544,
+    "tolerance": 0.01
+  },
+  "M3_portal_implicit_zeros": {
+    "fork": "missing",
+    "dataset": "portal",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "question": "Across the whole survey, what is the mean number of rodents caught in a plot in a year?",
+    "spec": "Restrict to records where taxa is 'Rodent'. The sampling units are every combination of a plot_id and a year that occur anywhere in the file, so a plot-year with no rodent records is a real zero and must be counted as zero rather than omitted. Report the mean count over all such units.",
+    "reference": 54.88301282051282,
+    "tolerance": 0.01
+  },
+  "R1_penguin_sex_clf": {
+    "fork": "randomness",
+    "dataset": "penguins",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/data/penguins.csv",
+    "question": "How accurately can a penguin's sex be predicted from its body measurements?",
+    "spec": "Predictors are bill_length_mm, bill_depth_mm, flipper_length_mm and body_mass_g; the target is sex. Drop records with any missing value among those five columns. Standardise the predictors with StandardScaler fitted on the training data only (use a pipeline). Split with train_test_split(test_size=0.2, random_state=42, stratify=y). Fit LogisticRegression(max_iter=2000). Report accuracy on the held-out test set.",
+    "reference": 0.8805970149253731,
+    "tolerance": 0.001
+  },
+  "R2_iris_species_clf": {
+    "fork": "randomness",
+    "dataset": "iris",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/data/iris.csv",
+    "question": "How accurately can the iris species be predicted from the four measurements?",
+    "spec": "Predictors are the four measurement columns; the target is the 'target' column. Standardise the predictors with StandardScaler fitted on the training data only (use a pipeline). Split with train_test_split(test_size=0.2, random_state=42, stratify=y). Fit LogisticRegression(max_iter=2000). Report accuracy on the held-out test set.",
+    "reference": 0.9333333333333333,
+    "tolerance": 0.001
+  },
+  "R3_portal_species_clf": {
+    "fork": "randomness",
+    "dataset": "portal",
+    "file": "/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission/study2/data/portal_surveys.csv",
+    "question": "How accurately can the two Dipodomys species (DM and DO) be told apart from weight and hindfoot length?",
+    "spec": "Restrict to records with species_id 'DM' or 'DO' and drop records missing weight or hindfoot_length. Predictors are weight and hindfoot_length; the target is species_id. Standardise the predictors with StandardScaler fitted on the training data only (use a pipeline). Split with train_test_split(test_size=0.2, random_state=42, stratify=y). Fit LogisticRegression(max_iter=2000). Report accuracy on the held-out test set.",
+    "reference": 0.8125249301954527,
+    "tolerance": 0.001
+  }
+}

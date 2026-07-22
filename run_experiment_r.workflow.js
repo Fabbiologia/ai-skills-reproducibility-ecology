@@ -11,6 +11,18 @@ const DIR = REPO + '/prompts_r'
 const TASKS = ['T1', 'T2', 'T3', 'T4']
 const CONDS = ['C0', 'C1', 'C2', 'C3', 'C4']
 const REPS = 10
+// Required for new run sets. The 2026 archival run predates this guard and does
+// not contain these fields; do not infer them retrospectively.
+const RUN_PROVENANCE = {
+  harness: 'REQUIRED: application and workflow-harness version',
+  provider: 'REQUIRED: model provider',
+  model: 'REQUIRED: exact model identifier/version',
+  decoding: 'REQUIRED: temperature, top-p, seed, and any unavailable controls',
+  run_date_utc: 'REQUIRED: ISO-8601 date/time',
+}
+if (Object.values(RUN_PROVENANCE).some(v => v.startsWith('REQUIRED:'))) {
+  throw new Error('Complete RUN_PROVENANCE before launching a new experiment run set.')
+}
 
 const SCHEMA = {
   type: 'object',
@@ -42,10 +54,10 @@ async function runOne(t, c, r) {
       phase: 'Runs', schema: SCHEMA,
     })
     if (res && res.value !== undefined && res.value !== null) {
-      return { task: t, condition: c, rep: r, ...res }
+      return { task: t, condition: c, rep: r, provenance: RUN_PROVENANCE, ...res }
     }
   }
-  return { task: t, condition: c, rep: r, value: null, method: 'FAILED', params: '', secondary: null, direction: null, n: null }
+  return { task: t, condition: c, rep: r, provenance: RUN_PROVENANCE, value: null, method: 'FAILED', params: '', secondary: null, direction: null, n: null }
 }
 
 const items = []

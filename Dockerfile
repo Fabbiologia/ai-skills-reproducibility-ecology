@@ -1,7 +1,7 @@
 # Containerised deterministic reproduction: regenerates all statistics, figures,
 # and the manuscript + Supporting Information documents from results_v2.json.
-# (Re-running the 200 LLM-agent runs is out of scope — it needs an agent harness;
-#  the archival run set results_v2.json is included.)
+# (Re-running the LLM-agent experiments is out of scope — it needs an agent harness;
+#  the archival scalar and report run sets are included.)
 FROM python:3.12-slim
 
 # Node.js for the docx build scripts

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Penguins Sex Classifier"
+  short_description: "Reproducible penguin sex classification"
+  default_prompt: "Use $penguins-sex-classifier to classify penguin sex reproducibly from the four body measurements."

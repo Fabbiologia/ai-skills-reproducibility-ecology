@@ -67,13 +67,28 @@ for cond in CONDS:
         ex, dist, sd = agree([r.get(f) for r in rs], tol)
         perq[f] = dict(exact=ex, distinct=dist, sd=sd, valid=valid([r.get(f) for r in rs], ref, tol))
     wm = whole_match(rs)
-    mean_valid = st.mean([perq[f]["valid"] for f in QSPEC if perq[f]["valid"] is not None])
+    # Weight the six scientific questions equally. Q1 and Q4 each have two
+    # numeric fields and pass only when both fields match their references.
+    question_validity = {
+        "Q1": st.mean([1 if (abs(r["q1_k"] - QSPEC["q1_k"][0]) <= QSPEC["q1_k"][1]
+                                  and abs(r["q1_sil"] - QSPEC["q1_sil"][0]) <= QSPEC["q1_sil"][1]) else 0
+                           for r in rs]),
+        "Q2": perq["q2_acc"]["valid"],
+        "Q3": perq["q3_adjr2"]["valid"],
+        "Q4": st.mean([1 if (abs(r["q4_ci_low"] - QSPEC["q4_ci_low"][0]) <= QSPEC["q4_ci_low"][1]
+                                  and abs(r["q4_ci_high"] - QSPEC["q4_ci_high"][0]) <= QSPEC["q4_ci_high"][1]) else 0
+                           for r in rs]),
+        "Q5": perq["q5_corr"]["valid"],
+        "Q6": perq["q6_pc1_pct"]["valid"],
+    }
+    mean_valid = st.mean(question_validity.values())
     # where divergence happens: method choices
     k_choices = dict(Counter(r.get("q1_k") for r in rs))
     scaled_pca = dict(Counter(r.get("q6_scaled") for r in rs))
     scope5 = dict(Counter((r.get("q5_scope") or "?")[:14] for r in rs))
     summary[cond] = dict(n=len(rs), adherence=adh, item_rates=item_rates, perq=perq,
                          whole_match=wm, mean_valid=mean_valid,
+                         question_validity=question_validity,
                          q1_k=k_choices, q6_scaled=scaled_pca, q5_scope=scope5)
     print(f"\n### {CLABEL[cond]} (n={len(rs)})")
     print(f"  coherence (adherence) = {adh*100:.0f}%   whole-report match = {wm*100:.0f}%   validity = {mean_valid*100:.0f}%")
@@ -86,34 +101,57 @@ for cond in CONDS:
 (HERE / "results" / "hard_summary.json").write_text(json.dumps(summary, indent=2, default=float))
 print("\nWrote results/hard_summary.json")
 
-# ---- figure ----
+# ---- figure: A standard report, B hard report, C where the hard report forked ----
+# Restructured per reviewer request into three panels with a colour-blind-safe
+# (Okabe-Ito) palette and named analyses rather than q-codes.
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-colors = {"C0": "#999999", "C1": "#e08214", "C2": "#2166ac"}
-fig, (axL, axR) = plt.subplots(1, 2, figsize=(13, 5.2))
-# left: 3 summary metrics
-mets = [("Skill coherence", "adherence"), ("Report match\n(all numbers agree)", "whole_match"), ("Validity", "mean_valid")]
-x = np.arange(len(mets)); w = 0.25
-for i, cond in enumerate(CONDS):
-    s = summary.get(cond);
-    if not s: continue
-    vals = [(s["adherence"] or 0), s["whole_match"], (s["mean_valid"] or 0)]
-    bars = axL.bar(x + (i - 1) * w, [v * 100 for v in vals], w, label=CLABEL[cond], color=colors[cond])
-    for b, v in zip(bars, vals):
-        axL.text(b.get_x() + b.get_width() / 2, v * 100 + 1, f"{v*100:.0f}", ha="center", va="bottom", fontsize=8)
-axL.set_xticks(x); axL.set_xticklabels([m[0] for m in mets]); axL.set_ylabel("percent"); axL.set_ylim(0, 108)
-axL.set_title("Summary metrics by condition", fontsize=11); axL.legend(fontsize=8); axL.grid(axis="y", ls=":", alpha=0.4)
-# right: per-question report agreement (exact-match) by condition
-QN = list(QSPEC.keys()); xq = np.arange(len(QN))
+OK = {"C0": "#999999", "C1": "#E69F00", "C2": "#0072B2"}
+CLAB = {"C0": "No skill", "C1": "Structure only", "C2": "Full skill"}
+
+# The standard-report summary is produced separately by analyze_report.py.
+std_path = HERE / "results" / "report_summary.json"
+std = json.loads(std_path.read_text()) if std_path.exists() else {}
+
+mets = ["Skill\ncoherence", "Whole-report\nagreement", "Validity"]
+xm = np.arange(len(mets)); w = 0.26
+
+def panel_bars(ax, summ, keys, title):
+    for i, cond in enumerate(CONDS):
+        s = summ.get(cond)
+        if not s: continue
+        ys = [(s.get(keys[0]) or 0) * 100, (s.get(keys[1]) or 0) * 100, (s.get(keys[2]) or 0) * 100]
+        bars = ax.bar(xm + (i - 1) * w, ys, w, label=CLAB[cond], color=OK[cond])
+        for b, v in zip(bars, ys):
+            ax.text(b.get_x() + b.get_width() / 2, v + 1, f"{v:.0f}", ha="center", va="bottom", fontsize=8)
+    ax.set_xticks(xm); ax.set_xticklabels(mets, fontsize=9); ax.set_ylim(0, 112)
+    ax.set_title(title, fontsize=11, loc="left", fontweight="bold")
+    ax.grid(axis="y", ls=":", alpha=0.4)
+
+fig, axes = plt.subplots(1, 3, figsize=(15.6, 4.8),
+                         gridspec_kw={"width_ratios": [1.1, 1.1, 0.9]})
+panel_bars(axes[0], std, ("adherence", "report_match", "mean_valid"), "A  Standard report (four analyses)")
+axes[0].set_ylabel("percent")
+panel_bars(axes[1], summary, ("adherence", "whole_match", "mean_valid"), "B  Hard report (six analyses with forks)")
+
+# Panel C: the only two numeric fields that diverged, named.
+axC = axes[2]
+QN = ["q2_acc", "q3_adjr2"]
+QNLABEL = {"q2_acc": "Species\naccuracy", "q3_adjr2": "Body-mass\nmodel R²"}
+xq = np.arange(len(QN))
 for i, cond in enumerate(CONDS):
     s = summary.get(cond)
     if not s: continue
     ys = [(s["perq"][f]["exact"] or 0) * 100 for f in QN]
-    axR.bar(xq + (i - 1) * w, ys, w, label=CLABEL[cond], color=colors[cond])
-axR.set_xticks(xq); axR.set_xticklabels([q.replace("_", "\n") for q in QN], fontsize=7)
-axR.set_ylabel("run-to-run agreement (%)"); axR.set_ylim(0, 108)
-axR.set_title("Per-analysis agreement across runs\n(low = reports diverge without the skill)", fontsize=11)
-axR.legend(fontsize=8); axR.grid(axis="y", ls=":", alpha=0.4)
-fig.suptitle("HARD report: does the skill make a forky report reproducible and coherent?",
-             fontsize=13, fontweight="bold")
-fig.tight_layout(); fig.savefig(HERE / "results" / "fig_hard_report.png", dpi=150)
+    bars = axC.bar(xq + (i - 1) * w, ys, w, label=CLAB[cond], color=OK[cond])
+    for b, v in zip(bars, ys):
+        axC.text(b.get_x() + b.get_width() / 2, v + 1, f"{v:.0f}", ha="center", va="bottom", fontsize=8)
+axC.set_xticks(xq); axC.set_xticklabels([QNLABEL[q] for q in QN], fontsize=9)
+axC.set_ylabel("modal agreement across reports (%)"); axC.set_ylim(0, 112)
+axC.set_title("C  Where the hard report forked", fontsize=11, loc="left", fontweight="bold")
+axC.grid(axis="y", ls=":", alpha=0.4)
+
+handles, labels = axes[0].get_legend_handles_labels()
+fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.99), ncol=3, frameon=False, fontsize=9.5)
+fig.tight_layout(rect=[0, 0.02, 1, 0.92])
+fig.savefig(HERE / "results" / "fig_hard_report.png", dpi=200, bbox_inches="tight")
 print("Wrote results/fig_hard_report.png")

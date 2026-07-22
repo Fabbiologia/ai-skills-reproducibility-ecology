@@ -1,13 +1,12 @@
-# Skills as the new packages: a standard for good AI analysis skills
+# Reusable instructions make AI ecological analyses reproducible
 
-Reproducibility repository for the manuscript **"Skills as the new packages: an
-evidence-based standard for good AI analysis skills and a curated repository for
-ecology"** (target journal: *Methods in Ecology and Evolution*).
+Reproducibility repository for the manuscript **"Reusable instructions make AI
+ecological analyses reproducible when they remove analytical choices"** (target journal:
+*Methods in Ecology and Evolution*).
 
-The paper argues that AI skills are becoming a reusable unit of analysis, like R
-packages on CRAN, and uses two controlled experiments to work out what a skill must
-contain and be tested for to deserve a place in a curated repository for Model
-Context Protocol (MCP) servers and skills.
+The paper tests when structured AI instructions improve the reproducibility and
+validity of ecological analyses, then turns the observed mechanisms into a proposed,
+machine-checkable evidence standard for curated skill repositories.
 
 This repository contains everything needed to reproduce the experiment, its figures
 and statistics, and to rebuild the manuscript and Supporting Information documents
@@ -28,13 +27,11 @@ a skill does the work, and the two languages test whether different code reaches
 same answer. A short literature review sets the context and is not a formal
 systematic review.
 
-**Headline result:** skills improve output reproducibility through *constraint*, not
-verbosity, and the decisive feature is task-dependent. Fix the stochastic controls
-(seed/split/scaling) where randomness exists, and fix the input/method contract where
-a domain convention is ambiguous. Reproducibility and validity are separable: an
-analysis can be perfectly consistent yet consistently wrong. Python and R give the
-same answer for the deterministic tasks, but not for the classifier, where the two
-languages use different random number generators.
+**Headline result:** in this task set, skills helped only where they removed a
+consequential analytical choice. Fixed stochastic controls removed Python classifier
+variation; an explicit survey-unit contract corrected a reproducible but invalid
+biomass result. Generic added prose did not help. These task-level findings motivate,
+but do not by themselves validate, a universal repository standard.
 
 ---
 
@@ -50,6 +47,8 @@ for_submission/
 ├── Makefile                      ← reproduce / build targets
 ├── Dockerfile                    ← containerised reproduction of analysis + docs
 ├── REPORT_v2.md                  ← plain-text findings report
+├── PROVENANCE.md                 ← known archival gaps and interpretation boundaries
+├── audit_archive.py              ← structural and provenance audit
 │
 ├── generate_prompts.py           ← writes the 20 Python condition prompts (the independent variable)
 ├── generate_prompts_r.py         ← writes the 20 R condition prompts
@@ -75,6 +74,10 @@ for_submission/
 │   ├── generate_report_prompts.py, run_report_experiment.workflow.js, analyze_report.py
 │   ├── prompts/ (C0/C1/C2), results_report.json, references_report.json
 │   └── results/fig_report_reproducibility.png
+├── repository_standard/          ← proposed machine-readable admission standard
+│   ├── skill-evidence.schema.json
+│   ├── validate_skills.py
+│   └── examples/penguins-sex-classifier/
 └── manuscript/                   ← Word documents + build scripts
     ├── Manuscript_AI_Skills_Reproducibility_MEE.docx
     ├── Supporting_Information_AI_Skills_Reproducibility_MEE.docx
@@ -97,9 +100,15 @@ what the `Makefile` / `Dockerfile` reproduce.
 a single underlying model) via the Claude Code agent/workflow harness. The prompts
 (`generate_prompts.py`, `prompts/`) and orchestration are provided in full for
 transparency, but **re-running the agents requires that harness and will not
-bit-reproduce**, because the agents are stochastic — which is precisely the
-phenomenon the experiment measures. The provided `results_v2.json` is the archival
-run set for the paper.
+bit-reproduce**, because execution is stochastic and backend-dependent. The archival
+records do not identify the exact model version, provider release, harness version,
+or decoding settings; this is a known historical limitation, not information that
+should be inferred retrospectively. See `PROVENANCE.md`.
+
+The report experiment retains structured values and judge grades but not the full
+report text the judge saw. Its findings are exploratory and cannot be independently
+regraded from the current archive. The workflows now retain full text and provenance
+for future run sets.
 
 ---
 
@@ -124,6 +133,7 @@ Or use the Makefile:
 ```bash
 make setup       # pip install + npm install
 make reproduce   # analyze_v2.py + rebuild both .docx (deterministic)
+make check       # validate skill manifests + audit archive completeness
 make all         # also regenerate the prompt files
 ```
 
@@ -144,10 +154,12 @@ The container reproduces the deterministic layer (statistics, figures, documents
    checkout (agents need an absolute path to read each prompt file).
 2. Regenerate the prompt files: `python generate_prompts.py` (they use repo-relative
    data paths, so run agents with the working directory at the repository root).
-3. Execute `run_experiment.workflow.js` in the Claude Code workflow harness. It runs
+3. Complete the required `RUN_PROVENANCE` block. The workflow refuses to launch while
+   model, provider, harness, decoding, or run-date fields are unset.
+4. Execute `run_experiment.workflow.js` in the Claude Code workflow harness. It runs
    4 tasks × 5 conditions × 10 replicates with a 3× retry per cell and enforced
    structured output, returning the run array (overwrite `results_v2.json`).
-4. `python analyze_v2.py` to re-score.
+5. `python analyze_v2.py` to re-score.
 
 ---
 
@@ -156,12 +168,12 @@ The container reproduces the deterministic layer (statistics, figures, documents
 - **iris.csv** — Fisher's iris data, via scikit-learn (`sklearn.datasets.load_iris`).
 - **penguins.csv** — Palmer Penguins (Horst, Hill & Gorman 2020; data from Gorman et
   al. 2014), via seaborn. CC0.
-- **ltem_cabo_pulmo_2023.csv** — **not included in this repository** (available on
+- **ltem_cabo_pulmo_2023.csv** — **excluded from the public repository** (available on
   request from the Aburto Lab; see `data/ltem_cabo_pulmo_2023.csv.README.md`). A 2023
   extract (2,798 reef-fish records, 10 reefs,
   41 transect units) from the Long-Term Ecological Monitoring (LTEM) programme,
-  Cabo Pulmo National Park, Gulf of California. Provided here solely to reproduce the
-  analysis; please contact the Aburto Lab regarding reuse of the monitoring data.
+  Cabo Pulmo National Park, Gulf of California. It is required to rerun Task T4;
+  please contact the Aburto Lab regarding reuse of the monitoring data.
 
 **Code** (`*.py`, `*.js`) is released under the MIT License (`LICENSE`).
 **Text and figures** (manuscript, SI, `results/*.png`) are intended for release under
@@ -178,3 +190,13 @@ repository and the archived OSF/Zenodo DOI (to be added on submission).
 
 Python 3; numpy 2.4.6; scipy 1.16.3; scikit-learn 1.9.0; matplotlib; pandas; seaborn.
 Node.js with `docx` 9.7.x for document generation.
+
+## Interpretation boundary
+
+The experiment was not preregistered, used one model/provider configuration that was
+not fully recorded, and has one task supporting each of its two main mechanistic
+effects. The Fisher tests are exploratory contrasts over runs from those tasks, not
+evidence that the effect sizes generalise to all ecological analyses. The strongest
+contribution is conditional: identify consequential degrees of freedom, encode them
+as a contract, and test reproducibility, reference validity, and method coherence
+separately.

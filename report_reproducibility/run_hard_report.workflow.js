@@ -14,6 +14,17 @@ const DIR = REPO + '/report_reproducibility/prompts_hard'
 const FILES = { C0: 'C0_none.txt', C1: 'C1_structure.txt', C2: 'C2_skill.txt' }
 const CONDS = ['C0', 'C1', 'C2']
 const REPS = 8
+const RUN_PROVENANCE = {
+  harness: 'REQUIRED: application and workflow-harness version',
+  provider: 'REQUIRED: provider for generator and judge',
+  generator_model: 'REQUIRED: exact generator model identifier/version',
+  judge_model: 'REQUIRED: exact judge model identifier/version',
+  decoding: 'REQUIRED: generator and judge decoding controls',
+  run_date_utc: 'REQUIRED: ISO-8601 date/time',
+}
+if (Object.values(RUN_PROVENANCE).some(v => v.startsWith('REQUIRED:'))) {
+  throw new Error('Complete RUN_PROVENANCE before launching a new report run set.')
+}
 
 const GEN_SCHEMA = {
   type: 'object',
@@ -94,14 +105,14 @@ const out = await pipeline(
     if (!gen) return { cond: it.cond, rep: it.r, ok: false }
     return agent(judgePrompt(gen), { label: `judge:${it.cond}-r${it.r}`, phase: 'Judge', schema: JUDGE_SCHEMA })
       .then((j) => ({
-        cond: it.cond, rep: it.r, ok: true,
+        cond: it.cond, rep: it.r, ok: true, provenance: RUN_PROVENANCE,
         q1_k: gen.q1_k, q1_sil: gen.q1_sil, q1_method: gen.q1_method,
         q2_acc: gen.q2_acc, q2_method: gen.q2_method,
         q3_adjr2: gen.q3_adjr2, q3_predictors: gen.q3_predictors,
         q4_ci_low: gen.q4_ci_low, q4_ci_high: gen.q4_ci_high, q4_method: gen.q4_method,
         q5_corr: gen.q5_corr, q5_scope: gen.q5_scope,
         q6_pc1_pct: gen.q6_pc1_pct, q6_scaled: gen.q6_scaled,
-        sections: gen.sections, conclusion: gen.conclusion, judge: j,
+        sections: gen.sections, conclusion: gen.conclusion, report_md: gen.report_md, judge: j,
       }))
   }
 )

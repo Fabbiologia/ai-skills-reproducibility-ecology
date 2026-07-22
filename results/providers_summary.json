@@ -1,0 +1,322 @@
+{
+  "opus_T1_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "opus_T1_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "opus_T2_C0": {
+    "n": 6,
+    "agree": 0.8333333333333334,
+    "valid": 0.16666666666666666,
+    "median": 0.8928571428571429,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "opus_T2_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.8805970149253731,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "opus_T3_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879616,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "opus_T3_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "opus_T4_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 0.0,
+    "median": 3.2952064217134107,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "opus_T4_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 3.4641913664166615,
+    "fail": 0,
+    "label": "Provider 1 (large)"
+  },
+  "sonnet_T1_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "sonnet_T1_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "sonnet_T2_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.8805970149253731,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "sonnet_T2_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.8805970149253731,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "sonnet_T3_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "sonnet_T3_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "sonnet_T4_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 3.4641913664166615,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "sonnet_T4_C4": {
+    "n": 6,
+    "agree": 0.6666666666666666,
+    "valid": 0.6666666666666666,
+    "median": 3.4641913664166615,
+    "fail": 0,
+    "label": "Provider 1 (medium)"
+  },
+  "haiku_T1_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "haiku_T1_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "haiku_T2_C0": {
+    "n": 6,
+    "agree": 0.6666666666666666,
+    "valid": 0.16666666666666666,
+    "median": 0.9104477611940298,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "haiku_T2_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.8805970149253731,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "haiku_T3_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "haiku_T3_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "haiku_T4_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 0.0,
+    "median": 33.77586582256245,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "haiku_T4_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 3.4641913664166615,
+    "fail": 0,
+    "label": "Provider 1 (small)"
+  },
+  "openai_T1_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 2"
+  },
+  "openai_T1_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 2"
+  },
+  "openai_T2_C0": {
+    "n": 1,
+    "agree": 1.0,
+    "valid": 0.0,
+    "median": 0.892857,
+    "fail": 5,
+    "label": "Provider 2"
+  },
+  "openai_T2_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.8805970149253731,
+    "fail": 0,
+    "label": "Provider 2"
+  },
+  "openai_T3_C0": {
+    "n": 4,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879614,
+    "fail": 2,
+    "label": "Provider 2"
+  },
+  "openai_T3_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 2"
+  },
+  "openai_T4_C0": {
+    "n": 6,
+    "agree": 0.6666666666666666,
+    "valid": 0.16666666666666666,
+    "median": 33.77586582256245,
+    "fail": 0,
+    "label": "Provider 2"
+  },
+  "openai_T4_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 3.4641913664166615,
+    "fail": 0,
+    "label": "Provider 2"
+  },
+  "google_T1_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300208,
+    "fail": 0,
+    "label": "Provider 3"
+  },
+  "google_T1_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": -0.11756978413300206,
+    "fail": 0,
+    "label": "Provider 3"
+  },
+  "google_T2_C0": {
+    "n": 6,
+    "agree": 0.8333333333333334,
+    "valid": 0.8333333333333334,
+    "median": 0.8805970149253731,
+    "fail": 0,
+    "label": "Provider 3"
+  },
+  "google_T2_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.8805970149253731,
+    "fail": 0,
+    "label": "Provider 3"
+  },
+  "google_T3_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 3"
+  },
+  "google_T3_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 0.6696719536879615,
+    "fail": 0,
+    "label": "Provider 3"
+  },
+  "google_T4_C0": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 0.0,
+    "median": 3.2952064217134107,
+    "fail": 0,
+    "label": "Provider 3"
+  },
+  "google_T4_C4": {
+    "n": 6,
+    "agree": 1.0,
+    "valid": 1.0,
+    "median": 3.4641913664166615,
+    "fail": 0,
+    "label": "Provider 3"
+  }
+}

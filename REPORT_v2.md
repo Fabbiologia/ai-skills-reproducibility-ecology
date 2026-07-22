@@ -1,4 +1,9 @@
-# Do AI skills improve the output reproducibility of ecological analyses? A controlled ablation experiment
+# Experiment 1 technical report: Python arm of the skill-ablation study
+
+This file documents the original 200-run Python arm. The submission manuscript and
+Supporting Information integrate the later R arm (another 200 runs) and two report
+templates (48 reports total). Treat the generated JSON summaries, not this narrative
+file, as the source of numeric results.
 
 **Companion empirical study to** *ChatMPA_PRISMA_Review_AI_Skills_Reproducibility*.
 The review's principal finding was that the intersection **AI skills × output
@@ -6,7 +11,7 @@ reproducibility × ecology is empirically empty** — no primary study has direc
 tested it. This experiment is a direct, purpose-built test that fills that gap and
 implements the design proposed in the review's Section 4.3.
 
-**Status:** completed. 200/200 runs successful. **Date:** 2026-07-02.
+**Status:** completed; 200/200 Python runs successful. **Date:** 2026-07-02.
 
 ---
 
@@ -15,10 +20,11 @@ implements the design proposed in the review's Section 4.3.
 A fully-crossed **4 (task) × 5 (skill-richness) factorial with 10 independent
 replicate runs per cell = 200 runs**. Each run is a fresh autonomous agent given a
 **byte-identical** prompt, required to *actually execute Python* and return a
-structured result. Within a cell the only thing that varies is the agent's own
-run-to-run stochasticity — operationalising exactly the "run-to-run output
+structured result. Inputs were held fixed within a cell; residual variation can
+include model inference, tool selection and execution, and unrecorded backend changes,
+operationalising the "run-to-run output
 variability" the review flags as the distinctive risk LLMs introduce
-(Themes 2 and 4). All materials are self-contained and re-runnable.
+(Themes 2 and 4). The run set is archived; exact model provenance is not.
 
 ### 1.1 Tasks (chosen to span reproducibility failure modes and domains)
 
@@ -49,7 +55,7 @@ rungs isolate the contribution of a specific skill feature:
 ### 1.3 Outcome measures (output-level, per the review's definition)
 
 Scored across the 10 runs in each cell: **run-to-run** — SD, CV, number of distinct
-answers (within tolerance), exact-match rate (fraction equal to the modal answer);
+answers (within tolerance), modal agreement (fraction in the largest tolerance cluster);
 and **validity** — fraction matching the reference within tolerance. Categorical
 agreement (method/direction) also recorded. Environment: scikit-learn 1.9.0,
 scipy 1.16.3, numpy 2.4.6.
@@ -75,9 +81,10 @@ scipy 1.16.3, numpy 2.4.6.
 | | C3 +controls | 0.000 | 1 | 100% | 100% | 0.000 |
 | | C4 full | 0.000 | 1 | 100% | 100% | 0.000 |
 
-Figures: `results/fig1_value_strips.png` (all values by condition),
-`fig2_reproducibility_gradient.png` (SD/CV gradient), `fig3_heatmaps.png`
-(reproducibility vs validity heatmaps).
+Main-text figure: `results/fig1_binding_transitions.png` (the two binding
+transitions). Diagnostics: `fig1_value_strips.png` (all values by condition),
+`fig2_reproducibility_gradient.png` (SD/CV gradient), and `fig3_heatmaps.png`
+(complete agreement and validity matrices).
 
 ### 2.2 Inferential tests
 
@@ -160,7 +167,8 @@ definitions, explicit prohibitions), not as tutorials.**
 
 ## 5. Limitations
 
-Four tasks, three datasets, one model family (scikit-learn), one agent vendor, 10
+Four tasks, three datasets, one Python software stack, one unrecorded agent/model
+configuration, and 10
 replicates per cell. Three tasks had a strong correct default, so the ablation's
 "stochastic-control" and "contract" effects rest on T2 and T4 respectively — clean
 but each carried by one task. A single vendor/model means run-to-run variance here
@@ -169,11 +177,14 @@ experiment measures *output* reproducibility of scalar results; multi-step pipel
 with cascading choices (the review's motivating case) may behave differently. The
 registered full study should: add ≥2 tasks per fork type, ≥20 replicates, a
 "contract-without-seed" arm on additional stochastic tasks, multi-step ecological
-workflows, and ≥2 model vendors; and pre-register tolerances per outcome.
+workflows, and ≥2 model vendors; and preregister tolerances per outcome. This study
+was not preregistered, so the Fisher tests are exploratory task-specific contrasts.
 
 ## 6. Reproducibility of this experiment
-`PROTOCOL`-equivalent design in §1; `data/` holds the exact CSVs (iris, penguins,
-`ltem_cabo_pulmo_2023.csv`); `prompts/` holds all 20 byte-identical condition files
+`PROTOCOL`-equivalent design in §1; `data/` holds iris and penguins, while the
+restricted `ltem_cabo_pulmo_2023.csv` is available on request; `prompts/` holds all
+20 condition files
 (the independent variable); `run_experiment.workflow.js` ran the 200 agents;
 `results_v2.json` holds every run; `analyze_v2.py` reproduces all tables and
-figures; `data/references.json` holds the canonical references.
+figures; `data/references.json` holds the canonical references. The archival run
+records do not contain exact model/provider/decoding metadata; see `PROVENANCE.md`.

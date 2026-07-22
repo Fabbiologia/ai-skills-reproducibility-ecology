@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Regenerate the literature search-and-selection diagram (Figure S1) from the
-background search counts. Output: results/figS1_prisma_flow.png"""
+"""Regenerate the informal background-search diagram (Figure S1).
+
+The search was not systematic and did not retain a deduplicated screening log, so
+the diagram intentionally reports process rather than PRISMA-style flow counts.
+"""
 from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
@@ -19,17 +22,12 @@ def box(x, y, w, h, txt, fill="#F3F4F6"):
 def arrow(x1, y1, x2, y2):
     ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>", mutation_scale=14, color=GRID, lw=1.2))
 
-box(2.2, 10.4, 5.6, 1.1, "Records identified from\ndatabases & registers (n = 96)")
-box(2.2, 8.6, 5.6, 1.0, "Records screened (n = 72)")
-box(2.2, 6.8, 5.6, 1.0, "Reports sought for retrieval (n = 30)")
-box(2.2, 5.0, 5.6, 1.0, "Reports assessed for eligibility (n = 28)")
-box(2.2, 2.9, 5.6, 1.3, "Studies included (n = 19)\n11 direct • 8 indirect/mechanistic", "#D9F2EE")
-box(8.0, 8.75, 1.9, 0.9, "Duplicates\nremoved (n = 24)")
-box(8.0, 6.95, 1.9, 0.9, "Not retrieved\n(n = 2)")
-box(8.0, 5.15, 1.9, 0.9, "Excluded (n = 9):\nno reprod. outcome")
-arrow(5, 10.4, 5, 9.6); arrow(5, 8.6, 5, 7.8); arrow(5, 6.8, 5, 6.0); arrow(5, 5.0, 5, 4.2)
-arrow(7.8, 9.1, 8.0, 9.1); arrow(7.8, 7.3, 8.0, 7.4); arrow(7.8, 5.5, 8.0, 5.6)
-ax.text(5, 11.75, "Literature search and selection (background search, July 2026)",
+box(2.2, 10.2, 5.6, 1.2, "Google Scholar, general web search,\njournals, and preprint servers")
+box(2.2, 8.0, 5.6, 1.2, "Single reviewer screened for relevance to\nAI/agent reliability or computational reproducibility")
+box(2.2, 5.8, 5.6, 1.2, "Nineteen studies read closely and\nsummarised narratively in Table S4")
+box(2.2, 3.3, 5.6, 1.5, "Interpretive context only\nNo preregistration • no auditable screening log • no completeness claim", "#D9F2EE")
+arrow(5, 10.2, 5, 9.2); arrow(5, 8.0, 5, 7.0); arrow(5, 5.8, 5, 4.8)
+ax.text(5, 11.75, "Informal background-search process (July 2026)",
         ha="center", fontsize=11, fontweight="bold", color=GRID)
 fig.tight_layout()
 out = HERE / "results" / "figS1_prisma_flow.png"

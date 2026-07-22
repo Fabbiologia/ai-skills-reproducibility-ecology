@@ -1,0 +1,89 @@
+{
+  "$schema": "../../skill-evidence.schema.json",
+  "schema_version": "0.1.0",
+  "name": "penguins-sex-classifier",
+  "version": "1.0.0",
+  "skill_file": "SKILL.md",
+  "domain": ["ecology", "classification"],
+  "summary": "Fixed-protocol logistic regression for Palmer Penguins sex classification.",
+  "contract": {
+    "inputs": {
+      "dataset": "../../../data/penguins.csv",
+      "required_columns": [
+        "bill_length_mm",
+        "bill_depth_mm",
+        "flipper_length_mm",
+        "body_mass_g",
+        "sex"
+      ],
+      "missing_data": "Drop rows missing any required value; do not impute."
+    },
+    "method": "StandardScaler fitted on the training fold, followed by LogisticRegression(max_iter=2000).",
+    "outputs": [
+      {
+        "name": "test_accuracy",
+        "type": "number",
+        "unit": "proportion",
+        "absolute_tolerance": 0.001
+      }
+    ]
+  },
+  "controls": {
+    "stochastic": true,
+    "fixed": {
+      "random_seed": 42,
+      "test_fraction": 0.2,
+      "stratify": true,
+      "preprocessing": "Fit StandardScaler on training data only."
+    }
+  },
+  "environment": {
+    "language": "Python",
+    "language_version": ">=3.11",
+    "packages": {
+      "pandas": ">=2.0",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "validation": {
+    "self_consistency": {
+      "minimum_runs": 10,
+      "minimum_modal_agreement": 1.0
+    },
+    "reference_tests": [
+      {
+        "dataset": "../../../data/penguins.csv",
+        "output": "test_accuracy",
+        "expected": 0.8805970149253731,
+        "absolute_tolerance": 0.001
+      }
+    ],
+    "coherence_checks": [
+      "Uses only the four body measurements as predictors.",
+      "Uses an 80/20 stratified split with random seed 42.",
+      "Fits scaling on the training fold only.",
+      "Uses logistic regression and reports held-out accuracy."
+    ]
+  },
+  "provenance": {
+    "authors": ["AI skills reproducibility study authors"],
+    "license": "MIT",
+    "source_study": "This repository"
+  },
+  "known_limitations": [
+    "Validated on one archived Palmer Penguins dataset and scikit-learn 1.9.0.",
+    "The reference value is implementation-specific and is not expected to equal an R glm result."
+  ],
+  "token_cost": {
+    "static_prompt_chars": 2211,
+    "static_prompt_tokens": 511,
+    "tokenizer": "tiktoken cl100k_base",
+    "median_completion_tokens": 1274,
+    "measured_on_model": "large-tier model (one provider)"
+  },
+  "model_compatibility": [
+    {"model": "large-tier model", "modal_agreement": 1.0, "reference_validity": 1.0, "passed": true},
+    {"model": "medium-tier model", "modal_agreement": 1.0, "reference_validity": 1.0, "passed": true},
+    {"model": "small-tier model", "modal_agreement": 1.0, "reference_validity": 1.0, "passed": true}
+  ]
+}

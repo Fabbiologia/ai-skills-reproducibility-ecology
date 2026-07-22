@@ -1,11 +1,10 @@
 cff-version: 1.2.0
 message: "If you use this software or data, please cite the manuscript and this repository."
-title: "Skills as the new packages: an evidence-based standard for good AI analysis skills and a curated repository for ecology"
+title: "Reusable instructions make AI ecological analyses reproducible when they remove analytical choices"
 abstract: >-
-  Materials, data, code, and documents for a paper that argues AI skills are becoming
-  a reusable unit of analysis like R packages, and uses two controlled experiments to
-  define an evidence-based standard for a good skill and the design of a curated
-  repository for Model Context Protocol servers and skills.
+  Materials, data, code, and documents for controlled ablations of AI analysis skills
+  across ecological tasks, plus a proposed machine-readable evidence standard for
+  versioned and testable skill repositories.
 type: software
 authors:
   - family-names: "Favoretto"

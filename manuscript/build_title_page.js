@@ -2,11 +2,11 @@
 // names, affiliations, running headline, and all statements. Single-spaced.
 const T = require("./theme.js");
 const { P, TITLE, H2, HR, buildDoc, write, setSpacing } = T;
-setSpacing(240);
+setSpacing(220);
 const path = require("path");
 
 const c = [];
-c.push(TITLE("Skills as the new packages: an evidence-based standard for good AI analysis skills and a curated repository for ecology"));
+c.push(TITLE("Reusable instructions make AI ecological analyses reproducible when they remove analytical choices"));
 c.push(P("Article type: Research Article. Target journal: Methods in Ecology and Evolution.", { size: 20, spacing: { after: 40 } }));
 c.push(P("Running headline: AI analysis skills and reproducible ecology (43 characters).", { size: 20 }));
 c.push(HR());
@@ -28,13 +28,13 @@ c.push(H2("Statement on inclusion"));
 c.push(P("Our study brings together authors from several countries, including a researcher based in the region where the reef fish monitoring data were collected (Baja California Sur, Mexico). All authors were engaged early with the research and study design. Whenever relevant, work by scientists from the region was cited. (Please edit to reflect the actual collaboration.)"));
 
 c.push(H2("Data availability statement"));
-c.push(P("All code and materials are available in a Git repository at https://github.com/Fabbiologia/ai-skills-reproducibility-ecology, and will be archived on Zenodo with a citable DOI on acceptance. This includes the two open datasets (iris; Palmer Penguins, Horst et al. 2020), the 40 prompts (Python and R), the two orchestration scripts that launched the 400 runs, every run's structured output for both languages, the report experiment's prompts, workflows, and gradings, and the analysis scripts that regenerate all tables and figures. The LTEM Cabo Pulmo 2023 reef fish data used for Task T4 are restricted and are available on request from the Aburto Lab; Tasks T1 to T3 are fully reproducible from the repository as it stands."));
+c.push(P("Code and materials are available at https://github.com/Fabbiologia/ai-skills-reproducibility-ecology and will be archived on Zenodo with a citable DOI. The companion Scientific AI Skills Registry (version 0.1.0), which implements the proposed community-submission workflow, is available at https://github.com/Fabbiologia/scientific-ai-skills-registry. The repository includes open iris and Palmer Penguins data, 40 scalar-task prompts, orchestration scripts, 400 scalar structured outputs, 48 report records and judge grades, analysis and document builders, an archive audit, and the proposed Skill Evidence Manifest. The restricted LTEM Cabo Pulmo 2023 reef-fish data are available on request from the Aburto Lab. Historical run records do not include exact model/provider/decoding metadata, and report records do not retain the full judged report text; these limitations are documented in PROVENANCE.md."));
 
-c.push(H2("Conflict of interest"));
-c.push(P("The authors declare no conflict of interest."));
+c.push(H2("Use of AI tools"));
+c.push(P("[Before submission, identify the exact applications and versions used for experimental generation and manuscript/code assistance, describe human verification, and align this statement with the Methods. Do not infer missing historical model metadata.]"));
 
-c.push(H2("Funding"));
-c.push(P("[To be completed.]"));
+c.push(H2("Conflict of interest and funding"));
+c.push(P("Conflict of interest: The authors declare no conflict of interest. Funding: [To be completed.]"));
 
 const doc = buildDoc(c, { title: "Title page - MEE submission", footerLeft: "Title page (not for review)", lineNumbers: false });
 write(doc, path.join(__dirname, "Title_Page_MEE.docx"));

@@ -5,7 +5,7 @@ then reports (a) within-language reproducibility and validity per cell, and
 (b) cross-language output equivalence (do Python and R agree within tolerance?).
 Writes a combined table, a cross-language summary, and figures."""
 import json, statistics as st
-from collections import Counter, defaultdict
+from collections import defaultdict
 from pathlib import Path
 import numpy as np
 
@@ -29,20 +29,26 @@ def cells(runs):
             d[(r["task"], r["condition"])].append(float(r["value"]))
     return d
 
+def tolerance_clusters(vals, tol):
+    clusters = []
+    for value in sorted(vals):
+        if not clusters or value - clusters[-1][0] > tol:
+            clusters.append([value])
+        else:
+            clusters[-1].append(value)
+    return clusters
+
+
 def modal(vals, tol):
-    key = [round(v / tol) for v in vals]
-    m = Counter(key).most_common(1)[0][0]
-    return [v for v, k in zip(vals, key) if k == m][0]  # a representative modal value
+    cluster = max(tolerance_clusters(vals, tol), key=len)
+    return st.mean(cluster)
 
 def summarize(vals, ref, tol):
     sd = st.pstdev(vals) if len(vals) > 1 else 0.0
-    uniq = []
-    for v in sorted(vals):
-        if not uniq or abs(v - uniq[-1]) > tol:
-            uniq.append(v)
-    mk = Counter(round(v / tol) for v in vals).most_common(1)[0][1]
+    clusters = tolerance_clusters(vals, tol)
+    mk = max(map(len, clusters))
     valid = sum(1 for v in vals if abs(v - ref) <= tol) / len(vals)
-    return dict(n=len(vals), sd=sd, n_distinct=len(uniq), exact=mk / len(vals),
+    return dict(n=len(vals), sd=sd, n_distinct=len(clusters), agreement=mk / len(vals),
                 valid=valid, mean=st.mean(vals), modal=modal(vals, tol))
 
 PYc, RRc = cells(PY), cells(RR)
@@ -61,11 +67,11 @@ for lang, C in [("python", PYc), ("r", RRc)]:
                 row.append(f"{c}:--"); continue
             s = summarize(vs, REF[lang][t]["value"], TOL[t])
             summary[f"{lang}_{t}_{c}"] = s
-            row.append(f"{c}:SD={s['sd']:.3f},exact={s['exact']*100:.0f}%,valid={s['valid']*100:.0f}%")
+            row.append(f"{c}:SD={s['sd']:.3f},agree={s['agreement']*100:.0f}%,valid={s['valid']*100:.0f}%")
         print(f"  {t} {TNAME[t]:<26} " + " | ".join(row))
 
 print("\n" + "=" * 92)
-print("CROSS-LANGUAGE OUTPUT EQUIVALENCE (Python modal vs R modal, within tolerance)")
+print("CROSS-IMPLEMENTATION COMPARISON (Python modal vs R modal, within tolerance)")
 print("=" * 92)
 xlang = {}
 for t in TASKS:
@@ -77,7 +83,7 @@ for t in TASKS:
         pm = modal(pv, TOL[t]); rm = modal(rv, TOL[t])
         agree = abs(pm - rm) <= TOL[t]
         xlang[f"{t}_{c}"] = dict(py=pm, r=rm, diff=abs(pm - rm), agree=bool(agree))
-        print(f"  {c}: Python={pm:.4f}  R={rm:.4f}  |diff|={abs(pm-rm):.4f}  equivalent={'YES' if agree else 'no'}")
+        print(f"  {c}: Python={pm:.4f}  R={rm:.4f}  |diff|={abs(pm-rm):.4f}  same output={'YES' if agree else 'no'}")
 
 (HERE / "results" / "cross_language_summary.json").write_text(
     json.dumps({"within": summary, "cross": xlang,
@@ -102,7 +108,65 @@ for ax, t in zip(axes.ravel(), TASKS):
     ax.set_xticks(range(5)); ax.set_xticklabels(CONDS)
     ax.set_title(f"{t}  {TNAME[t]}", fontsize=10)
     ax.grid(axis="y", ls=":", alpha=0.4); ax.legend(fontsize=8, loc="best")
-fig.suptitle("Python vs R: output by skill level (10 runs per cell per language)",
-             fontsize=12, fontweight="bold")
 fig.tight_layout(); fig.savefig(HERE / "results" / "fig4_python_vs_r.png", dpi=150)
 print("Wrote results/fig4_python_vs_r.png")
+
+# Main-text Figure 2: descriptive replication of the task-specific binding
+# transitions. Pooling is weighted by the number of runs in each cell.
+def pooled_rate(lang, task, conditions, key):
+    total = sum(summary[f"{lang}_{task}_{c}"]["n"] for c in conditions)
+    successes = sum(round(summary[f"{lang}_{task}_{c}"][key]
+                          * summary[f"{lang}_{task}_{c}"]["n"])
+                    for c in conditions)
+    return 100 * successes / total
+
+
+from matplotlib.lines import Line2D
+fig2, axes2 = plt.subplots(1, 2, figsize=(10.8, 4.7), sharex=True, sharey=True)
+transition_specs = [
+    ("T2", ["C0", "C1", "C2"], ["C3", "C4"],
+     "A  Classifier: controls bind the choice", "C0-C2", "C3-C4"),
+    ("T4", ["C0", "C1"], ["C2", "C3", "C4"],
+     "B  Biomass: contract binds the choice", "C0-C1", "C2-C4"),
+]
+rows = [("agreement", "Agreement · Python", "python"),
+        ("agreement", "Agreement · R", "r"),
+        ("valid", "Validity · Python", "python"),
+        ("valid", "Validity · R", "r")]
+ypos = np.arange(len(rows))[::-1]
+for ax, (task, preconds, postconds, title, prelab, postlab) in zip(axes2, transition_specs):
+    for y, (key, label, lang) in zip(ypos, rows):
+        pre = pooled_rate(lang, task, preconds, key)
+        post = pooled_rate(lang, task, postconds, key)
+        ax.plot([pre, post], [y, y], color="#9ca3af", lw=2, zorder=1)
+        ax.scatter(pre, y, s=72, facecolor="white", edgecolor="#6b7280",
+                   linewidth=1.8, zorder=3)
+        ax.scatter(post, y, s=52, marker="D", color="#0072B2", zorder=4)
+        label_dy = -0.30 if y == ypos[0] else 0.23
+        if abs(pre - post) < 0.5:
+            ax.text(pre - 2.5, y + label_dy, f"{pre:.0f}→{post:.0f}",
+                    ha="right", va="center", fontsize=8.5)
+        else:
+            ax.text(pre, y + label_dy, f"{pre:.0f}", ha="center", va="center", fontsize=8.5)
+            ax.text(post, y + label_dy, f"{post:.0f}", ha="center", va="center", fontsize=8.5)
+    ax.axhline(1.5, color="#d1d5db", lw=1)
+    ax.set_title(title, fontsize=10.5, loc="left", fontweight="bold")
+    ax.set_xlim(-8, 109); ax.set_xticks([0, 25, 50, 75, 100])
+    ax.set_xlabel("Pooled run-level rate (%)")
+    ax.grid(axis="x", color="#e5e7eb", lw=0.8)
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.tick_params(axis="y", length=0)
+axes2[0].set_yticks(ypos); axes2[0].set_yticklabels([r[1] for r in rows], fontsize=9)
+axes2[1].tick_params(labelleft=False)
+legend_handles = [
+    Line2D([0], [0], marker="o", color="none", markerfacecolor="white",
+           markeredgecolor="#6b7280", markeredgewidth=1.8, markersize=7, label="Before binding constraint"),
+    Line2D([0], [0], marker="D", color="none", markerfacecolor="#0072B2",
+           markeredgecolor="#0072B2", markersize=6, label="After binding constraint"),
+]
+fig2.legend(handles=legend_handles, loc="upper center", bbox_to_anchor=(0.5, 0.99),
+            ncol=2, frameon=False, fontsize=9)
+fig2.tight_layout(rect=[0, 0.02, 1, 0.92])
+fig2.savefig(HERE / "results" / "fig2_binding_replication.png", dpi=200,
+             bbox_inches="tight")
+print("Wrote results/fig2_binding_replication.png")
