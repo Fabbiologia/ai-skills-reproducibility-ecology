@@ -8,20 +8,8 @@ const path = require("path");
 const fs = require("fs");
 
 const ROOT = path.resolve(__dirname, "..");
-const REFS = JSON.parse(fs.readFileSync(path.join(ROOT, "main_study/references.json"), "utf8"));
-
-// ---- read the run records -------------------------------------------------
-const raw = fs.readFileSync(path.join(ROOT, "main_study/run_records.csv"), "utf8").trim().split("\n");
-const head = raw[0].split(",");
-const rows = raw.slice(1).map(l => {
-  // values never contain commas in this file, so a plain split is safe
-  const p = l.split(","); const o = {};
-  head.forEach((h, i) => o[h] = p[i]);
-  return o;
-});
-const isProviderError = r => (r.error || "").startsWith("api");
-const hasNumber = r => r.value !== "" && r.value !== "None";
-const kept = rows.filter(r => !isProviderError(r));
+const SUM = JSON.parse(fs.readFileSync(path.join(ROOT, "main_study/analysis_summary.json"), "utf8"));
+const REFS = SUM.tasks;
 
 const ARMS = ["none", "code", "skill"];
 const ALAB = { none: "Question alone", code: "With a script", skill: "With a specification" };
@@ -29,32 +17,17 @@ const FORK = {
   aggregation: "Sampling unit", scope: "Scope of the estimate",
   missing: "Missing records", randomness: "Fitting a model",
 };
-
-const cellOf = (t, a, src = kept) => src.filter(r => r.task === t && r.arm === a);
-const pct = (t, a, src = kept) => {
-  const rr = cellOf(t, a, src);
-  return rr.length ? Math.round(100 * rr.filter(r => r.correct === "True").length / rr.length) : null;
-};
-function consensus(t, a) {
-  const v = cellOf(t, a).filter(hasNumber).map(r => parseFloat(r.value)).sort((x, y) => x - y);
-  if (!v.length) return null;
-  const tol = REFS[t].tolerance, groups = [];
-  for (const x of v) {
-    const g = groups.find(g => Math.abs(x - g[0]) <= tol);
-    if (g) g.push(x); else groups.push([x]);
-  }
-  const best = groups.reduce((a, b) => b.length > a.length ? b : a);
-  const modal = best.reduce((s, x) => s + x, 0) / best.length;
-  return { n: best.length, total: v.length, modal, ok: Math.abs(modal - REFS[t].reference) <= tol };
-}
+const cellOf = (t, a) => SUM.cells[t][a];
 const sig = x => Math.abs(x) >= 100 ? x.toFixed(3) : x.toPrecision(6).replace(/0+$/, "").replace(/\.$/, "");
+const nnn = ["zero","one","two","three","four","five","six","seven","eight","nine","ten",
+             "eleven","twelve"];
 
 const c = [];
 setSpacing(240);
 
 c.push(TITLE("Supporting Information"));
 c.push(P("Repeated AI analyses of ecological data agree on wrong answers until the method is written down", { size: 22, spacing: { after: 40 } }));
-c.push(P("This document supports the manuscript of the above title. Every number in it is computed from the archived task definitions and run records at the time the document is built, by the script manuscript/build_si2.js, so it cannot fall out of step with the analysis. Section numbering is independent of the manuscript.", { size: 20 }));
+c.push(P("This document supports the manuscript of the above title. Every number in it is read, at the time the document is built, from the summary that main_study/analyze.py writes when it analyses the archived run records. No quantity is recomputed here, so this document cannot disagree with the analysis or with the manuscript. Section numbering is independent of the manuscript.", { size: 20 }));
 c.push(PB());
 
 // ---------------- S1 ----------------
@@ -86,12 +59,10 @@ c.push(TCAP("Table S2. Accuracy, failures and agreement for each of the twelve t
 const s3 = [];
 Object.keys(REFS).forEach(t => {
   ARMS.forEach((a, k) => {
-    const all = rows.filter(r => r.task === t && r.arm === a);
-    const api = all.filter(isProviderError).length;
-    const bad = all.filter(r => !hasNumber(r) && !isProviderError(r)).length;
-    const con = consensus(t, a);
-    s3.push([k === 0 ? t : "", ALAB[a], `${pct(t, a)}`, `${api} / ${bad}`,
-      con ? `${con.n} of ${con.total} on ${sig(con.modal)}${con.ok ? "" : ", not the reference"}` : "no runs"]);
+    const q = cellOf(t, a);
+    s3.push([k === 0 ? t : "", ALAB[a], `${q.correct_pct}`,
+      `${q.provider_errors} / ${q.unusable}`,
+      q.agree_total ? `${q.agree_n} of ${q.agree_total} on ${sig(q.agree_value)}${q.agree_is_reference ? "" : ", not the reference"}` : "no runs"]);
   });
 });
 c.push(table(["Task", "Condition", "Correct (%)", "Provider / unusable", "Agreement"], s3, [2200, 1750, 1100, 1350, 2600]));
@@ -102,9 +73,9 @@ c.push(H1("S4  What the wrong values were, and where they come from"));
 c.push(P("On the tasks where runs settled on a value that is not the reference, the value they settled on is not arbitrary. Each one follows from a defensible but different reading of the question, which is why the errors are plausible and why they survive inspection. The readings below were recovered by reading the scripts the runs produced."));
 c.push(TCAP("Table S3. The value runs agreed on where that value is not the reference, and the analytical choice that produces it."));
 const s4rows = [
-  ["Mean per-transect fish biomass", "3.4642", "3.2952", "Treats each combination of reef, habitat and transect as a survey unit, rather than each combination of reef and transect, so the same fish are averaged over more units."],
+  ["Mean per-transect fish biomass", "3.4642", "3.295", "Treats each combination of reef, habitat and transect as a survey unit, rather than each combination of reef and transect, so the same fish are averaged over more units."],
   ["Mean per-transect fish biomass", "3.4642", "33.776", "Averages the biomass of individual records without first summing within a survey unit, so the quantity is a mean per record rather than a mean per transect."],
-  ["Mean rodents per plot-year, empty plot-years", "54.883", "55.326", "Counts only the plot-years that appear as rows in the file, so plot-years that were surveyed and caught nothing are dropped instead of contributing zeros, and the mean rises."],
+  ["Mean rodents per plot-year, empty plot-years", "54.883", "55.326", "Counts only the plot-years that appear as rows in the file, so plot-years that were surveyed and caught nothing are dropped instead of contributing zeros, and the mean rises. This value is the reference for the neighbouring task that asks the same question without the instruction about empty plot-years, matched to seven decimal places."],
   ["Iris species classifier", "0.9333", "0.9667", "Uses a different split of the data or a different random seed from the one the specification fixes, so the accuracy is measured on a different test set."],
   ["Penguin sex classifier", "0.8806", "various", "Leaves the split, the seed and the scaling of predictors free. Runs given the question alone returned nine different values in ten runs, so here the failure is visible scatter rather than agreement."],
 ];
@@ -114,14 +85,22 @@ c.push(PB());
 // ---------------- S5 ----------------
 c.push(H1("S5  Sensitivity to how failed runs are counted"));
 c.push(P("A run can fail to produce a number because the model returned code that does not run, which is a property of the condition, or because the call failed at the provider on a network or quota error, which is not. The manuscript excludes the second and keeps the first as an incorrect answer. Both alternatives are given here. The comparison between the specification and the question alone holds under all three conventions. The comparison between the specification and the script holds under the first two and does not survive the third, because a large part of the script arm's disadvantage is that it produced code that did not run."));
-c.push(TCAP("Table S4. Mean proportion of runs reaching the reference under each convention for counting failures, with paired Wilcoxon signed-rank tests across the twelve tasks."));
+c.push(TCAP("Table S4. Mean proportion of runs reaching the reference under each convention for counting failures, with paired Wilcoxon signed-rank tests across the twelve tasks. Every value in this table is computed when the document is built."));
+
+const LABEL = {
+  "primary (provider errors dropped)": "Provider errors excluded (manuscript)",
+  "all runs": "Every run counted",
+  "only runs returning a number": "Only runs returning a number",
+};
 c.push(table(["Runs included", "Question alone", "With a script", "With a specification", "spec vs none", "spec vs script"],
-  [
-    ["Provider errors excluded (manuscript)", "0.59", "0.75", "0.96", "P = 0.031", "P = 0.031"],
-    ["Every run counted", "0.57", "0.72", "0.90", "P = 0.031", "P = 0.031"],
-    ["Only runs returning a number", "0.60", "0.85", "0.96", "P = 0.062", "P = 0.500"],
-  ], [2900, 1350, 1250, 1600, 1250, 1250]));
-c.push(P("Provider errors fell unevenly across conditions, at 14 runs of 120 for the question alone, 6 for the script and 7 for the specification, which is why they are excluded from the primary analysis rather than counted as wrong answers. Runs returning code that could not be executed or read numbered 3, 10 and 0 respectively.", { spacing: { before: 100 } }));
+  Object.entries(SUM.sensitivity).map(([k, v]) => [
+    LABEL[k], v.means.none.toFixed(2), v.means.code.toFixed(2), v.means.skill.toFixed(2),
+    "P = " + v.skill_vs_none_p.toFixed(3), "P = " + v.skill_vs_code_p.toFixed(3),
+  ]), [2900, 1350, 1250, 1600, 1250, 1250]));
+
+const F = SUM.failures, X = SUM.provider_error_test;
+c.push(P(`Calls that failed at the provider numbered ${F.none.provider} runs of 120 for the question alone, ${F.code.provider} for the script and ${F.skill.provider} for the specification. That spread is not distinguishable from an even one (chi-square = ${X.chi2}, ${nnn[X.df]} degrees of freedom, P = ${X.p}), which is why they are excluded from the primary analysis rather than counted as wrong answers. All of them were calls to one of the two companies, so the exclusion removes runs from one model and not from the other, and ${nnn[SUM.single_model_cells.length]} of the thirty six combinations of task and condition are left resting on a single model, namely ${SUM.single_model_cells.map(([t, a]) => `${t} with ${a === "none" ? "the question alone" : a === "code" ? "a script" : "a specification"}`).join("; ")}. Runs that returned code which could not be executed or read numbered ${F.none.unusable}, ${F.code.unusable} and ${F.skill.unusable} respectively, and these are counted as incorrect throughout, since an analysis that does not run has not answered the question.`, { spacing: { before: 100 } }));
+
 c.push(PB());
 
 // ---------------- S6 ----------------

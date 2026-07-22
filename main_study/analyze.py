@@ -188,8 +188,76 @@ for a in ARMS:
 print("  A collection that accepted a specification because its runs agreed would have")
 print("  accepted those cases.")
 
+# ---------------------------------------------------------------------------
+# One machine-readable summary, which the Supporting Information is built from.
+# Nothing downstream recomputes a statistic, so the documents cannot disagree
+# with the analysis.
+# ---------------------------------------------------------------------------
+def cell_summary(t, a):
+    all_runs = [r for r in rows if r["task"] == t and r["arm"] == a]
+    keptr = [r for r in all_runs if not IS_PROVIDER_ERROR(r)]
+    v = [float(r["value"]) for r in keptr if HAS_NUMBER(r)]
+    n, tot, modal, _ = consensus(v, REFS[t]["tolerance"])
+    return {
+        "correct_pct": round(100 * np.mean([r["correct"] == "True" for r in keptr])) if keptr else None,
+        "runs_scored": len(keptr),
+        "provider_errors": sum(1 for r in all_runs if IS_PROVIDER_ERROR(r)),
+        "unusable": sum(1 for r in keptr if not HAS_NUMBER(r)),
+        "agree_n": n, "agree_total": tot,
+        "agree_value": modal,
+        "agree_is_reference": bool(tot and abs(modal - REFS[t]["reference"]) <= REFS[t]["tolerance"]),
+        "providers_present": sorted({r["provider"] for r in keptr}),
+    }
+
+
+summary = {
+    "tasks": {t: {k: REFS[t][k] for k in ("fork", "dataset", "question", "spec",
+                                          "reference", "tolerance")} for t in TASKS},
+    "cells": {t: {a: cell_summary(t, a) for a in ARMS} for t in TASKS},
+    "means": {a: round(float(np.mean([rate[(t, a)] for t in TASKS])), 4) for a in ARMS},
+    "comparisons": {},
+    "sensitivity": {},
+    "failures": {a: {"provider": sum(1 for r in rows if r["arm"] == a and IS_PROVIDER_ERROR(r)),
+                     "unusable": sum(1 for r in rows if r["arm"] == a
+                                     and not HAS_NUMBER(r) and not IS_PROVIDER_ERROR(r))}
+                 for a in ARMS},
+    "binding_tasks": binding,
+    "ceiling_tasks": ceiling,
+    "by_fork": {f: {a: round(float(np.mean([rate[(t, a)] for t in TASKS
+                                            if REFS[t]["fork"] == f])), 4) for a in ARMS}
+                for f in ["aggregation", "scope", "missing", "randomness"]},
+}
+for a, b in [("skill", "none"), ("code", "none"), ("skill", "code")]:
+    ma, mb, p, up, dn, nz = paired(rate, a, b)
+    md, lo, hi = boot_ci(rate, a, b)
+    summary["comparisons"][f"{a}_vs_{b}"] = {
+        "mean_a": round(ma, 4), "mean_b": round(mb, 4), "p": round(float(p), 4),
+        "diff": round(float(md), 4), "ci_low": round(float(lo), 4), "ci_high": round(float(hi), 4),
+        "higher": up, "lower": dn, "tied": 12 - nz}
+    if binding:
+        mba, mbb, pb, *_ = paired(rate, a, b, binding)
+        summary["comparisons"][f"{a}_vs_{b}"]["binding"] = {
+            "mean_a": round(mba, 4), "mean_b": round(mbb, 4), "p": round(float(pb), 4)}
+for label, inc in INCLUSIONS.items():
+    rt, _ = task_rates(inc)
+    row = {"means": {a: round(float(np.mean([rt[(t, a)] for t in TASKS])), 4) for a in ARMS}}
+    for a, b in [("skill", "none"), ("code", "none"), ("skill", "code")]:
+        row[f"{a}_vs_{b}_p"] = round(float(paired(rt, a, b)[2]), 4)
+    summary["sensitivity"][label] = row
+
+tab = np.array([[summary["failures"][a]["provider"], 120 - summary["failures"][a]["provider"]]
+                for a in ARMS])
+chi2, pchi, dof, _ = stats.chi2_contingency(tab)
+summary["provider_error_test"] = {"chi2": round(float(chi2), 2), "df": int(dof),
+                                  "p": round(float(pchi), 3),
+                                  "companies_affected": sorted({r["provider"] for r in rows
+                                                                if IS_PROVIDER_ERROR(r)})}
+summary["single_model_cells"] = [[t, a] for t in TASKS for a in ARMS
+                                 if len(summary["cells"][t][a]["providers_present"]) < 2]
+
+json.dump(summary, open(HERE / "analysis_summary.json", "w"), indent=1)
 json.dump({f"{t}|{a}": rate[(t, a)] for t in TASKS for a in ARMS},
           open(HERE / "task_rates.json", "w"), indent=2)
-json.dump({f"{t}|{a}": agree.get((t, a)) for t in TASKS for a in ARMS},
-          open(HERE / "task_agreement.json", "w"), indent=2)
-print("\nWrote main_study/task_rates.json and main_study/task_agreement.json")
+print("\nWrote main_study/analysis_summary.json and main_study/task_rates.json")
+print(f"  provider errors came from: {summary['provider_error_test']['companies_affected']}; "
+      f"cells left on one model: {len(summary['single_model_cells'])}")
