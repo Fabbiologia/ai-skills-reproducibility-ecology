@@ -54,6 +54,7 @@ for_submission/
 │   ├── run_records.csv     the 360 run records
 │   ├── analyze.py         task-level statistics, paired tests, agreement, sensitivity
 │   ├── make_figures.py    Figures 1 and 2
+│   ├── make_design_figure.py  schematic of the design, read from the task definitions
 │   └── data/portal_surveys.csv
 ├── transfer_runs/         how far a specification carries when the data are presented differently
 ├── supporting_runs/       earlier runs reported as description only, with no test applied
