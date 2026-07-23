@@ -96,8 +96,12 @@ CHECKS = [
     ("no dashes in prose, page ranges excepted",
      not any(ch in re.sub(r"\d+[–—]\d+", "", d) for d in (MS, SI, CL, TP)
              for ch in "–—")),
-    ("figures and tables are referenced, and the per-task table is in the SI",
-     all(x in MS for x in ("(Fig. 1)", "(Fig. 2)", "(Table 1)", "Table S2"))),
+    ("three figures, numbered and referenced, with the per-task table in the SI",
+     all(f"Figure {n}." in MS for n in (1, 2, 3))
+     and all(x in MS for x in ("Figure 1,", "(Fig. 2)", "(Fig. 3)", "(Table 1)", "Table S2"))
+     and "Figure 4." not in MS),
+    ("the design schematic is the first figure and sits in the methods",
+     MS.index("Figure 1. The design of the study") < MS.index("3  Results")),
     ("the abstract is within the 350-word limit",
      len(MS[MS.index("Abstract"):MS.index("Data and code for peer review")].split()) - 1 <= 350),
     ("every reference in the list is cited in the text", not uncited),

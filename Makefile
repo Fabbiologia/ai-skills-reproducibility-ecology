@@ -21,9 +21,9 @@ refs:               ## recompute every reference value with two independent impl
 analyze:            ## task-level statistics from the archived run records
 	$(PYTHON) main_study/analyze.py
 
-figures:            ## draw Figures 1 and 2 and the design schematic
-	$(PYTHON) main_study/make_figures.py
+figures:            ## draw Figure 1 (design) and Figures 2 and 3 (results)
 	$(PYTHON) main_study/make_design_figure.py
+	$(PYTHON) main_study/make_figures.py
 
 docs:               ## rebuild the manuscript, SI, title page and cover letter (.docx)
 	cd manuscript && node build_paper2.js && node build_si2.js && node build_title_page2.js && node build_cover_letter2.js

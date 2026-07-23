@@ -53,8 +53,8 @@ for_submission/
 │   ├── run.py             the harness: 12 tasks x 3 conditions x 2 models x 5 repeats
 │   ├── run_records.csv     the 360 run records
 │   ├── analyze.py         task-level statistics, paired tests, agreement, sensitivity
-│   ├── make_figures.py    Figures 1 and 2
-│   ├── make_design_figure.py  schematic of the design, read from the task definitions
+│   ├── make_design_figure.py  Figure 1, the design schematic
+│   ├── make_figures.py    Figures 2 and 3
 │   └── data/portal_surveys.csv
 ├── transfer_runs/         how far a specification carries when the data are presented differently
 ├── supporting_runs/       earlier runs reported as description only, with no test applied
