@@ -1,4 +1,21 @@
 {
+ "design": {
+  "n_tasks": 12,
+  "n_arms": 3,
+  "n_models": 2,
+  "reps": 5,
+  "n_runs": 360,
+  "models": [
+   "gemini-pro-latest",
+   "gpt-4.1"
+  ],
+  "datasets": [
+   "iris",
+   "penguins",
+   "portal",
+   "reef"
+  ]
+ },
  "tasks": {
   "A1_reef_biomass": {
    "fork": "aggregation",

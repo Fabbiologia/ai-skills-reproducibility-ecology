@@ -66,7 +66,9 @@ for_submission/
 │   └── results/                                summary tables
 ├── registry_standard/     proposed machine-readable manifest for a shared collection
 ├── manuscript/            the .docx files and the scripts that build them
-│                          (the Supporting Information is generated from the records)
+│                          (the Supporting Information is generated from the records,
+│                          and Design_Schematic_Editable.pptx is the design figure
+│                          as native PowerPoint shapes, rebuilt by `make editable`)
 ├── data/                  iris, penguins, and the access note for the restricted reef data
 ├── audit_archive.py       structural and provenance audit
 ├── PROVENANCE.md          known gaps, stated rather than papered over
@@ -83,8 +85,15 @@ make setup && make reproduce
 
 `make reproduce` recomputes every reference value with two independent
 implementations, regenerates the statistics from the archived run records, redraws
-both figures and rebuilds the three Word documents. It calls no model and is
-deterministic. `make check` runs the archive audit. `make help` lists the targets.
+the figures and rebuilds the four Word documents, then checks that every number
+quoted in those documents still matches the analysis. It calls no model and is
+deterministic. `make check` runs the archive audit as well. `make help` lists the
+targets.
+
+`make editable` rebuilds `manuscript/Design_Schematic_Editable.pptx`, a PowerPoint
+version of the design figure in which every box and label is a native shape. It is
+deliberately not part of `make reproduce`, because rebuilding it would overwrite
+any edits made in PowerPoint. Save those under a new name.
 
 To re-run the experiment itself, set `OPENAI_API_KEY` and `GEMINI_API_KEY` and run
 `python main_study/run.py 5`. This calls paid interfaces, costs money, and will not

@@ -6,7 +6,7 @@
 
 PYTHON ?= python3
 
-.PHONY: help setup refs analyze figures docs verify standard audit check reproduce runs all clean
+.PHONY: help setup refs analyze figures docs editable verify standard audit check reproduce runs all clean
 
 help:               ## list the available targets
 	@grep -hE '^[a-z]+:.*##' $(MAKEFILE_LIST) | sed 's/:.*##/\t/' | expand -t22
@@ -27,6 +27,9 @@ figures:            ## draw Figures 1 and 2 and the design schematic
 
 docs:               ## rebuild the manuscript, SI, title page and cover letter (.docx)
 	cd manuscript && node build_paper2.js && node build_si2.js && node build_title_page2.js && node build_cover_letter2.js
+
+editable:           ## rebuild the editable PowerPoint of the design schematic (overwrites your edits)
+	cd manuscript && node build_design_pptx.js
 
 verify:             ## check the built documents still agree with the analysis
 	$(PYTHON) verify_documents.py

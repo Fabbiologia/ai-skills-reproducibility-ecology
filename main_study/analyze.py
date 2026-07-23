@@ -211,6 +211,11 @@ def cell_summary(t, a):
 
 
 summary = {
+    "design": {"n_tasks": len(TASKS), "n_arms": len(ARMS), "n_models": len({r["model"] for r in rows}),
+               "reps": len(rows) // (len(TASKS) * len(ARMS) * len({r["model"] for r in rows})),
+               "n_runs": len(rows),
+               "models": sorted({r["model"] for r in rows}),
+               "datasets": sorted({REFS[t]["dataset"] for t in TASKS})},
     "tasks": {t: {k: REFS[t][k] for k in ("fork", "dataset", "question", "spec",
                                           "reference", "tolerance")} for t in TASKS},
     "cells": {t: {a: cell_summary(t, a) for a in ARMS} for t in TASKS},
