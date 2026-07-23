@@ -54,7 +54,7 @@ c.push(PB());
 
 // ---------------- S3 ----------------
 c.push(H1("S3  Complete results for every task and condition"));
-c.push(P("The proportion of runs reaching the reference, the number of runs that returned no number and why, and the agreement between the runs that did. Calls that failed at the provider are excluded from the percentages, as in the manuscript, and are listed separately here so the reader can apply the other convention if preferred."));
+c.push(P("This is the table referred to from section 3.1 of the manuscript. It gives, for every task under every condition, the proportion of runs reaching the reference, the number of runs that returned no number and why, and the agreement between the runs that did. Calls that failed at the provider are excluded from the percentages, as in the manuscript, and are listed separately here so that the reader can apply the other convention if preferred."));
 c.push(TCAP("Table S2. Accuracy, failures and agreement for each of the twelve tasks under each of the three conditions. Agreement is the size of the largest group of returned values falling within the task's tolerance of one another, out of the runs that returned a number, followed by the value that group agreed on."));
 const s3 = [];
 Object.keys(REFS).forEach(t => {

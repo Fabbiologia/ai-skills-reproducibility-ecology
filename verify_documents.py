@@ -54,6 +54,11 @@ strong = {a: sum(1 for t in S["tasks"]
                  and S["cells"][t][a]["agree_n"] / S["cells"][t][a]["agree_total"] >= 0.8)
           for a in ("none", "code", "skill")}
 
+# every reference in the list must appear in the body text
+refs = re.findall(r'^  "(.*)",$', (MS_DIR / "build_paper2.js").read_text(), re.M)
+body = MS[MS.index("1  Introduction"):MS.index("References")]
+uncited = [r.split(",")[0] for r in refs if r.split(",")[0] not in body]
+
 CHECKS = [
     ("headline means appear in the manuscript",
      all(f"{round(means[a] * 100)} per cent" in MS for a in ("none", "code", "skill"))),
@@ -80,8 +85,8 @@ CHECKS = [
      all("seven decimal places" in d for d in (MS, SI, CL))
      and "exactly the reference value" not in CL),
     ("the agreement counts in the manuscript match the data",
-     f"the question alone produced agreement on eight of the twelve tasks, "
-     f"the script on eleven and the specification on eleven" in MS
+     "the question alone produced agreement on eight of the twelve tasks, "
+     "the script on eleven and the specification on eleven" in MS
      and (strong["none"], strong["code"], strong["skill"]) == (8, 11, 11)),
     ("the single-model caveat appears in the methods, the limitations and the SI",
      MS.count("resting on a single model") >= 2 and "resting on a single model" in SI
@@ -91,18 +96,19 @@ CHECKS = [
     ("no dashes in prose, page ranges excepted",
      not any(ch in re.sub(r"\d+[–—]\d+", "", d) for d in (MS, SI, CL, TP)
              for ch in "–—")),
-    ("figures and tables are referenced from the text",
-     all(x in MS for x in ("(Fig. 1)", "(Fig. 2)", "(Table 1)", "Table 2."))),
+    ("figures and tables are referenced, and the per-task table is in the SI",
+     all(x in MS for x in ("(Fig. 1)", "(Fig. 2)", "(Table 1)", "Table S2"))),
     ("the abstract is within the 350-word limit",
      len(MS[MS.index("Abstract"):MS.index("Data and code for peer review")].split()) - 1 <= 350),
-    ("every reference in the list is cited in the text", True),  # checked below
+    ("every reference in the list is cited in the text", not uncited),
+    ("the results section carries no interpretive framing",
+     not any(w in MS[MS.index("3  Results"):MS.index("4  Discussion")]
+             for w in ("deserves attention", "the clearest single case", "understates what happens",
+                       "the informative ones", "is the practical difference", "therefore computed",
+                       "would not have exposed", "the reason is visible"))),
+    ("the section on what a specification needs is inside the discussion",
+     MS.index("4.4  What a specification needs to contain") > MS.index("4  Discussion")),
 ]
-
-# every reference cited
-refs = re.findall(r'^  "(.*)",$', (MS_DIR / "build_paper2.js").read_text(), re.M)
-body = MS[MS.index("1  Introduction"):MS.index("References")]
-uncited = [r.split(",")[0] for r in refs if r.split(",")[0] not in body]
-CHECKS[-1] = ("every reference in the list is cited in the text", not uncited)
 
 failed = 0
 for name, ok in CHECKS:
