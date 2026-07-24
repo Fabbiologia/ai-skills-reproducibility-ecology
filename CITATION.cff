@@ -12,12 +12,15 @@ authors:
   - family-names: "Favoretto"
     given-names: "Fabio"
     affiliation: "School of Biological and Marine Science, University of Plymouth, UK"
+  - family-names: "León-Solorzano"
+    given-names: "Eduardo"
+    affiliation: "Centro para la Biodiversidad Marina y la Conservación, A.C., La Paz, Mexico"
   - family-names: "Rivera"
     given-names: "Alberto"
     affiliation: "Scripps Institution of Oceanography, University of California San Diego, USA"
-  - family-names: "León Solorzano"
-    given-names: "Eduardo"
-    affiliation: "Centro para la Biodiversidad Marina y la Conservación, A.C., La Paz, Mexico"
+  - family-names: "Aburto-Oropeza"
+    given-names: "Octavio"
+    affiliation: "Scripps Institution of Oceanography, University of California San Diego, USA"
 keywords:
   - reproducibility
   - analytical choices
