@@ -7,7 +7,7 @@ export const meta = {
   ],
 }
 
-const REPO = '/Users/fabiofavoretto/Library/CloudStorage/OneDrive-UniversityofPlymouth/Projects/skills/for_submission'
+const REPO = '<path to your clone of this repository>'
 const TASKS = ['T1', 'T2', 'T3', 'T4']
 const ALLC = ['C0', 'C1', 'C2', 'C3', 'C4']
 const C04 = ['C0', 'C4']

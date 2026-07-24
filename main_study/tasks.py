@@ -319,7 +319,10 @@ def build(verbose=True):
             print(f"{t['id']:28}{t['fork']:12}{a:>18.10f}{b:>18.10f}  {agree}")
         if not agree:
             raise AssertionError(f"{t['id']}: independent implementations disagree ({a} vs {b})")
-        out[t["id"]] = dict(fork=t["fork"], dataset=t["dataset"], file=t["file"],
+        # relative to the repository root: an absolute path would only work on the
+        # machine that generated the file, and the archive has to run from a clone
+        rel = str(Path(t["file"]).resolve().relative_to(HERE.parent))
+        out[t["id"]] = dict(fork=t["fork"], dataset=t["dataset"], file=rel,
                             question=t["question"], spec=t["spec"],
                             reference=a, tolerance=t["tol"])
     (HERE / "references.json").write_text(json.dumps(out, indent=2))

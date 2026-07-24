@@ -129,8 +129,10 @@ def preview(path, n=6):
 
 def build_prompt(task_id, arm):
     t = REFS[task_id]
+    # paths in references.json are repo-relative; scripts run with cwd at the root
+    data_file = REPO / t["file"]
     body = f"QUESTION\n{t['question']}\n\nThe data are in the file {t['file']}."
-    body += preview(t["file"])
+    body += preview(data_file)
     if arm == "skill":
         body += ("\nSPECIFICATION (follow it exactly)\n" + t["spec"] + "\n")
     elif arm == "code":
