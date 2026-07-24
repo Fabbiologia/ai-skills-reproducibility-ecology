@@ -15,7 +15,10 @@ FORBIDDEN = ["manuscript/Title_Page_Specifications.docx",
              "manuscript/build_title_page2.js",
              "manuscript/build_cover_letter2.js"]
 
-files = subprocess.run(["git", "ls-files"], capture_output=True, text=True).stdout.split()
+SELF = Path(__file__).name          # this file lists the terms, so it always matches
+
+files = [f for f in subprocess.run(["git", "ls-files"], capture_output=True,
+                                   text=True).stdout.split() if f != SELF]
 problems = []
 
 for f in FORBIDDEN:
