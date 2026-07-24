@@ -1,8 +1,10 @@
-# Node
-manuscript/node_modules/
+# The manuscript itself is not archived here. This repository holds the study:
+# the tasks, the data, the run records, the analysis and the figures. The Word
+# documents and the scripts that build them live alongside it but are not part
+# of the archive, and remain in the history of this repository up to d58d176.
+manuscript/
+verify_documents.py
 npm-debug.log*
-# NOTE: manuscript/package-lock.json is intentionally committed to pin exact
-# dependency versions for reproducible document builds.
 
 # Python
 __pycache__/

@@ -1,8 +1,9 @@
 # Repeated AI analyses of ecological data agree on wrong answers until the method is written down
 
-Materials for the manuscript of that title, prepared for *Methods in Ecology and
-Evolution*. Everything needed to check the numbers, redraw the figures and rebuild
-the documents is here, and none of it requires calling a model.
+Code and data for the study of that title, prepared for *Methods in Ecology and
+Evolution*. Everything needed to check every number and redraw every figure is
+here, and none of it requires calling a model. The manuscript itself is not
+archived here.
 
 ## What the study asks
 
@@ -65,10 +66,6 @@ for_submission/
 │   ├── prompts/, prompts_r/                    the prompts as they were sent
 │   └── results/                                summary tables
 ├── registry_standard/     proposed machine-readable manifest for a shared collection
-├── manuscript/            the .docx files and the scripts that build them
-│                          (the Supporting Information is generated from the records,
-│                          and Design_Schematic_Editable.pptx is the design figure
-│                          as native PowerPoint shapes, rebuilt by `make editable`)
 ├── data/                  iris, penguins, and the access note for the restricted reef data
 ├── audit_archive.py       structural and provenance audit
 ├── PROVENANCE.md          known gaps, stated rather than papered over
@@ -77,23 +74,18 @@ for_submission/
 
 ## Reproducing it
 
-Python 3.11 or later and Node.js 18 or later.
+Python 3.11 or later.
 
 ```bash
 make setup && make reproduce
 ```
 
 `make reproduce` recomputes every reference value with two independent
-implementations, regenerates the statistics from the archived run records, redraws
-the figures and rebuilds the four Word documents, then checks that every number
-quoted in those documents still matches the analysis. It calls no model and is
-deterministic. `make check` runs the archive audit as well. `make help` lists the
-targets.
-
-`make editable` rebuilds `manuscript/Design_Schematic_Editable.pptx`, a PowerPoint
-version of the design figure in which every box and label is a native shape. It is
-deliberately not part of `make reproduce`, because rebuilding it would overwrite
-any edits made in PowerPoint. Save those under a new name.
+implementations, regenerates the statistics from the archived run records, and
+redraws the three figures. It calls no model and is deterministic, so every number
+in the paper can be checked against the records without spending anything.
+`make check` runs the archive audit and validates the proposed manifests.
+`make help` lists the targets.
 
 To re-run the experiment itself, set `OPENAI_API_KEY` and `GEMINI_API_KEY` and run
 `python main_study/run.py 5`. This calls paid interfaces, costs money, and will not
@@ -140,6 +132,14 @@ under CC-BY 4.0 on publication.
 
 See `CITATION.cff`. Please cite the manuscript once published, and this repository
 with its Zenodo DOI until then.
+
+## What this repository does not contain
+
+The manuscript, the Supporting Information, the title page and the cover letter
+are not archived here, nor are the scripts that build them. This repository is the
+study rather than the paper. The figures it produces are the figures the paper
+prints, and the analysis it runs produces every number the paper quotes, so the
+two can be checked against one another without the documents being present.
 
 ## What the study does not show
 
