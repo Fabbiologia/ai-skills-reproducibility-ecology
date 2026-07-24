@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Aburto Lab, Scripps Institution of Oceanography, and the manuscript authors
+Copyright (c) 2026 the authors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,4 +27,4 @@ Manuscript text, the Supporting Information, and figures (results/*.png) are
 intended for release under the Creative Commons Attribution 4.0 (CC-BY 4.0)
 license on publication. The Long-Term Ecological Monitoring (LTEM) reef-fish
 data extract (data/ltem_cabo_pulmo_2023.csv) is provided only to reproduce the
-analyses in this study; contact the Aburto Lab regarding any other reuse.
+analyses in this study; contact the data holders regarding any other reuse.

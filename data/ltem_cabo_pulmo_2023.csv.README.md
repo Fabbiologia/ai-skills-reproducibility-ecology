@@ -3,8 +3,8 @@
 The real reef-fish visual-transect data used for Task T4 (Cabo Pulmo National
 Park, Gulf of California, 2023 surveys) is **not distributed in this repository**.
 It comes from the Long-Term Ecological Monitoring (LTEM) programme and is
-restricted. It is **available on request from the Aburto Lab**
-(Scripps Institution of Oceanography, UC San Diego) and collaborators.
+restricted. It is **available on request from the monitoring programme**
+that collected it, and from its collaborators.
 
 Everything else needed to reproduce the study is included, and the aggregate T4
 results (in `results_v2.json`, `results_v2_R.json`, and the manuscript) are derived

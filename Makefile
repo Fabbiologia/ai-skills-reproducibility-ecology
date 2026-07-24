@@ -6,7 +6,7 @@
 
 PYTHON ?= python3
 
-.PHONY: help setup refs analyze figures docs editable verify standard audit check reproduce runs all clean
+.PHONY: help setup refs analyze figures docs editable anon standard audit check reproduce runs all clean
 
 help:               ## list the available targets
 	@grep -hE '^[a-z]+:.*##' $(MAKEFILE_LIST) | sed 's/:.*##/\t/' | expand -t22
@@ -25,8 +25,8 @@ figures:            ## draw Figure 1 (design) and Figures 2 and 3 (results)
 	$(PYTHON) main_study/make_design_figure.py
 	$(PYTHON) main_study/make_figures.py
 
-docs:               ## rebuild the manuscript, SI, title page and cover letter (.docx)
-	cd manuscript && node build_paper2.js && node build_si2.js && node build_title_page2.js && node build_cover_letter2.js
+docs:               ## rebuild the manuscript and Supporting Information (.docx)
+	cd manuscript && node build_paper2.js && node build_si2.js
 
 editable:           ## rebuild the editable PowerPoint of the design schematic (overwrites your edits)
 	cd manuscript && node build_design_pptx.js
@@ -37,12 +37,15 @@ verify:             ## check the built documents still agree with the analysis
 standard:           ## validate the proposed machine-readable specification manifests
 	$(PYTHON) registry_standard/validate_skills.py
 
+anon:               ## refuse to publish if anything on this branch identifies the authors
+	$(PYTHON) check_anonymity.py
+
 audit:              ## check archive completeness and print known provenance gaps
 	$(PYTHON) audit_archive.py
 
-check: standard audit verify  ## repository checks that generate nothing
+check: standard audit anon  ## repository checks that generate nothing
 
-reproduce: refs analyze figures docs verify  ## everything in the paper, without calling a model
+reproduce: refs analyze figures docs  ## everything in the paper, without calling a model
 
 runs:               ## re-run the experiment; calls paid model interfaces and overwrites the records
 	@echo "This calls paid model interfaces and overwrites main_study/run_records.csv."

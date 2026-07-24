@@ -65,7 +65,7 @@ function table(headers, rows, colWidths) {
 
 function buildDoc(children, { title = "Document", footerLeft = "", lineNumbers = true } = {}) {
   return new Document({
-    creator: "Aburto Lab", title,
+    creator: "Anonymous", title,
     styles: {
       default: { document: { run: { font: FONT, size: 24, color: BODY }, paragraph: { spacing: { line: LINESP, after: 120 } } } },
       paragraphStyles: [

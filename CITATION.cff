@@ -1,5 +1,6 @@
 cff-version: 1.2.0
-message: "If you use this software or data, please cite the manuscript and this repository."
+message: "Anonymised copy prepared for double-anonymous peer review. Author and repository
+  metadata are withheld until the manuscript is accepted."
 title: "Repeated AI analyses of ecological data agree on wrong answers until the method is written down"
 abstract: >-
   Tasks, reference values, prompts, run records, analysis code and documents for a
@@ -9,15 +10,7 @@ abstract: >-
   machine-readable manifest for a shared collection of such specifications.
 type: software
 authors:
-  - family-names: "Favoretto"
-    given-names: "Fabio"
-    affiliation: "School of Biological and Marine Science, University of Plymouth, UK"
-  - family-names: "Rivera"
-    given-names: "Alberto"
-    affiliation: "Scripps Institution of Oceanography, University of California San Diego, USA"
-  - family-names: "León Solorzano"
-    given-names: "Eduardo"
-    affiliation: "Centro para la Biodiversidad Marina y la Conservación, A.C., La Paz, Mexico"
+  - name: "Withheld for anonymous peer review"
 keywords:
   - reproducibility
   - analytical choices
@@ -27,4 +20,3 @@ keywords:
   - ecology
 license: MIT
 version: "2.0.0"
-date-released: "2026-07-22"

@@ -55,7 +55,7 @@ const SHORT = {
 const pres = new pptxgen();
 pres.defineLayout({ name: "FIGURE", width: SW, height: SH });
 pres.layout = "FIGURE";
-pres.author = "Favoretto et al.";
+pres.author = "Anonymous";
 pres.title = "Design of the specification study";
 const s = pres.addSlide();
 

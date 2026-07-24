@@ -1,5 +1,11 @@
 # Repeated AI analyses of ecological data agree on wrong answers until the method is written down
 
+> **Anonymised copy for double-anonymous peer review.** This is the `review`
+> branch. Author names, affiliations, the title page and the cover letter are
+> withheld, and the citation and licence metadata are anonymised. Everything
+> needed to check the analysis is present and unchanged. The identified version
+> will be released on acceptance.
+
 Materials for the manuscript of that title, prepared for *Methods in Ecology and
 Evolution*. Everything needed to check the numbers, redraw the figures and rebuild
 the documents is here, and none of it requires calling a model.
@@ -129,7 +135,7 @@ memory.
   Project long-term survey.
 - **ltem_cabo_pulmo_2023.csv** — **not distributed here**. A 2023 extract of reef-fish
   transect records from the Long-Term Ecological Monitoring programme in Cabo Pulmo
-  National Park, Gulf of California. Available on request from the Aburto Lab; see
+  National Park, Gulf of California. Available on request from the monitoring programme; see
   `data/ltem_cabo_pulmo_2023.csv.README.md`. The deterministic reproduction does not
   need it. Re-running the two reef-fish tasks does.
 
